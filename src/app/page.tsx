@@ -1,5 +1,11 @@
 import Link from "next/link";
 import SearchWidget from "@/components/SearchWidget";
+import { AwinPartners } from "@/app/components/AwinPartners";
+import { buildAwinLink } from "@/lib/awin";
+
+// b0arding.com is the primary hotel partner — update advertiserId in src/lib/awin.ts once retrieved
+const BOARDING_AWIN_ID = "TODO";
+const BOARDING_URL = "https://b0arding.com/";
 
 const popularDestinations = [
   {
@@ -144,7 +150,7 @@ export default function Home() {
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {popularDestinations.map((dest) => (
-              <Link
+              <a
                 key={dest.name}
                 href={`/destinations/${dest.slug}`}
                 className="group relative overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl"
@@ -164,7 +170,7 @@ export default function Home() {
                     {dest.deals}
                   </span>
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
           <div className="mt-8 text-center">
@@ -204,6 +210,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Awin Partner Brands */}
+      <AwinPartners />
 
       {/* How It Works */}
       <section id="how-it-works" className="bg-surface px-4 py-20 sm:px-6 lg:px-8">
@@ -299,12 +308,14 @@ export default function Home() {
           <p className="mt-4 text-lg text-blue-100">
             Start comparing prices now and save up to 60% on your next booking.
           </p>
-          <Link
-            href="/#search"
+          <a
+            href={buildAwinLink(BOARDING_AWIN_ID, BOARDING_URL)}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
             className="mt-8 inline-block rounded-lg bg-accent px-8 py-4 text-lg font-bold text-white transition hover:bg-accent-hover"
           >
             Start Searching
-          </Link>
+          </a>
         </div>
       </section>
     </div>

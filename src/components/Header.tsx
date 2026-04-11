@@ -14,6 +14,9 @@ export default function Header() {
           <Link href="/blog" className="text-sm font-medium text-gray-600 transition hover:text-primary">
             Blog
           </Link>
+          <Link href="/#partners" className="text-sm font-medium text-gray-600 transition hover:text-primary">
+            Partners
+          </Link>
           <Link href="/about" className="text-sm font-medium text-gray-600 transition hover:text-primary">
             About
           </Link>
