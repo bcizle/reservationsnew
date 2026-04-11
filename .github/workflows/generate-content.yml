@@ -1,0 +1,50 @@
+name: Generate Blog Content
+
+on:
+  schedule:
+    # Runs twice a week: Monday and Thursday at 9am UTC
+    - cron: '0 9 * * 1,4'
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install ts-node
+        run: npm install -g ts-node typescript
+
+      - name: Generate blog post
+        run: npx ts-node scripts/generate-blog-post.ts
+        env:
+          NEXT_PUBLIC_BOOKING_AID: ${{ secrets.BOOKING_AID }}
+          NEXT_PUBLIC_TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
+
+      - name: Check for new content
+        id: check_changes
+        run: |
+          git diff --quiet content/ || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push new content
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add content/
+          git commit -m "chore: auto-generate blog post [skip ci]"
+          git push
+
+      - name: Trigger Vercel deployment
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          echo "New content committed. Vercel will auto-deploy from the push."

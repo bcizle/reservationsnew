@@ -1,37 +1,44 @@
 import Link from "next/link";
+import SearchWidget from "@/components/SearchWidget";
 
 const popularDestinations = [
   {
+    slug: "new-york-city",
     name: "New York City",
     country: "USA",
     image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&q=80",
     deals: "2,400+ hotels",
   },
   {
+    slug: "paris",
     name: "Paris",
     country: "France",
     image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
     deals: "1,800+ hotels",
   },
   {
+    slug: "tokyo",
     name: "Tokyo",
     country: "Japan",
     image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&q=80",
     deals: "1,500+ hotels",
   },
   {
+    slug: "london",
     name: "London",
     country: "United Kingdom",
     image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80",
     deals: "2,100+ hotels",
   },
   {
+    slug: "cancun",
     name: "Cancun",
     country: "Mexico",
     image: "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?w=600&q=80",
     deals: "900+ hotels",
   },
   {
+    slug: "dubai",
     name: "Dubai",
     country: "UAE",
     image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80",
@@ -86,34 +93,6 @@ const testimonials = [
 export default function Home() {
   return (
     <div className="min-h-screen font-sans">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <Link href="/" className="text-2xl font-bold tracking-tight text-primary">
-            Reservations<span className="text-accent">New</span>
-          </Link>
-          <div className="hidden items-center gap-8 md:flex">
-            <Link href="#destinations" className="text-sm font-medium text-gray-600 transition hover:text-primary">
-              Destinations
-            </Link>
-            <Link href="#deals" className="text-sm font-medium text-gray-600 transition hover:text-primary">
-              Deals
-            </Link>
-            <Link href="#how-it-works" className="text-sm font-medium text-gray-600 transition hover:text-primary">
-              How It Works
-            </Link>
-            <Link href="#reviews" className="text-sm font-medium text-gray-600 transition hover:text-primary">
-              Reviews
-            </Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <button className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-hover">
-              Find Deals
-            </button>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0f4c75] via-[#1b6ca8] to-[#3282b8] px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDJ2LTJoMzR6bTAtMzBWNkgwVjRoMzZ6TTYgMzR2Mkgwdi0yaDZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30" />
@@ -128,44 +107,7 @@ export default function Home() {
             one place.
           </p>
 
-          {/* Search Box */}
-          <div className="mx-auto mt-10 max-w-3xl rounded-2xl bg-white p-3 shadow-2xl sm:p-4">
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <div className="flex-1">
-                <label className="mb-1 block text-left text-xs font-medium text-gray-500">
-                  Where to?
-                </label>
-                <input
-                  type="text"
-                  placeholder="City, hotel, or destination"
-                  className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-800 placeholder-gray-400 outline-none transition focus:border-primary-light focus:ring-2 focus:ring-primary-light/20"
-                />
-              </div>
-              <div className="flex-1">
-                <label className="mb-1 block text-left text-xs font-medium text-gray-500">
-                  Check-in
-                </label>
-                <input
-                  type="date"
-                  className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-primary-light focus:ring-2 focus:ring-primary-light/20"
-                />
-              </div>
-              <div className="flex-1">
-                <label className="mb-1 block text-left text-xs font-medium text-gray-500">
-                  Check-out
-                </label>
-                <input
-                  type="date"
-                  className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-primary-light focus:ring-2 focus:ring-primary-light/20"
-                />
-              </div>
-              <div className="flex items-end">
-                <button className="w-full rounded-lg bg-accent px-8 py-3 text-sm font-bold text-white transition hover:bg-accent-hover sm:w-auto">
-                  Search
-                </button>
-              </div>
-            </div>
-          </div>
+          <SearchWidget />
 
           {/* Trust Badges */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-blue-200">
@@ -204,7 +146,7 @@ export default function Home() {
             {popularDestinations.map((dest) => (
               <Link
                 key={dest.name}
-                href="#"
+                href={`/destinations/${dest.slug}`}
                 className="group relative overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="aspect-[4/3] overflow-hidden">
@@ -224,6 +166,11 @@ export default function Home() {
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link href="/destinations" className="text-sm font-medium text-primary underline hover:text-primary-light">
+              View all destinations &rarr;
+            </Link>
           </div>
         </div>
       </section>
@@ -352,66 +299,14 @@ export default function Home() {
           <p className="mt-4 text-lg text-blue-100">
             Start comparing prices now and save up to 60% on your next booking.
           </p>
-          <button className="mt-8 rounded-lg bg-accent px-8 py-4 text-lg font-bold text-white transition hover:bg-accent-hover">
+          <Link
+            href="/#search"
+            className="mt-8 inline-block rounded-lg bg-accent px-8 py-4 text-lg font-bold text-white transition hover:bg-accent-hover"
+          >
             Start Searching
-          </button>
+          </Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-[#1a1a2e] px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <h3 className="text-lg font-bold text-white">
-                Reservations<span className="text-accent">New</span>
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-gray-400">
-                Your trusted travel companion. We compare prices from hundreds
-                of booking sites so you always get the best deal.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-300">
-                Explore
-              </h4>
-              <ul className="mt-4 space-y-2">
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Hotels</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Vacation Rentals</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Flights</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Car Rentals</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-300">
-                Company
-              </h4>
-              <ul className="mt-4 space-y-2">
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">About Us</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Contact</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Careers</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Blog</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-300">
-                Legal
-              </h4>
-              <ul className="mt-4 space-y-2">
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Privacy Policy</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Terms of Service</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Cookie Policy</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Affiliate Disclosure</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-12 border-t border-gray-700 pt-8 text-center">
-            <p className="text-sm text-gray-500">
-              &copy; {new Date().getFullYear()} ReservationsNew. All rights reserved. Prices shown may vary. We may earn a commission from our partners when you book through our links.
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
