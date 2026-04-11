@@ -6,6 +6,7 @@ import TravelPayoutsFlightWidget from "@/components/TravelPayoutsFlightWidget";
 import TravelPayoutsCarWidget from "@/components/TravelPayoutsCarWidget";
 import AffiliateBanner from "@/components/AffiliateBanner";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/JsonLd";
+import { AwinPartners } from "@/app/components/AwinPartners";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
 
@@ -308,6 +309,11 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
             ))}
           </div>
         </section>
+
+        {/* Awin partner showcase */}
+        <div className="mt-12">
+          <AwinPartners />
+        </div>
 
         {/* CTA */}
         <div className="mt-12 rounded-2xl bg-gradient-to-r from-[#0f4c75] to-[#3282b8] p-8 text-center">
