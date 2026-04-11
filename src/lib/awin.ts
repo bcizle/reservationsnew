@@ -37,14 +37,15 @@ export interface AwinPartner {
  * Approved Awin partner programs.
  *
  * Confirmed IDs (verified via Awin merchant profile pages):
- *   Campspot    → 22326
- *   ShopRaise   → 115325
- *   Sim Local LATAM → 87123
- *   XTV         → 110558
- *
- * Still need IDs from Awin dashboard:
- *   b0arding.com   → set advertiserId to "TODO" until retrieved
- *   eSimShop HK    → set advertiserId to "TODO" until retrieved
+ *   Campspot             → 22326
+ *   ShopRaise            → 115325
+ *   Sim Local LATAM      → 87123
+ *   XTV                  → 110558
+ *   b0arding.com         → 116441
+ *   eSimShop HongKong    → 124780
+ *   Promeed              → 100833
+ *   Temptation Experience (US) → 23093
+ *   Turbopass US         → 100613
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
@@ -62,8 +63,7 @@ export const AWIN_PARTNERS: AwinPartner[] = [
   {
     id: "b0arding",
     name: "b0arding.com",
-    // TODO: retrieve this ID from Awin Dashboard → My Programs → Approved → b0arding.com
-    advertiserId: "TODO",
+    advertiserId: "116441",
     category: "Hotels",
     description:
       "Book hotels worldwide at competitive rates — powered by global Amadeus inventory.",
@@ -93,8 +93,7 @@ export const AWIN_PARTNERS: AwinPartner[] = [
   {
     id: "esimshop",
     name: "eSimShop",
-    // TODO: retrieve this ID from Awin Dashboard → My Programs → Approved → eSimShop HongKong
-    advertiserId: "TODO",
+    advertiserId: "124780",
     category: "Travel eSIM",
     description:
       "Instant eSIM activation for Hong Kong and Asia — no physical SIM card required.",
@@ -110,5 +109,35 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Shop your favorite stores and raise money for the causes you care about — at no extra cost.",
     icon: "🛍️",
     destinationUrl: "https://www.shopraise.com/",
+  },
+  {
+    id: "turbopass",
+    name: "Turbopass US",
+    advertiserId: "100613",
+    category: "City Passes & Attractions",
+    description:
+      "City passes for top destinations — free entry to museums, attractions, and public transit in cities like New York, London, Barcelona, and more.",
+    icon: "🎟️",
+    destinationUrl: "https://www.turbopass.com/",
+  },
+  {
+    id: "temptation",
+    name: "Temptation Experience",
+    advertiserId: "23093",
+    category: "Resorts",
+    description:
+      "Adults-only resort experiences in top destinations — book unforgettable getaways with premium all-inclusive packages.",
+    icon: "🌴",
+    destinationUrl: "https://www.temptationresorts.com/",
+  },
+  {
+    id: "promeed",
+    name: "Promeed",
+    advertiserId: "100833",
+    category: "Travel Comfort",
+    description:
+      "Premium silk pillowcases and bedding — Good Housekeeping's 'Best Value' pick for silky sleep comfort at home or on the road.",
+    icon: "🛏️",
+    destinationUrl: "https://promeed.com/",
   },
 ];
