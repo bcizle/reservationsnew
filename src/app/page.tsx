@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AwinPartners from "@/components/AwinPartners";
 
 const popularDestinations = [
   {
@@ -257,6 +258,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Awin Partner Programs */}
+      <AwinPartners />
 
       {/* How It Works */}
       <section id="how-it-works" className="bg-surface px-4 py-20 sm:px-6 lg:px-8">
