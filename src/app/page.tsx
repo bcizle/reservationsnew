@@ -1,4 +1,10 @@
 import Link from "next/link";
+import { AwinPartners } from "@/app/components/AwinPartners";
+import { buildAwinLink } from "@/lib/awin";
+
+// b0arding.com is the primary hotel partner — update advertiserId in src/lib/awin.ts once retrieved
+const BOARDING_AWIN_ID = "TODO";
+const BOARDING_URL = "https://b0arding.com/";
 
 const popularDestinations = [
   {
@@ -99,6 +105,9 @@ export default function Home() {
             <Link href="#deals" className="text-sm font-medium text-gray-600 transition hover:text-primary">
               Deals
             </Link>
+            <Link href="#partners" className="text-sm font-medium text-gray-600 transition hover:text-primary">
+              Partners
+            </Link>
             <Link href="#how-it-works" className="text-sm font-medium text-gray-600 transition hover:text-primary">
               How It Works
             </Link>
@@ -107,9 +116,14 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex items-center gap-3">
-            <button className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-hover">
+            <a
+              href={buildAwinLink(BOARDING_AWIN_ID, BOARDING_URL)}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-hover"
+            >
               Find Deals
-            </button>
+            </a>
           </div>
         </div>
       </nav>
@@ -160,9 +174,14 @@ export default function Home() {
                 />
               </div>
               <div className="flex items-end">
-                <button className="w-full rounded-lg bg-accent px-8 py-3 text-sm font-bold text-white transition hover:bg-accent-hover sm:w-auto">
+                <a
+                  href={buildAwinLink(BOARDING_AWIN_ID, BOARDING_URL)}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  className="block w-full rounded-lg bg-accent px-8 py-3 text-center text-sm font-bold text-white transition hover:bg-accent-hover sm:w-auto"
+                >
                   Search
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -202,9 +221,14 @@ export default function Home() {
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {popularDestinations.map((dest) => (
-              <Link
+              <a
                 key={dest.name}
-                href="#"
+                href={buildAwinLink(
+                  BOARDING_AWIN_ID,
+                  `${BOARDING_URL}?destination=${encodeURIComponent(dest.name)}`,
+                )}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
                 className="group relative overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="aspect-[4/3] overflow-hidden">
@@ -222,7 +246,7 @@ export default function Home() {
                     {dest.deals}
                   </span>
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
         </div>
@@ -257,6 +281,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Awin Partner Brands */}
+      <AwinPartners />
 
       {/* How It Works */}
       <section id="how-it-works" className="bg-surface px-4 py-20 sm:px-6 lg:px-8">
@@ -352,9 +379,14 @@ export default function Home() {
           <p className="mt-4 text-lg text-blue-100">
             Start comparing prices now and save up to 60% on your next booking.
           </p>
-          <button className="mt-8 rounded-lg bg-accent px-8 py-4 text-lg font-bold text-white transition hover:bg-accent-hover">
+          <a
+            href={buildAwinLink(BOARDING_AWIN_ID, BOARDING_URL)}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="mt-8 inline-block rounded-lg bg-accent px-8 py-4 text-lg font-bold text-white transition hover:bg-accent-hover"
+          >
             Start Searching
-          </button>
+          </a>
         </div>
       </section>
 
@@ -376,10 +408,44 @@ export default function Home() {
                 Explore
               </h4>
               <ul className="mt-4 space-y-2">
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Hotels</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Vacation Rentals</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Flights</Link></li>
-                <li><Link href="#" className="text-sm text-gray-400 transition hover:text-white">Car Rentals</Link></li>
+                <li>
+                  <a
+                    href={buildAwinLink(BOARDING_AWIN_ID, BOARDING_URL)}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    className="text-sm text-gray-400 transition hover:text-white"
+                  >
+                    Hotels
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={buildAwinLink("22326", "https://www.campspot.com/")}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    className="text-sm text-gray-400 transition hover:text-white"
+                  >
+                    Camping & Outdoors
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={buildAwinLink("87123", "https://www.simlocal.com/")}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    className="text-sm text-gray-400 transition hover:text-white"
+                  >
+                    Travel SIM Cards
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#partners"
+                    className="text-sm text-gray-400 transition hover:text-white"
+                  >
+                    All Partners
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
