@@ -46,6 +46,7 @@ export interface AwinPartner {
  *   Promeed              → 100833
  *   Temptation Experience (US) → 23093
  *   Turbopass US         → 100613
+ *   Swimply              → 117149
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
@@ -139,5 +140,15 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Premium silk pillowcases and bedding — Good Housekeeping's 'Best Value' pick for silky sleep comfort at home or on the road.",
     icon: "🛏️",
     destinationUrl: "https://promeed.com/",
+  },
+  {
+    id: "swimply",
+    name: "Swimply",
+    advertiserId: "117149",
+    category: "Activities & Experiences",
+    description:
+      "Book private pools, courts, and outdoor spaces by the hour — a unique alternative to crowded public venues.",
+    icon: "🏊",
+    destinationUrl: "https://swimply.com/",
   },
 ];
