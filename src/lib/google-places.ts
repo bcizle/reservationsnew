@@ -258,6 +258,128 @@ export function buildPhotoUrl(
   return `${PLACES_BASE}/${name}/media?${params.toString()}`;
 }
 
+/**
+ * Resolve a Place ID from a free-text query (e.g. "Hotel de la Seine, Paris").
+ * Returns the best match's place ID + a handful of useful fields, or null.
+ *
+ * Used to auto-populate Place IDs when hotel data doesn't hardcode one.
+ */
+export async function findPlaceByQuery(
+  query: string,
+  { ttlMs }: { ttlMs?: number } = {},
+): Promise<Place | null> {
+  const cacheKey = `findPlace:${query}`;
+  const cached = cacheGet<Place | null>(cacheKey);
+  if (cached !== undefined) return cached;
+
+  if (!SERVER_KEY) {
+    cacheSet(cacheKey, null, ttlMs);
+    return null;
+  }
+
+  await rateLimit();
+  const fields = [
+    "places.id",
+    "places.displayName",
+    "places.formattedAddress",
+    "places.rating",
+    "places.userRatingCount",
+    "places.photos",
+    "places.location",
+    "places.types",
+  ];
+
+  try {
+    const res = await fetch(`${PLACES_BASE}/places:searchText`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": SERVER_KEY,
+        "X-Goog-FieldMask": fields.join(","),
+      },
+      body: JSON.stringify({ textQuery: query, pageSize: 1 }),
+      next: { revalidate: 60 * 60 * 24 * 7 },
+    });
+    if (!res.ok) {
+      cacheSet(cacheKey, null, ttlMs);
+      return null;
+    }
+    const json = (await res.json()) as { places?: Place[] };
+    const best = json.places?.[0] ?? null;
+    cacheSet(cacheKey, best, ttlMs);
+    return best;
+  } catch {
+    cacheSet(cacheKey, null, ttlMs);
+    return null;
+  }
+}
+
+export interface ResolvedHotelPhoto {
+  id: string;
+  src: string;
+  thumb: string;
+  alt: string;
+  credit?: string;
+}
+
+/**
+ * Given a hotel (with an optional placeId and a free-text query fallback),
+ * return a gallery of photo URLs suitable for the `PhotoGallery` component.
+ *
+ * Strategy:
+ *  1. If `placeId` is provided, fetch photos from getPlaceDetails.
+ *  2. Otherwise, run a text search with `query` to resolve a placeId + photos.
+ *  3. If either step fails or returns no photos, return null so callers fall back.
+ *
+ * Safe to call at build/request time — all fetches are rate-limited, cached,
+ * and swallow network errors rather than throw.
+ */
+export async function resolveHotelPhotos({
+  placeId,
+  query,
+  hotelName,
+  limit = 8,
+  maxWidthPx = 1600,
+  thumbWidthPx = 500,
+}: {
+  placeId?: string;
+  query?: string;
+  hotelName: string;
+  limit?: number;
+  maxWidthPx?: number;
+  thumbWidthPx?: number;
+}): Promise<ResolvedHotelPhoto[] | null> {
+  if (!SERVER_KEY) return null;
+
+  let place: Place | null = null;
+  try {
+    if (placeId) {
+      place = await getPlaceDetails(placeId, {
+        fields: ["id", "displayName", "photos", "location"],
+      });
+    } else if (query) {
+      place = await findPlaceByQuery(query);
+    }
+  } catch {
+    return null;
+  }
+
+  if (!place?.photos?.length) return null;
+
+  const photos = place.photos.slice(0, limit).map((photo, idx): ResolvedHotelPhoto => {
+    const attribution = photo.authorAttributions?.[0]?.displayName;
+    return {
+      id: `${place!.id}-${idx}`,
+      src: buildPhotoUrl(photo, { maxWidthPx }),
+      thumb: buildPhotoUrl(photo, { maxWidthPx: thumbWidthPx }),
+      alt: `${hotelName} — photo ${idx + 1}`,
+      credit: attribution ? `Photo © ${attribution} via Google` : undefined,
+    };
+  });
+
+  return photos;
+}
+
 export function clearPlacesCache() {
   cache.clear();
 }

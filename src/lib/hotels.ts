@@ -59,6 +59,11 @@ export interface HotelReviewSnippet {
   score: number;
 }
 
+export interface HotelCoordinates {
+  lat: number;
+  lng: number;
+}
+
 export interface Hotel {
   slug: string;
   name: string;
@@ -76,8 +81,12 @@ export interface Hotel {
   rooms: HotelRoom[];
   reviews: HotelReviewSnippet[];
   whyBookHere: string[];
-  nearbyAttractions: Array<{ name: string; distance: string }>;
+  nearbyAttractions: Array<{ name: string; distance: string; coordinates?: HotelCoordinates }>;
   platforms: Array<"Booking.com" | "Expedia" | "Hotels.com">;
+  /** Google Places ID — populate to pull real photos + map marker. Falls back to gallery/name search. */
+  placeId?: string;
+  /** Optional hardcoded coords — used for map centering without a Places lookup. */
+  coordinates?: HotelCoordinates;
 }
 
 const UNSPLASH = (id: string, w: number) =>
@@ -942,6 +951,30 @@ const hotelList: Hotel[] = [
     platforms: ["Booking.com", "Hotels.com"],
   },
 ];
+
+// Approximate coordinates in each hotel's neighborhood. Used for map markers
+// when the real Google Places lookup hasn't been wired up yet.
+const HOTEL_COORDS: Record<string, HotelCoordinates> = {
+  "grand-central-hotel-nyc": { lat: 40.7527, lng: -73.9772 },
+  "park-avenue-inn-nyc": { lat: 40.7469, lng: -73.9810 },
+  "hotel-de-la-seine-paris": { lat: 48.8540, lng: 2.3358 },
+  "le-marais-boutique-paris": { lat: 48.8590, lng: 2.3600 },
+  "shinjuku-skyview-tokyo": { lat: 35.6938, lng: 139.7036 },
+  "bloomsbury-heritage-london": { lat: 51.5210, lng: -0.1270 },
+  "playa-azul-resort-cancun": { lat: 21.1260, lng: -86.7520 },
+  "marina-palm-dubai": { lat: 25.0800, lng: 55.1400 },
+  "gothic-quarter-hotel-barcelona": { lat: 41.3833, lng: 2.1763 },
+  "trastevere-suites-rome": { lat: 41.8887, lng: 12.4684 },
+  "chiado-townhouse-lisbon": { lat: 38.7107, lng: -9.1423 },
+  "ubud-jungle-retreat-bali": { lat: -8.5069, lng: 115.2625 },
+  "sukhumvit-skyhigh-bangkok": { lat: 13.7300, lng: 100.5700 },
+  "canal-house-amsterdam": { lat: 52.3730, lng: 4.8855 },
+};
+
+for (const h of hotelList) {
+  const coords = HOTEL_COORDS[h.slug];
+  if (coords && !h.coordinates) h.coordinates = coords;
+}
 
 export const hotels = hotelList;
 

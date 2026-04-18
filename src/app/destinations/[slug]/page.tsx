@@ -7,6 +7,7 @@ import TravelPayoutsCarWidget from "@/components/TravelPayoutsCarWidget";
 import AffiliateBanner from "@/components/AffiliateBanner";
 import OptimizedImage from "@/components/OptimizedImage";
 import PhotoGallery from "@/components/PhotoGallery";
+import DestinationMap from "@/components/DestinationMap";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/JsonLd";
 import { AwinPartners } from "@/app/components/AwinPartners";
 import { destinations, getDestination } from "@/lib/destinations";
@@ -50,6 +51,16 @@ export default async function DestinationPage({
   if (!dest) notFound();
 
   const topHotels = getHotelsForDestination(slug);
+  const mapHotels = topHotels
+    .filter((h) => h.coordinates)
+    .map((h) => ({
+      slug: h.slug,
+      name: h.name,
+      neighborhood: h.neighborhood,
+      pricePerNight: h.pricePerNight,
+      reviewScore: h.reviewScore,
+      coordinates: h.coordinates!,
+    }));
 
   const faqQuestions = [
     {
@@ -154,6 +165,17 @@ export default async function DestinationPage({
           heading={`${dest.name} in Photos`}
           description="Tap any image to open the full-screen gallery."
         />
+
+        {/* Map of hotels in this destination */}
+        {dest.coordinates && mapHotels.length > 0 && (
+          <DestinationMap
+            center={dest.coordinates}
+            zoom={dest.mapZoom ?? 13}
+            hotels={mapHotels}
+            heading={`Hotels on the map in ${dest.name}`}
+            description="Click a marker for details and pricing. Use the map to find stays near the neighborhoods you want."
+          />
+        )}
 
         {/* Top hotels in this destination */}
         {topHotels.length > 0 && (

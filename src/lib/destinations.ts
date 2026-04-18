@@ -21,6 +21,10 @@ export interface Destination {
   avgPrice: string;
   highlights: string[];
   tips: string[];
+  /** City-center coordinates used to center the destination map. */
+  coordinates?: { lat: number; lng: number };
+  /** Map zoom override. Defaults to 13 when omitted. */
+  mapZoom?: number;
 }
 
 const UNSPLASH = (id: string, w: number) =>
@@ -482,6 +486,31 @@ const destinationList: Destination[] = [
     ],
   },
 ];
+
+// City-center coordinates for destination maps. Kept in a side table so the
+// main destination definitions stay compact.
+const DESTINATION_COORDS: Record<string, { lat: number; lng: number; zoom?: number }> = {
+  "new-york-city": { lat: 40.7580, lng: -73.9855, zoom: 13 },
+  paris: { lat: 48.8566, lng: 2.3522, zoom: 13 },
+  tokyo: { lat: 35.6895, lng: 139.6917, zoom: 12 },
+  london: { lat: 51.5074, lng: -0.1278, zoom: 12 },
+  cancun: { lat: 21.1619, lng: -86.8515, zoom: 12 },
+  dubai: { lat: 25.0772, lng: 55.1304, zoom: 12 },
+  barcelona: { lat: 41.3874, lng: 2.1686, zoom: 13 },
+  rome: { lat: 41.9028, lng: 12.4964, zoom: 13 },
+  lisbon: { lat: 38.7223, lng: -9.1393, zoom: 13 },
+  bali: { lat: -8.5069, lng: 115.2625, zoom: 11 },
+  bangkok: { lat: 13.7563, lng: 100.5018, zoom: 12 },
+  amsterdam: { lat: 52.3676, lng: 4.9041, zoom: 13 },
+};
+
+for (const d of destinationList) {
+  const coords = DESTINATION_COORDS[d.slug];
+  if (coords && !d.coordinates) {
+    d.coordinates = { lat: coords.lat, lng: coords.lng };
+    if (coords.zoom) d.mapZoom = coords.zoom;
+  }
+}
 
 export const destinationsBySlug: Record<string, Destination> = Object.fromEntries(
   destinationList.map((d) => [d.slug, d]),

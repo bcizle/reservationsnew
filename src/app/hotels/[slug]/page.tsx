@@ -6,9 +6,11 @@ import PhotoGallery from "@/components/PhotoGallery";
 import AmenityIcon from "@/components/AmenityIcon";
 import AffiliateBanner from "@/components/AffiliateBanner";
 import BookingSearchWidget from "@/components/BookingSearchWidget";
+import HotelMapEmbed from "@/components/HotelMapEmbed";
 import { BreadcrumbJsonLd, HotelJsonLd } from "@/components/JsonLd";
 import { hotels, getHotel } from "@/lib/hotels";
 import { getDestination } from "@/lib/destinations";
+import { resolveHotelPhotos, type ResolvedHotelPhoto } from "@/lib/google-places";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
 
@@ -64,6 +66,26 @@ export default async function HotelDetailPage({
   const ratingLabel =
     hotel.reviewScore >= 9 ? "Exceptional" : hotel.reviewScore >= 8 ? "Excellent" : "Very Good";
 
+  // Try to pull real photos from Google Places. Falls back silently to the
+  // curated Unsplash gallery if the hotel has no placeId, no text-search match,
+  // or the API key isn't configured.
+  let placesPhotos: ResolvedHotelPhoto[] | null = null;
+  try {
+    placesPhotos = await resolveHotelPhotos({
+      placeId: hotel.placeId,
+      query: `${hotel.name}, ${locationLabel}`,
+      hotelName: hotel.name,
+    });
+  } catch {
+    placesPhotos = null;
+  }
+
+  const galleryPhotos =
+    placesPhotos && placesPhotos.length >= 3
+      ? placesPhotos
+      : hotel.gallery.map((p) => ({ ...p, credit: undefined }));
+  const heroPhoto = galleryPhotos[0] ?? hotel.gallery[0];
+
   return (
     <div>
       <BreadcrumbJsonLd
@@ -80,7 +102,7 @@ export default async function HotelDetailPage({
         name={hotel.name}
         description={hotel.description}
         url={`${siteUrl}/hotels/${hotel.slug}`}
-        image={hotel.gallery.slice(0, 5).map((p) => p.src)}
+        image={galleryPhotos.slice(0, 5).map((p) => p.src)}
         priceRange={hotel.pricePerNight}
         starRating={hotel.stars}
         address={
@@ -98,8 +120,8 @@ export default async function HotelDetailPage({
       <div className="relative h-[50vh] min-h-[360px] w-full overflow-hidden sm:h-[60vh] sm:min-h-[460px]">
         <OptimizedImage
           variant="hero"
-          src={hotel.gallery[0].src}
-          alt={hotel.gallery[0].alt}
+          src={heroPhoto.src}
+          alt={heroPhoto.alt}
           className="absolute inset-0 h-full w-full object-cover"
           priority
         />
@@ -172,9 +194,13 @@ export default async function HotelDetailPage({
 
             {/* Gallery */}
             <PhotoGallery
-              photos={hotel.gallery}
+              photos={galleryPhotos}
               heading="Photo tour"
-              description="Tap any image to open the full-screen gallery."
+              description={
+                placesPhotos && placesPhotos.length >= 3
+                  ? "Photos from Google Places — tap any image to open the full-screen gallery."
+                  : "Tap any image to open the full-screen gallery."
+              }
             />
 
             {/* Amenities */}
@@ -254,6 +280,17 @@ export default async function HotelDetailPage({
                 ))}
               </ul>
             </section>
+
+            {/* Map */}
+            <HotelMapEmbed
+              hotelName={hotel.name}
+              locationLabel={locationLabel}
+              coordinates={hotel.coordinates}
+              placeId={hotel.placeId}
+              description={`${hotel.neighborhood} · ${hotel.nearbyAttractions[0]?.distance ?? ""} from ${
+                hotel.nearbyAttractions[0]?.name ?? "nearby attractions"
+              }`}
+            />
           </div>
 
           {/* Sticky sidebar */}
