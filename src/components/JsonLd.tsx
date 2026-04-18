@@ -89,6 +89,59 @@ export function FAQJsonLd({ questions }: FAQJsonLdProps) {
   );
 }
 
+interface HotelJsonLdProps {
+  name: string;
+  description: string;
+  url: string;
+  image: string[];
+  priceRange: string;
+  starRating?: number;
+  address?: { addressLocality: string; addressCountry: string };
+  aggregateRating?: { ratingValue: number; reviewCount: number };
+}
+
+export function HotelJsonLd({
+  name,
+  description,
+  url,
+  image,
+  priceRange,
+  starRating,
+  address,
+  aggregateRating,
+}: HotelJsonLdProps) {
+  const jsonLd: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    name,
+    description,
+    url,
+    image,
+    priceRange,
+  };
+  if (starRating) {
+    jsonLd.starRating = { "@type": "Rating", ratingValue: starRating };
+  }
+  if (address) {
+    jsonLd.address = { "@type": "PostalAddress", ...address };
+  }
+  if (aggregateRating) {
+    jsonLd.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: aggregateRating.ratingValue,
+      reviewCount: aggregateRating.reviewCount,
+      bestRating: 10,
+      worstRating: 1,
+    };
+  }
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
 interface BreadcrumbJsonLdProps {
   items: { name: string; url: string }[];
 }
