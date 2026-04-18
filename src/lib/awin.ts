@@ -47,6 +47,7 @@ export interface AwinPartner {
  *   Temptation Experience (US) → 23093
  *   Turbopass US         → 100613
  *   Swimply              → 117149
+ *   Station Casinos (US) → 19995
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
@@ -150,5 +151,15 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Book private pools, courts, and outdoor spaces by the hour — a unique alternative to crowded public venues.",
     icon: "🏊",
     destinationUrl: "https://swimply.com/",
+  },
+  {
+    id: "station-casinos",
+    name: "Station Casinos",
+    advertiserId: "19995",
+    category: "Hotels & Casinos",
+    description:
+      "Book stays at Las Vegas's leading regional casino resorts — Red Rock, Green Valley Ranch, Palace Station, and more.",
+    icon: "🎰",
+    destinationUrl: "https://www.sclv.com/",
   },
 ];
