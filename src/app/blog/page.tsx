@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts, getAllCategories } from "@/lib/blog";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
+import OptimizedImage from "@/components/OptimizedImage";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
 
@@ -52,8 +53,9 @@ export default function BlogIndex() {
             href={`/blog/${post.slug}`}
             className="group overflow-hidden rounded-2xl border border-gray-100 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
-            <div className="aspect-[16/9] overflow-hidden">
-              <img
+            <div className="relative aspect-[16/9] overflow-hidden">
+              <OptimizedImage
+                variant="card"
                 src={post.image}
                 alt={post.title}
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

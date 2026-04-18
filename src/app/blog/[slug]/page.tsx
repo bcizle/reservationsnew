@@ -5,6 +5,7 @@ import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import AffiliateLink from "@/components/AffiliateLink";
 import AffiliateBanner from "@/components/AffiliateBanner";
 import BookingSearchWidget from "@/components/BookingSearchWidget";
+import OptimizedImage from "@/components/OptimizedImage";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
@@ -94,9 +95,15 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       />
 
       {/* Hero image */}
-      <div className="relative h-64 sm:h-80">
-        <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      <div className="relative h-64 w-full overflow-hidden sm:h-96">
+        <OptimizedImage
+          variant="hero"
+          src={post.image}
+          alt={post.title}
+          className="absolute inset-0 h-full w-full object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
       </div>
 
       <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
@@ -168,8 +175,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   href={`/blog/${related.slug}`}
                   className="group overflow-hidden rounded-xl border border-gray-100 shadow-sm transition hover:shadow-md"
                 >
-                  <div className="aspect-[16/9] overflow-hidden">
-                    <img src={related.image} alt={related.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <div className="relative aspect-[16/9] overflow-hidden">
+                    <OptimizedImage
+                      variant="card"
+                      src={related.image}
+                      alt={related.title}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
                   </div>
                   <div className="p-4">
                     <span className="text-xs text-text-muted">{related.category}</span>

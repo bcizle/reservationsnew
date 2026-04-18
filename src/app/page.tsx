@@ -1,57 +1,15 @@
-// v1.0.1
+// v1.0.2
 import Link from "next/link";
 import SearchWidget from "@/components/SearchWidget";
+import OptimizedImage from "@/components/OptimizedImage";
 import { AwinPartners } from "@/app/components/AwinPartners";
+import { BookingPartners } from "@/app/components/BookingPartners";
 import { buildAwinLink } from "@/lib/awin";
+import { destinations } from "@/lib/destinations";
 
 // b0arding.com is the primary hotel partner — update advertiserId in src/lib/awin.ts once retrieved
 const BOARDING_AWIN_ID = "TODO";
 const BOARDING_URL = "https://b0arding.com/";
-
-const popularDestinations = [
-  {
-    slug: "new-york-city",
-    name: "New York City",
-    country: "USA",
-    image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&q=80",
-    deals: "2,400+ hotels",
-  },
-  {
-    slug: "paris",
-    name: "Paris",
-    country: "France",
-    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
-    deals: "1,800+ hotels",
-  },
-  {
-    slug: "tokyo",
-    name: "Tokyo",
-    country: "Japan",
-    image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&q=80",
-    deals: "1,500+ hotels",
-  },
-  {
-    slug: "london",
-    name: "London",
-    country: "United Kingdom",
-    image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80",
-    deals: "2,100+ hotels",
-  },
-  {
-    slug: "cancun",
-    name: "Cancun",
-    country: "Mexico",
-    image: "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?w=600&q=80",
-    deals: "900+ hotels",
-  },
-  {
-    slug: "dubai",
-    name: "Dubai",
-    country: "UAE",
-    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80",
-    deals: "1,200+ hotels",
-  },
-];
 
 const dealTypes = [
   {
@@ -73,27 +31,6 @@ const dealTypes = [
     icon: "🚗",
     title: "Car Rentals",
     description: "Get around with ease. Compare car rental deals from top providers.",
-  },
-];
-
-const testimonials = [
-  {
-    name: "Sarah M.",
-    location: "Austin, TX",
-    text: "Saved over $300 on my Cancun trip by comparing prices here first. The deals are legit!",
-    rating: 5,
-  },
-  {
-    name: "James L.",
-    location: "Toronto, CA",
-    text: "I use this site every time I travel for work. The hotel comparison tool is incredibly fast.",
-    rating: 5,
-  },
-  {
-    name: "Priya K.",
-    location: "London, UK",
-    text: "Found a 4-star hotel in Paris for half the price I saw elsewhere. Absolutely recommend.",
-    rating: 5,
   },
 ];
 
@@ -150,17 +87,19 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {popularDestinations.map((dest) => (
-              <a
-                key={dest.name}
+            {destinations.map((dest) => (
+              <Link
+                key={dest.slug}
                 href={`/destinations/${dest.slug}`}
                 className="group relative overflow-hidden rounded-2xl shadow-md transition-all hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={dest.image}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <OptimizedImage
+                    variant="card"
+                    src={dest.cardImage}
                     alt={`Hotels in ${dest.name}`}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    style={{ objectFit: "cover" }}
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -168,10 +107,10 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-white">{dest.name}</h3>
                   <p className="text-sm text-gray-200">{dest.country}</p>
                   <span className="mt-2 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                    {dest.deals}
+                    {dest.hotels} hotels
                   </span>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
           <div className="mt-8 text-center">
@@ -211,6 +150,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Major booking platform logos */}
+      <BookingPartners />
 
       {/* Awin Partner Brands */}
       <AwinPartners />
@@ -257,43 +199,6 @@ export default function Home() {
                 <p className="mt-2 text-sm leading-relaxed text-text-muted">
                   {item.description}
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="reviews" className="bg-white px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              What Travelers Say
-            </h2>
-            <p className="mt-3 text-lg text-text-muted">
-              Join thousands of happy travelers saving on every trip.
-            </p>
-          </div>
-          <div className="mt-12 grid gap-8 sm:grid-cols-3">
-            {testimonials.map((t) => (
-              <div
-                key={t.name}
-                className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm"
-              >
-                <div className="flex gap-0.5 text-amber-400">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <svg key={i} className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-gray-600">
-                  &ldquo;{t.text}&rdquo;
-                </p>
-                <div className="mt-4">
-                  <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                  <p className="text-xs text-text-muted">{t.location}</p>
-                </div>
               </div>
             ))}
           </div>
