@@ -1,6 +1,6 @@
 # ROADMAP.md — ReservationsNew
 
-> Last updated: 2026-04-11
+> Last updated: 2026-04-17
 > Purpose: Guides Cowork sessions. Tasks are sized for daily sessions (1 task per session).
 > Priority: Top-to-bottom. Work the next unchecked item unless Brent directs otherwise.
 > Reference: `CLAUDE.md` for codebase context, `src/lib/awin.ts` for current affiliate partners.
@@ -62,6 +62,33 @@ These tasks directly increase affiliate click-through and conversion rates. Each
 ## Tier 2: Content & SEO
 
 Content pipeline improvements and SEO hardening to increase organic traffic.
+
+- [ ] **Content & imagery overhaul (guestreservations.com-level polish)**
+  - Full plan: [`docs/planning/content-imagery-overhaul.md`](docs/planning/content-imagery-overhaul.md)
+  - Replace placeholder/stock imagery across the site with real, photo-dense content; add per-hotel detail pages, galleries, maps, and real trust signals. Design reference: guestreservations.com.
+  - Scoped as 5 phases / 16 Cowork sessions. Work them in order — each depends on the previous.
+  - **Phase 1 — Image Infrastructure** (2 sessions)
+    - [ ] Build `<SiteImage>` wrapper + size constants + `next/image` migration (homepage, destinations)
+    - [ ] Finish `next/image` migration (blog, search, header/footer) + image manifest scaffold
+  - **Phase 2 — Destination Page Imagery** (4 sessions)
+    - [ ] Centralize destination data into `src/data/destinations.ts` (removes tech debt from `CLAUDE.md` §12.3)
+    - [ ] Unsplash fetch script + image manifests for 6 existing destinations
+    - [ ] Rebuild destination page: full-bleed hero, gallery strip, lightbox, static map embed
+    - [ ] Build 6 missing destination pages (Barcelona, Rome, Lisbon, Bali, Bangkok, Amsterdam) — clears `CLAUDE.md` §12.4
+  - **Phase 3 — Hotel Card Imagery** (2 sessions)
+    - [ ] Extend hotel data shape (image, slug, location, rating, reviewCount) + seed 20–30 hotels
+    - [ ] Rebuild hotel card layout with real photo, numeric rating, price block, fallback tile
+  - **Phase 4 — Content Enrichment: hotel detail pages** (5 sessions)
+    - [ ] `<AmenityIcon>` component + amenity taxonomy + extended hotel schema
+    - [ ] New `/hotels/[slug]` route + layout skeleton with seeded data
+    - [ ] Google Places Photos API integration (5–8 photos/hotel, cached, with attribution)
+    - [ ] Rooms / reviews / nearby attractions sections + JSON-LD `Hotel` schema + sitemap entries
+    - [ ] "Top hotels in [city]" section on destination pages + internal linking pass
+  - **Phase 5 — Trust & Polish** (3 sessions)
+    - [ ] Real partner logos (replace emoji in `AwinPartners.tsx`) + "Compare deals from" logo row
+    - [ ] Testimonials overhaul — avatars, booking detail, verification styling
+    - [ ] Typography/spacing sweep + trust badges + `@vercel/og` image templates
+  - **Done when:** Site passes the "squint test" against guestreservations.com; Lighthouse mobile Performance ≥ 90 / A11y ≥ 95 / SEO ≥ 95; every hotel has a detail page with ≥5 photos; no raw `<img>` tags remain in `src/`.
 
 - [ ] **Upgrade blog generator from templates to AI-generated content**
   - Current `scripts/generate-blog-post.ts` uses template strings — content is repetitive
