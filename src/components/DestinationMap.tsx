@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { loadGoogleMaps } from "@/lib/googleMaps";
 
 interface HotelMarker {
   slug: string;
@@ -19,50 +20,6 @@ interface Props {
   description?: string;
   /** Absolute or relative base for hotel detail links. */
   hotelHrefBase?: string;
-}
-
-// We don't depend on @types/google.maps — declare the bits we touch ourselves.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type MapsNamespace = any;
-
-declare global {
-  interface Window {
-    google?: { maps?: MapsNamespace };
-  }
-}
-
-// Keep a single loader promise so multiple mounted maps share it.
-let mapsScriptPromise: Promise<MapsNamespace | null> | null = null;
-
-function loadMapsScript(apiKey: string): Promise<MapsNamespace | null> {
-  if (typeof window === "undefined") return Promise.resolve(null);
-  if (window.google?.maps) return Promise.resolve(window.google.maps);
-  if (mapsScriptPromise) return mapsScriptPromise;
-
-  mapsScriptPromise = new Promise((resolve) => {
-    const existing = document.querySelector<HTMLScriptElement>(
-      "script[data-google-maps-loader]",
-    );
-    const onReady = () => resolve(window.google?.maps ?? null);
-    if (existing) {
-      existing.addEventListener("load", onReady, { once: true });
-      existing.addEventListener("error", () => resolve(null), { once: true });
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(
-      apiKey,
-    )}&libraries=marker&loading=async&v=weekly`;
-    script.async = true;
-    script.defer = true;
-    script.dataset.googleMapsLoader = "true";
-    script.addEventListener("load", onReady, { once: true });
-    script.addEventListener("error", () => resolve(null), { once: true });
-    document.head.appendChild(script);
-  });
-
-  return mapsScriptPromise;
 }
 
 export default function DestinationMap({
@@ -112,7 +69,7 @@ export default function DestinationMap({
     if (!shouldLoad || !apiKey) return;
     let cancelled = false;
 
-    loadMapsScript(apiKey).then((maps) => {
+    loadGoogleMaps().then((maps) => {
       if (cancelled) return;
       if (!maps || !mapRef.current) {
         setStatus("unavailable");
