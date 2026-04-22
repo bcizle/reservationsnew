@@ -48,6 +48,7 @@ export interface AwinPartner {
  *   Turbopass US         → 100613
  *   Swimply              → 117149
  *   Station Casinos (US) → 19995
+ *   NN Hotels (US)       → 19428
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
@@ -161,5 +162,15 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Book stays at Las Vegas's leading regional casino resorts — Red Rock, Green Valley Ranch, Palace Station, and more.",
     icon: "🎰",
     destinationUrl: "https://www.sclv.com/",
+  },
+  {
+    id: "nn-hotels",
+    name: "NN Hotels",
+    advertiserId: "19428",
+    category: "Hotels",
+    description:
+      "Boutique hotels in the heart of Barcelona — stay near the Ramblas, the Gothic Quarter, and Paseo de Gracia.",
+    icon: "🛎️",
+    destinationUrl: "https://www.nnhotels.com/en",
   },
 ];
