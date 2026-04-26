@@ -10,8 +10,8 @@ export default function Footer() {
               Reservations<span className="text-accent">New</span>
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-gray-400">
-              Your trusted travel companion. We compare prices from hundreds
-              of booking sites so you always get the best deal.
+              Compare hotel prices across the world&apos;s top booking platforms. We help travelers
+              save time and money by surfacing the best deals in one place.
             </p>
           </div>
           <div>
@@ -19,10 +19,10 @@ export default function Footer() {
               Explore
             </h4>
             <ul className="mt-4 space-y-2">
-              <li><Link href="/destinations" className="text-sm text-gray-400 transition hover:text-white">Hotels</Link></li>
-              <li><Link href="/destinations" className="text-sm text-gray-400 transition hover:text-white">Vacation Rentals</Link></li>
-              <li><Link href="/destinations" className="text-sm text-gray-400 transition hover:text-white">Flights</Link></li>
-              <li><Link href="/destinations" className="text-sm text-gray-400 transition hover:text-white">Car Rentals</Link></li>
+              <li><Link href="/destinations" className="text-sm text-gray-400 transition hover:text-white">All destinations</Link></li>
+              <li><Link href="/search" className="text-sm text-gray-400 transition hover:text-white">Search hotels</Link></li>
+              <li><Link href="/blog" className="text-sm text-gray-400 transition hover:text-white">Travel blog</Link></li>
+              <li><Link href="/#partners" className="text-sm text-gray-400 transition hover:text-white">Travel partners</Link></li>
             </ul>
           </div>
           <div>
@@ -30,9 +30,9 @@ export default function Footer() {
               Company
             </h4>
             <ul className="mt-4 space-y-2">
-              <li><Link href="/about" className="text-sm text-gray-400 transition hover:text-white">About Us</Link></li>
+              <li><Link href="/about" className="text-sm text-gray-400 transition hover:text-white">About us</Link></li>
               <li><Link href="/contact" className="text-sm text-gray-400 transition hover:text-white">Contact</Link></li>
-              <li><Link href="/blog" className="text-sm text-gray-400 transition hover:text-white">Blog</Link></li>
+              <li><Link href="/affiliate-disclosure" className="text-sm text-gray-400 transition hover:text-white">How we earn</Link></li>
             </ul>
           </div>
           <div>
@@ -49,7 +49,8 @@ export default function Footer() {
         </div>
         <div className="mt-12 border-t border-gray-700 pt-8 text-center">
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} ReservationsNew. All rights reserved. Prices shown may vary. We may earn a commission from our partners when you book through our links.
+            &copy; {new Date().getFullYear()} ReservationsNew. All rights reserved. We may earn a
+            commission when you book through our affiliate partner links — at no extra cost to you.
           </p>
         </div>
       </div>

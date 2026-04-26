@@ -1,15 +1,15 @@
-// v1.0.2
+// v1.0.3
 import Link from "next/link";
 import SearchWidget from "@/components/SearchWidget";
 import OptimizedImage from "@/components/OptimizedImage";
 import { AwinPartners } from "@/app/components/AwinPartners";
 import { BookingPartners } from "@/app/components/BookingPartners";
-import { buildAwinLink } from "@/lib/awin";
 import { destinations } from "@/lib/destinations";
 
-// b0arding.com is the primary hotel partner — update advertiserId in src/lib/awin.ts once retrieved
-const BOARDING_AWIN_ID = "TODO";
-const BOARDING_URL = "https://b0arding.com/";
+const BOOKING_AID = process.env.NEXT_PUBLIC_BOOKING_AID || "";
+const bookingCtaUrl = BOOKING_AID
+  ? `https://www.booking.com/index.html?aid=${BOOKING_AID}&label=reservationsnew-home-cta`
+  : "https://www.booking.com/";
 
 const dealTypes = [
   {
@@ -215,12 +215,12 @@ export default function Home() {
             Start comparing prices now and save up to 60% on your next booking.
           </p>
           <a
-            href={buildAwinLink(BOARDING_AWIN_ID, BOARDING_URL)}
+            href={bookingCtaUrl}
             target="_blank"
             rel="noopener noreferrer sponsored"
             className="mt-8 inline-block rounded-lg bg-accent px-8 py-4 text-lg font-bold text-white transition hover:bg-accent-hover"
           >
-            Start Searching
+            Start Searching on Booking.com
           </a>
         </div>
       </section>
