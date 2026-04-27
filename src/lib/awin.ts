@@ -37,6 +37,7 @@ export interface AwinPartner {
  * Approved Awin partner programs.
  *
  * Confirmed IDs (verified via Awin merchant profile pages):
+ *   Caesars Rewards      → 6145
  *   Campspot             → 22326
  *   ShopRaise            → 115325
  *   Sim Local LATAM      → 87123
@@ -162,6 +163,16 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Book stays at Las Vegas's leading regional casino resorts — Red Rock, Green Valley Ranch, Palace Station, and more.",
     icon: "🎰",
     destinationUrl: "https://www.sclv.com/",
+  },
+  {
+    id: "caesars-rewards",
+    name: "Caesars Rewards",
+    advertiserId: "6145",
+    category: "Hotels & Casinos",
+    description:
+      "World's most geographically diversified casino-entertainment company — book stays at Caesars Palace, Harrah's, Horseshoe, Flamingo, and dozens more iconic resorts.",
+    icon: "🎲",
+    destinationUrl: "https://www.caesars.com/",
   },
   {
     id: "nn-hotels",
