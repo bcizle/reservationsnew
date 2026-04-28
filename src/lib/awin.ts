@@ -50,6 +50,7 @@ export interface AwinPartner {
  *   Swimply              → 117149
  *   Station Casinos (US) → 19995
  *   NN Hotels (US)       → 19428
+ *   GoWithGuide US       → 87121
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
@@ -183,5 +184,15 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Boutique hotels in the heart of Barcelona — stay near the Ramblas, the Gothic Quarter, and Paseo de Gracia.",
     icon: "🛎️",
     destinationUrl: "https://www.nnhotels.com/en",
+  },
+  {
+    id: "gowithguide",
+    name: "GoWithGuide",
+    advertiserId: "87121",
+    category: "Tours & Local Guides",
+    description:
+      "Book private, customizable tours with local guides in 500+ cities across 120+ countries — personalized travel experiences worldwide.",
+    icon: "🗺️",
+    destinationUrl: "https://gowithguide.com/",
   },
 ];
