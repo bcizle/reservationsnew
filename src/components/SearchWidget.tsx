@@ -36,6 +36,8 @@ export default function SearchWidget() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const autocompleteRef = useRef<GoogleAutocomplete | null>(null);
+  const checkInInputRef = useRef<HTMLInputElement | null>(null);
+  const checkOutInputRef = useRef<HTMLInputElement | null>(null);
   const checkInRef = useRef("");
   const checkOutRef = useRef("");
   const [destination, setDestination] = useState("");
@@ -130,9 +132,19 @@ export default function SearchWidget() {
             Check-in
           </label>
           <input
+            ref={checkInInputRef}
             type="date"
             value={checkIn}
-            onChange={(e) => setCheckIn(e.target.value)}
+            onChange={(e) => {
+              setCheckIn(e.target.value);
+              // Auto-advance to check-out after selecting check-in
+              if (e.target.value) {
+                setTimeout(() => checkOutInputRef.current?.showPicker?.(), 100);
+              }
+            }}
+            onFocus={(e) => {
+              try { e.currentTarget.showPicker?.(); } catch { /* some browsers throw */ }
+            }}
             className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-primary-light focus:ring-2 focus:ring-primary-light/20"
           />
         </div>
@@ -141,9 +153,13 @@ export default function SearchWidget() {
             Check-out
           </label>
           <input
+            ref={checkOutInputRef}
             type="date"
             value={checkOut}
             onChange={(e) => setCheckOut(e.target.value)}
+            onFocus={(e) => {
+              try { e.currentTarget.showPicker?.(); } catch { /* some browsers throw */ }
+            }}
             className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-primary-light focus:ring-2 focus:ring-primary-light/20"
           />
         </div>
