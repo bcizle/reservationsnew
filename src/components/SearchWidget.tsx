@@ -89,7 +89,8 @@ export default function SearchWidget() {
           if (!trimmed) return;
           setDestination(trimmed);
           if (inputRef.current) inputRef.current.value = trimmed;
-          navigateFor(trimmed);
+          // Don't auto-navigate — let the user fill in dates first.
+          // Navigation happens when they click the Search button.
         });
       })
       .catch((err) => {
