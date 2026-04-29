@@ -10,6 +10,7 @@ import PhotoGallery from "@/components/PhotoGallery";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/JsonLd";
 import { AwinPartners } from "@/app/components/AwinPartners";
 import { destinations, getDestination } from "@/lib/destinations";
+import { buildBookingLink } from "@/lib/booking";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
 
@@ -26,11 +27,11 @@ export async function generateMetadata({
   const dest = getDestination(slug);
   if (!dest) return { title: "Destination Not Found" };
   return {
-    title: `Hotels in ${dest.name} — Compare ${dest.hotels} Deals`,
-    description: `Find the best hotel deals in ${dest.name}, ${dest.country}. Compare prices from top booking sites and save on your next trip. ${dest.hotels} hotels available.`,
+    title: `Hotels in ${dest.name} — Compare Booking.com Deals`,
+    description: `Find the best hotel deals in ${dest.name}, ${dest.country} on Booking.com. Compare ${dest.hotels} hotels with free cancellation, verified reviews, and live pricing — typical rates ${dest.avgPrice}.`,
     openGraph: {
-      title: `Hotels in ${dest.name} — Compare ${dest.hotels} Deals | ReservationsNew`,
-      description: `Find the best hotel deals in ${dest.name}, ${dest.country}.`,
+      title: `Hotels in ${dest.name} — Compare Booking.com Deals | ReservationsNew`,
+      description: `Search ${dest.hotels} hotels in ${dest.name}, ${dest.country} on Booking.com. Live prices, free cancellation, verified guest reviews.`,
       images: [{ url: dest.heroImage, alt: `Hotels in ${dest.name}` }],
     },
     alternates: {
@@ -47,6 +48,13 @@ export default async function DestinationPage({
   const { slug } = await params;
   const dest = getDestination(slug);
   if (!dest) notFound();
+
+  const bookingLink = buildBookingLink(
+    `${dest.name}, ${dest.country}`,
+    undefined,
+    undefined,
+    { label: `reservationsnew-destination-${slug}` },
+  );
 
   const faqQuestions = [
     {
@@ -125,10 +133,64 @@ export default async function DestinationPage({
           </div>
         </div>
 
-        {/* Booking Widgets */}
+        {/* Primary Booking.com CTA */}
+        <section className="mt-8 overflow-hidden rounded-2xl bg-gradient-to-br from-[#003580] via-[#013d92] to-[#0f4c75] p-6 text-white shadow-lg sm:p-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="max-w-xl">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                Hotel prices powered by Booking.com
+              </div>
+              <h2 className="mt-3 text-2xl font-bold sm:text-3xl">
+                Search Hotels in {dest.name} on Booking.com
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-blue-100">
+                Compare {dest.hotels} hotels in {dest.name} with live availability, free cancellation
+                on most rooms, and verified guest reviews. Typical rates {dest.avgPrice}.
+              </p>
+              <a
+                href={bookingLink}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-bold text-white transition hover:bg-accent-hover"
+              >
+                Search Hotels in {dest.name}
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </a>
+              <p className="mt-3 text-[11px] text-blue-200">
+                Affiliate link via Awin — we may earn a commission at no extra cost to you.
+              </p>
+            </div>
+            <div className="hidden shrink-0 rounded-xl bg-white/10 p-5 text-sm shadow-sm backdrop-blur-sm sm:block">
+              <p className="font-semibold">Why Booking.com</p>
+              <ul className="mt-2 space-y-1.5 text-xs text-blue-50">
+                <li className="flex items-center gap-2">
+                  <span className="text-amber-300">✓</span> 28M+ accommodations
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-amber-300">✓</span> Free cancellation on most rooms
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-amber-300">✓</span> Verified guest reviews
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-amber-300">✓</span> Best price guarantee
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Booking Widgets — secondary search & travel partners */}
         <section className="mt-10">
           <h2 className="mb-4 text-xl font-bold text-foreground">
-            Search Hotels & Flights in {dest.name}
+            Round out your trip to {dest.name}
           </h2>
           <div className="grid gap-6 lg:grid-cols-2">
             <BookingSearchWidget destination={dest.name} />
@@ -213,19 +275,21 @@ export default async function DestinationPage({
         </div>
 
         {/* CTA */}
-        <div className="mt-12 rounded-2xl bg-gradient-to-r from-[#0f4c75] to-[#3282b8] p-8 text-center">
+        <div className="mt-12 rounded-2xl bg-gradient-to-r from-[#003580] to-[#0f4c75] p-8 text-center">
           <h3 className="text-xl font-bold text-white">
             Ready to find your perfect hotel in {dest.name}?
           </h3>
           <p className="mt-2 text-sm text-blue-100">
-            Compare prices from top booking sites and save.
+            Compare live prices on Booking.com — 28M+ properties, free cancellation, verified reviews.
           </p>
-          <Link
-            href={`/search?q=${encodeURIComponent(dest.name)}`}
+          <a
+            href={bookingLink}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
             className="mt-5 inline-block rounded-lg bg-accent px-8 py-3 text-sm font-bold text-white transition hover:bg-accent-hover"
           >
-            Search Hotels in {dest.name}
-          </Link>
+            Search Hotels in {dest.name} on Booking.com
+          </a>
         </div>
 
         {/* Back link */}

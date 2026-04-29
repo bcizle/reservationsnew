@@ -7,28 +7,16 @@ import AffiliateBanner from "@/components/AffiliateBanner";
 import OptimizedImage from "@/components/OptimizedImage";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { AwinPartners } from "@/app/components/AwinPartners";
-import { destinations, getDestination } from "@/lib/destinations";
+import { destinations } from "@/lib/destinations";
+import { buildBookingLink } from "@/lib/booking";
 
 export const metadata: Metadata = {
-  title: "Search Hotel Deals — ReservationsNew",
+  title: "Search Hotel Deals on Booking.com — ReservationsNew",
   description:
-    "Search and compare hotel prices across top booking platforms. Find the best deals for your next trip on Booking.com.",
+    "Hotel prices powered by Booking.com. Search 28+ million accommodations worldwide with free cancellation, verified reviews, and live availability.",
 };
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
-const BOOKING_AID = process.env.NEXT_PUBLIC_BOOKING_AID || "";
-
-function bookingSearchUrl(query: string, checkin?: string, checkout?: string) {
-  const params = new URLSearchParams({
-    label: "reservationsnew-search",
-    lang: "en-us",
-  });
-  if (BOOKING_AID) params.set("aid", BOOKING_AID);
-  if (query) params.set("ss", query);
-  if (checkin) params.set("checkin", checkin);
-  if (checkout) params.set("checkout", checkout);
-  return `https://www.booking.com/searchresults.html?${params.toString()}`;
-}
 
 function findMatchingDestination(q: string) {
   if (!q) return null;
@@ -59,7 +47,9 @@ export default async function SearchPage({
   const displayQuery = query || "your destination";
 
   const matchedDest = findMatchingDestination(query);
-  const bookingUrl = bookingSearchUrl(query, params.checkin, params.checkout);
+  const bookingUrl = buildBookingLink(query, params.checkin, params.checkout, {
+    label: "reservationsnew-search",
+  });
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -71,14 +61,15 @@ export default async function SearchPage({
       />
 
       <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-          Hotel Search
-        </p>
-        <h1 className="mt-2 text-3xl font-extrabold text-foreground sm:text-4xl">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#003580]/20 bg-[#003580]/5 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#003580]">
+          <span className="flex h-4 w-4 items-center justify-center rounded bg-[#003580] text-[10px] font-extrabold text-white">B</span>
+          Hotel prices powered by Booking.com
+        </div>
+        <h1 className="mt-3 text-3xl font-extrabold text-foreground sm:text-4xl">
           {query ? `Hotels in ${displayQuery}` : "Find your next hotel"}
         </h1>
         <p className="mt-2 text-sm text-text-muted">
-          We compare live prices across the world&apos;s top booking platforms.
+          As a Booking.com Affiliate, we earn from qualifying transactions — at no extra cost to you.
           {params.checkin && ` Check-in ${params.checkin}.`}
           {params.checkout && ` Check-out ${params.checkout}.`}
         </p>

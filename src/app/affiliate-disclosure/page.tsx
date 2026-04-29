@@ -3,7 +3,8 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Affiliate Disclosure",
-  description: "Transparency about how ReservationsNew earns revenue through affiliate partnerships with Booking.com, TravelPayouts, and other travel providers.",
+  description:
+    "As a Booking.com Affiliate, ReservationsNew earns from qualifying transactions. Full transparency on our affiliate partnerships with Booking.com (via Awin), TravelPayouts, and other travel providers.",
 };
 
 export default function AffiliateDisclosure() {
@@ -13,6 +14,18 @@ export default function AffiliateDisclosure() {
       <p className="mt-2 text-sm text-text-muted">Last updated: April 10, 2026</p>
 
       <div className="mt-10 space-y-8 text-sm leading-relaxed text-gray-700">
+        <section className="rounded-2xl border border-blue-100 bg-blue-50/40 p-5">
+          <p className="text-base font-semibold text-foreground">
+            As a Booking.com Affiliate, I earn from qualifying transactions.
+          </p>
+          <p className="mt-2 text-sm text-gray-700">
+            ReservationsNew participates in the Booking.com affiliate partner program through the
+            Awin affiliate network (Awin Publisher ID 2793280, Booking.com Advertiser ID 6776).
+            When you click a Booking.com link on this site and complete a booking, we may earn a
+            commission — at no extra cost to you.
+          </p>
+        </section>
+
         <section>
           <h2 className="text-lg font-semibold text-foreground">How We Earn Revenue</h2>
           <p className="mt-2">
@@ -27,7 +40,17 @@ export default function AffiliateDisclosure() {
           </p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>
-              <strong>Booking.com</strong> — We are a participant in the Booking.com affiliate partner program. When you search for or book hotels through our Booking.com links, we may earn a commission. Booking.com is one of the world&apos;s leading hotel booking platforms with over 28 million listings.
+              <strong>Booking.com (via Awin)</strong> — As a Booking.com Affiliate, we earn from
+              qualifying transactions. Bookings made through our Booking.com links are tracked
+              through the Awin affiliate network. Booking.com is the world&apos;s largest
+              accommodation platform with over 28 million listings, free cancellation on most
+              rooms, and verified guest reviews.
+            </li>
+            <li>
+              <strong>Awin partner network</strong> — Beyond Booking.com, we work with a curated
+              roster of approved Awin partners covering hotels, city passes, eSIMs, campgrounds,
+              boutique stays, and other travel services. Each partner is listed on our homepage
+              partner section with the relevant category and a transparent affiliate link.
             </li>
             <li>
               <strong>TravelPayouts</strong> — We partner with TravelPayouts, a travel affiliate network that connects us with multiple travel services including Aviasales (flight comparison), Hotellook (hotel comparison), and Economy Bookings (car rentals). Commissions are earned when you click through our links and complete a booking.

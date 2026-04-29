@@ -7,6 +7,7 @@ import AffiliateBanner from "@/components/AffiliateBanner";
 import BookingSearchWidget from "@/components/BookingSearchWidget";
 import OptimizedImage from "@/components/OptimizedImage";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
+import { buildBookingLink } from "@/lib/booking";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
 
@@ -75,6 +76,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   if (!post) notFound();
 
   const relatedPosts = getRelatedPosts(slug, 2);
+  const bookingLink = buildBookingLink(undefined, undefined, undefined, {
+    label: `reservationsnew-blog-${slug}`,
+  });
 
   return (
     <div>
@@ -158,6 +162,37 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </div>
           </div>
         )}
+
+        {/* End-of-post Booking.com CTA */}
+        <div className="mt-10 overflow-hidden rounded-2xl bg-gradient-to-br from-[#003580] via-[#013d92] to-[#0f4c75] p-6 text-white shadow-lg sm:p-8">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+            Hotel prices powered by Booking.com
+          </div>
+          <h3 className="mt-3 text-xl font-bold sm:text-2xl">
+            Ready to book your next trip?
+          </h3>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-blue-100">
+            Search 28+ million accommodations on Booking.com — live availability, free
+            cancellation on most rooms, and verified guest reviews. As a Booking.com Affiliate,
+            we earn from qualifying transactions.
+          </p>
+          <a
+            href={bookingLink}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-bold text-white transition hover:bg-accent-hover"
+          >
+            Search Hotels on Booking.com
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </a>
+        </div>
 
         {/* Booking widget */}
         <div className="mt-8">

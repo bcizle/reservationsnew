@@ -1,5 +1,7 @@
 "use client";
 
+import { buildBookingLink } from "@/lib/booking";
+
 interface BookingSearchWidgetProps {
   destination?: string;
   checkIn?: string;
@@ -7,19 +9,9 @@ interface BookingSearchWidgetProps {
 }
 
 export default function BookingSearchWidget({ destination, checkIn, checkOut }: BookingSearchWidgetProps) {
-  const aid = process.env.NEXT_PUBLIC_BOOKING_AID || "YOUR_BOOKING_AID";
-
-  // Build Booking.com deep link
-  const params = new URLSearchParams({
-    aid,
-    label: "reservationsnew-search",
-    lang: "en-us",
-    ...(destination && { ss: destination }),
-    ...(checkIn && { checkin: checkIn }),
-    ...(checkOut && { checkout: checkOut }),
+  const bookingUrl = buildBookingLink(destination, checkIn, checkOut, {
+    label: "reservationsnew-widget",
   });
-
-  const bookingUrl = `https://www.booking.com/searchresults.html?${params.toString()}`;
 
   function handleClick() {
     if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
@@ -58,7 +50,7 @@ export default function BookingSearchWidget({ destination, checkIn, checkOut }: 
         </svg>
       </a>
       <p className="mt-3 text-xs text-gray-400">
-        Affiliate link — we may earn a commission at no extra cost to you.
+        As a Booking.com Affiliate, we earn from qualifying transactions — at no extra cost to you.
       </p>
     </div>
   );

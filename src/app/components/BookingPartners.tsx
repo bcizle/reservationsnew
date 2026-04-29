@@ -1,4 +1,4 @@
-const BOOKING_AID = process.env.NEXT_PUBLIC_BOOKING_AID || "";
+import { buildBookingHomeLink } from "@/lib/booking";
 
 interface BookingPartner {
   name: string;
@@ -10,18 +10,19 @@ interface BookingPartner {
   /** Initial or short mark to display */
   mark: string;
   url: string;
+  /** Optional accent badge text (e.g., "Featured Partner") */
+  badge?: string;
 }
 
 const partners: BookingPartner[] = [
   {
     name: "Booking.com",
-    tagline: "28M+ listings worldwide",
+    tagline: "28M+ listings — Featured Partner",
     textClass: "text-[#003580]",
     swatchClass: "bg-[#003580]",
     mark: "B.",
-    url: BOOKING_AID
-      ? `https://www.booking.com/index.html?aid=${BOOKING_AID}`
-      : "https://www.booking.com/",
+    url: buildBookingHomeLink("reservationsnew-home-partner"),
+    badge: "Featured",
   },
   {
     name: "Expedia",
@@ -72,8 +73,16 @@ export function BookingPartners() {
               href={p.url}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
+              className={[
+                "group relative flex items-center gap-4 rounded-xl border bg-white px-5 py-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
+                p.badge ? "border-[#003580]/40 ring-1 ring-[#003580]/20" : "border-gray-200 hover:border-gray-300",
+              ].join(" ")}
             >
+              {p.badge && (
+                <span className="absolute -top-2 right-3 rounded-full bg-[#003580] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                  {p.badge}
+                </span>
+              )}
               <div
                 className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg ${p.swatchClass} text-xl font-extrabold text-white`}
                 aria-hidden="true"

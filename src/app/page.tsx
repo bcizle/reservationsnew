@@ -1,15 +1,13 @@
-// v1.0.3
+// v1.0.4
 import Link from "next/link";
 import SearchWidget from "@/components/SearchWidget";
 import OptimizedImage from "@/components/OptimizedImage";
 import { AwinPartners } from "@/app/components/AwinPartners";
 import { BookingPartners } from "@/app/components/BookingPartners";
 import { destinations } from "@/lib/destinations";
+import { buildBookingHomeLink } from "@/lib/booking";
 
-const BOOKING_AID = process.env.NEXT_PUBLIC_BOOKING_AID || "";
-const bookingCtaUrl = BOOKING_AID
-  ? `https://www.booking.com/index.html?aid=${BOOKING_AID}&label=reservationsnew-home-cta`
-  : "https://www.booking.com/";
+const bookingCtaUrl = buildBookingHomeLink("reservationsnew-home-cta");
 
 const dealTypes = [
   {
@@ -41,17 +39,26 @@ export default function Home() {
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0f4c75] via-[#1b6ca8] to-[#3282b8] px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-36">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDJ2LTJoMzR6bTAtMzBWNkgwVjRoMzZ6TTYgMzR2Mkgwdi0yaDZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30" />
         <div className="relative mx-auto max-w-7xl text-center">
-          <h1 className="mx-auto max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <div className="mx-auto inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+            <span className="flex h-4 w-4 items-center justify-center rounded bg-white text-[10px] font-extrabold text-[#003580]">B</span>
+            Hotel prices powered by Booking.com
+          </div>
+          <h1 className="mx-auto mt-4 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
             Your Next Adventure Starts with the{" "}
             <span className="text-amber-300">Perfect Stay</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-blue-100 sm:text-xl">
-            Compare prices from the world&apos;s top booking sites. Find
-            exclusive hotel deals, vacation rentals, and travel packages — all in
-            one place.
+            Compare live hotel prices from Booking.com and the world&apos;s top travel partners.
+            28+ million stays, free cancellation on most rooms, and verified guest reviews — all
+            in one place.
           </p>
 
           <SearchWidget />
+
+          <p className="mx-auto mt-3 max-w-2xl text-xs text-blue-200">
+            Search routes through Booking.com via our Awin affiliate link. As a Booking.com
+            Affiliate, we earn from qualifying transactions — at no extra cost to you.
+          </p>
 
           {/* Trust Badges */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-blue-200">

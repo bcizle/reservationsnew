@@ -37,6 +37,7 @@ export interface AwinPartner {
  * Approved Awin partner programs.
  *
  * Confirmed IDs (verified via Awin merchant profile pages):
+ *   Booking.com          → 6776
  *   Caesars Rewards      → 6145
  *   Campspot             → 22326
  *   ShopRaise            → 115325
@@ -53,6 +54,18 @@ export interface AwinPartner {
  *   GoWithGuide US       → 87121
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
+  {
+    id: "booking",
+    name: "Booking.com",
+    advertiserId: "6776",
+    category: "Hotels",
+    description:
+      "The world's largest accommodation platform — 28+ million listings, free cancellation on most rooms, and verified guest reviews.",
+    icon: "🏨",
+    destinationUrl: "https://www.booking.com/",
+    badge: "Featured Partner",
+    topPerformer: true,
+  },
   {
     id: "xtv",
     name: "XTV",
