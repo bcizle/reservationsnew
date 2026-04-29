@@ -521,3 +521,79 @@ export const destinations = destinationList;
 export function getDestination(slug: string): Destination | undefined {
   return destinationsBySlug[slug];
 }
+
+/**
+ * Common name aliases that should resolve to one of our 12 destinations.
+ * Lowercase keys, slug values.
+ */
+const DESTINATION_ALIASES: Record<string, string> = {
+  "new york": "new-york-city",
+  "new york city": "new-york-city",
+  nyc: "new-york-city",
+  manhattan: "new-york-city",
+  brooklyn: "new-york-city",
+  "paris france": "paris",
+  "tokyo japan": "tokyo",
+  "london uk": "london",
+  "london england": "london",
+  "barcelona spain": "barcelona",
+  "rome italy": "rome",
+  "lisbon portugal": "lisbon",
+  "bali indonesia": "bali",
+  ubud: "bali",
+  seminyak: "bali",
+  "bangkok thailand": "bangkok",
+  "amsterdam netherlands": "amsterdam",
+  "amsterdam holland": "amsterdam",
+  "cancún": "cancun",
+  "cancun mexico": "cancun",
+  "dubai uae": "dubai",
+};
+
+/**
+ * Try to match a free-text query to one of our 12 curated destinations.
+ * Returns null if there's no good match — callers should treat that as
+ * a "we don't have a guide for this city" case.
+ */
+export function matchDestination(query: string): Destination | null {
+  if (!query) return null;
+  const needle = query.trim().toLowerCase().replace(/\s+/g, " ");
+
+  // Exact match
+  const exact = destinationList.find(
+    (d) =>
+      d.name.toLowerCase() === needle ||
+      d.slug === needle ||
+      d.slug.replace(/-/g, " ") === needle,
+  );
+  if (exact) return exact;
+
+  // Alias match
+  const aliasSlug = DESTINATION_ALIASES[needle];
+  if (aliasSlug) return destinationsBySlug[aliasSlug] ?? null;
+
+  // First-token match (e.g. "Paris, France" → "paris")
+  const firstToken = needle.split(/[,\s]/)[0];
+  if (firstToken && firstToken !== needle) {
+    const aliased = DESTINATION_ALIASES[firstToken];
+    if (aliased) return destinationsBySlug[aliased] ?? null;
+    const byName = destinationList.find(
+      (d) => d.name.toLowerCase() === firstToken || d.slug === firstToken,
+    );
+    if (byName) return byName;
+  }
+
+  // Substring match — name contains query (e.g. "tokyo" matches "Tokyo")
+  // Only allow when the needle is at least 4 chars to avoid false positives.
+  if (needle.length >= 4) {
+    const partial = destinationList.find(
+      (d) =>
+        d.name.toLowerCase().includes(needle) ||
+        d.country.toLowerCase().includes(needle) ||
+        needle.includes(d.name.toLowerCase()),
+    );
+    if (partial) return partial;
+  }
+
+  return null;
+}

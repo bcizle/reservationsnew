@@ -16,6 +16,14 @@ interface BookingLinkOptions {
   label?: string;
   /** Optional Booking.com aid (legacy direct affiliate id) — falls through Awin. */
   aid?: string;
+  /** Star ratings to include (e.g. [4, 5] for 4-and-5 star only). */
+  starRatings?: number[];
+  /** Number of adult guests. */
+  adults?: number;
+  /** Min review score (e.g. 8 for 8+/10). */
+  minReviewScore?: 6 | 7 | 8 | 9;
+  /** Sort order — popular ("popularity"), price low-to-high ("price"), top reviewed ("review_score_and_price"). */
+  sort?: "popularity" | "price" | "review_score_and_price";
 }
 
 /**
@@ -24,7 +32,7 @@ interface BookingLinkOptions {
  * @param destination  Destination text shown in Booking.com's search box (city, hotel, etc.)
  * @param checkin      ISO date string (YYYY-MM-DD)
  * @param checkout     ISO date string (YYYY-MM-DD)
- * @param options      Optional label / aid for finer tracking attribution
+ * @param options      Optional label / aid / filter overrides
  */
 export function buildBookingLink(
   destination?: string,
@@ -40,6 +48,21 @@ export function buildBookingLink(
   if (destination) params.set("ss", destination);
   if (checkin) params.set("checkin", checkin);
   if (checkout) params.set("checkout", checkout);
+  if (options.adults) params.set("group_adults", String(options.adults));
+  if (options.sort) params.set("order", options.sort);
+
+  const filters: string[] = [];
+  if (options.starRatings && options.starRatings.length > 0) {
+    for (const star of options.starRatings) {
+      filters.push(`class=${star}`);
+    }
+  }
+  if (options.minReviewScore) {
+    filters.push(`review_score=${options.minReviewScore * 10}`);
+  }
+  if (filters.length) {
+    params.set("nflt", filters.join(";"));
+  }
 
   const bookingUrl = `https://www.booking.com/searchresults.html?${params.toString()}`;
   return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
