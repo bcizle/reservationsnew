@@ -34,14 +34,14 @@ jobs:
       - name: Check for new content
         id: check_changes
         run: |
-          git diff --quiet content/ || echo "changes=true" >> $GITHUB_OUTPUT
+          git add content/
+          git diff --cached --quiet content/ || echo "changes=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push new content
         if: steps.check_changes.outputs.changes == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add content/
           git commit -m "chore: auto-generate blog post [skip ci]"
           git push
 
