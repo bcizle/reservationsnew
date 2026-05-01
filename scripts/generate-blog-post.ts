@@ -3,40 +3,48 @@
  *
  * Usage: npx ts-node scripts/generate-blog-post.ts
  *
- * This script generates SEO-optimized travel blog posts and saves them
- * as JSON files in the content/blog/ directory.
+ * Generates SEO-optimized travel blog posts using the Anthropic Claude API
+ * (Haiku 4.5) and saves them as JSON files in content/blog/.
  *
- * Prerequisites:
- * - Set OPENAI_API_KEY or ANTHROPIC_API_KEY in .env.local
- * - npm install -g ts-node (or use npx)
+ * Falls back to a template-based post if ANTHROPIC_API_KEY is missing or
+ * the API call fails — the cron should never fail silently.
  *
- * For automation, set up a GitHub Action or Vercel Cron to run this
- * on a schedule (e.g., 2x per week).
+ * Env vars:
+ * - ANTHROPIC_API_KEY (required for AI generation; absent → template fallback)
+ * - NEXT_PUBLIC_BOOKING_AID, NEXT_PUBLIC_TRAVELPAYOUTS_TOKEN (affiliate IDs)
  */
 
 import fs from "fs";
 import path from "path";
+import Anthropic from "@anthropic-ai/sdk";
 
 // ============================================================
-// CONFIGURATION - Edit these to customize content generation
+// CONFIGURATION
 // ============================================================
 
-const SITE_NAME = "ReservationsNew";
 const BOOKING_AID_PLACEHOLDER = "BOOKING_AID";
 const TRAVELPAYOUTS_PLACEHOLDER = "TRAVELPAYOUTS_TOKEN";
 
-// Topics pool - the script randomly picks from these
+const VALID_CATEGORIES = [
+  "Hotel Tips",
+  "Destinations",
+  "Travel Guides",
+  "Budget Travel",
+  "Flight Tips",
+  "Car Rental",
+] as const;
+
 const TOPIC_TEMPLATES = [
-  { template: "Best Budget Hotels in {city} for {year}", category: "Destination Guides", tags: ["hotels", "budget", "{city_tag}"] },
-  { template: "How to Save Money on Hotels in {city}", category: "Tips & Tricks", tags: ["savings", "hotels", "{city_tag}"] },
+  { template: "Best Budget Hotels in {city} for {year}", category: "Destinations", tags: ["hotels", "budget", "{city_tag}"] },
+  { template: "How to Save Money on Hotels in {city}", category: "Hotel Tips", tags: ["savings", "hotels", "{city_tag}"] },
   { template: "{city} Travel Guide: Where to Stay, Eat, and Explore", category: "Travel Guides", tags: ["travel-guide", "{city_tag}", "restaurants", "attractions"] },
-  { template: "Cheapest Months to Visit {city} in {year}", category: "Tips & Tricks", tags: ["budget", "timing", "{city_tag}"] },
-  { template: "Top 5 Neighborhoods to Stay in {city}", category: "Destination Guides", tags: ["hotels", "neighborhoods", "{city_tag}"] },
+  { template: "Cheapest Months to Visit {city} in {year}", category: "Budget Travel", tags: ["budget", "timing", "{city_tag}"] },
+  { template: "Top 5 Neighborhoods to Stay in {city}", category: "Destinations", tags: ["hotels", "neighborhoods", "{city_tag}"] },
   { template: "Weekend Getaway: 3 Days in {city}", category: "Travel Guides", tags: ["weekend-trip", "{city_tag}", "itinerary"] },
   { template: "First-Timer's Guide to {city}: Hotels, Food, and Must-Sees", category: "Travel Guides", tags: ["first-time", "{city_tag}", "guide"] },
-  { template: "Best Hotels Near the Airport in {city}", category: "Destination Guides", tags: ["airport-hotels", "{city_tag}", "convenience"] },
-  { template: "Romantic Hotels in {city} for Couples", category: "Destination Guides", tags: ["couples", "romantic", "{city_tag}"] },
-  { template: "Best Family Hotels in {city}", category: "Destination Guides", tags: ["family", "kids", "{city_tag}"] },
+  { template: "Best Hotels Near the Airport in {city}", category: "Destinations", tags: ["airport-hotels", "{city_tag}", "convenience"] },
+  { template: "Romantic Hotels in {city} for Couples", category: "Destinations", tags: ["couples", "romantic", "{city_tag}"] },
+  { template: "Best Family Hotels in {city}", category: "Destinations", tags: ["family", "kids", "{city_tag}"] },
 ];
 
 const CITIES = [
@@ -62,8 +70,36 @@ const IMAGES: Record<string, string> = {
   "default": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&q=80",
 };
 
+const MIN_WORD_COUNT = 500;
+const MAX_RETRIES = 2;
+
 // ============================================================
-// GENERATOR LOGIC
+// TYPES
+// ============================================================
+
+interface GeneratedPost {
+  title: string;
+  excerpt: string;
+  content: string;
+  tags: string[];
+  category: string;
+}
+
+interface BlogPostFile {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  category: string;
+  image: string;
+  tags: string[];
+  content: string;
+  affiliateLinks: { label: string; url: string; provider: string }[];
+}
+
+// ============================================================
+// HELPERS
 // ============================================================
 
 function slugify(text: string): string {
@@ -77,35 +113,211 @@ function getRandomItem<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function generatePost(): void {
+function countWords(text: string): number {
+  return text.trim().split(/\s+/).length;
+}
+
+// ============================================================
+// AI GENERATION
+// ============================================================
+
+const BLOG_POST_SCHEMA = {
+  type: "object",
+  properties: {
+    title: { type: "string" },
+    excerpt: { type: "string" },
+    content: { type: "string" },
+    tags: { type: "array", items: { type: "string" } },
+    category: { type: "string", enum: [...VALID_CATEGORIES] },
+  },
+  required: ["title", "excerpt", "content", "tags", "category"],
+  additionalProperties: false,
+};
+
+function buildPrompt(seedTitle: string, city: string, category: string): string {
+  return `Write a 600-800 word travel blog post about: ${seedTitle}
+
+Destination: ${city}
+Category hint: ${category}
+
+Requirements:
+- Informative, practical, and engaging tone
+- Include specific hotel recommendations with price ranges (USD)
+- Include local tips that show real knowledge of ${city}
+- Mention specific neighborhoods to stay in by name
+- Include a section on budget tips
+- SEO-optimized for the topic — use the keyword naturally
+- No fluff, no filler, no AI clichés ("nestled in", "vibrant tapestry", etc.)
+- Write as a knowledgeable travel advisor speaking to a smart reader
+- Do NOT include any placeholder text like "[insert X]" or "{city}" — write real content
+- Use ## for section headers (at least 3 sections) and **bold** for emphasis
+- Word count: between 600 and 800 words for the content field
+
+Output JSON with these fields:
+- title: refined version of the topic above (string)
+- excerpt: 1-2 sentence summary that would make a reader click (string)
+- content: the full article body as markdown with ## headers and **bold** (string)
+- tags: 3-5 relevant tags, lowercase, hyphenated (array of strings)
+- category: one of: ${VALID_CATEGORIES.join(", ")}`;
+}
+
+async function generateWithClaude(
+  client: Anthropic,
+  seedTitle: string,
+  city: string,
+  category: string,
+): Promise<GeneratedPost> {
+  let lastError: Error | null = null;
+
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await client.messages.create({
+        model: "claude-haiku-4-5",
+        max_tokens: 4096,
+        output_config: {
+          format: { type: "json_schema", schema: BLOG_POST_SCHEMA },
+        },
+        messages: [{ role: "user", content: buildPrompt(seedTitle, city, category) }],
+      });
+
+      const textBlock = response.content.find((b) => b.type === "text");
+      if (!textBlock || textBlock.type !== "text") {
+        throw new Error("No text block in response");
+      }
+
+      const post = JSON.parse(textBlock.text) as GeneratedPost;
+      validatePost(post);
+      return post;
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      console.warn(`Attempt ${attempt} failed: ${lastError.message}`);
+    }
+  }
+
+  throw lastError ?? new Error("AI generation failed");
+}
+
+function validatePost(post: GeneratedPost): void {
+  if (!post.title || !post.excerpt || !post.content || !post.tags || !post.category) {
+    throw new Error("Missing required fields in generated post");
+  }
+  if (!Array.isArray(post.tags) || post.tags.length === 0) {
+    throw new Error("Tags must be a non-empty array");
+  }
+  if (!VALID_CATEGORIES.includes(post.category as (typeof VALID_CATEGORIES)[number])) {
+    throw new Error(`Invalid category: ${post.category}`);
+  }
+  const words = countWords(post.content);
+  if (words < MIN_WORD_COUNT) {
+    throw new Error(`Content too short: ${words} words (minimum ${MIN_WORD_COUNT})`);
+  }
+  if (!post.content.includes("##")) {
+    throw new Error("Content missing required ## header");
+  }
+  if (/\[insert [^\]]+\]|\{[a-z_]+\}/i.test(post.content)) {
+    throw new Error("Content contains placeholder text");
+  }
+}
+
+// ============================================================
+// TEMPLATE FALLBACK
+// ============================================================
+
+function generateContentTemplate(city: string): string {
+  return `Planning a trip to ${city}? You've come to the right place. This guide covers everything you need to know about finding the best hotels, saving money, and making the most of your visit to one of the world's most exciting destinations.
+
+## Why Visit ${city}?
+
+${city} attracts millions of visitors each year, and it's easy to see why. From world-class dining and cultural attractions to stunning architecture and vibrant neighborhoods, ${city} delivers an experience that stays with you long after you return home.
+
+## Finding the Best Hotels
+
+The key to a great trip starts with choosing the right accommodation. ${city} offers everything from budget hostels to luxury five-star hotels.
+
+**Compare Prices Across Platforms**: The same room can vary by 20-40% across different booking sites. Always check at least 3-4 platforms before committing.
+
+**Book at the Right Time**: For ${city}, the ideal booking window is typically 2-8 weeks before your trip for the best balance of availability and pricing.
+
+**Consider the Neighborhood**: Central locations are convenient but expensive. Staying slightly outside the tourist core can save 30-50% on your nightly rate.
+
+## Best Neighborhoods to Stay
+
+Choosing the right neighborhood can make or break your trip. Central districts work for first-time visitors who want walkable access. Arts and culture districts offer the best value with character and authenticity. Waterfront areas, where ${city} has them, offer scenic views at varying price points.
+
+## Saving Money on Your Trip
+
+Skip tourist-trap restaurants and seek out neighborhoods where locals eat. Many of ${city}'s best experiences cost nothing — parks, markets, and architectural walks are all free. Research public transit options before you go; day passes and multi-ride cards often save significantly over individual fares.
+
+## When to Visit
+
+Shoulder seasons typically offer the best combination of pleasant weather, manageable crowds, and reasonable prices. For ${city}, this means visiting during the transition months when tourism slows but conditions remain favorable.
+
+## Final Tips
+
+Book your accommodation through a price comparison tool to ensure you're getting the best rate. Read recent reviews (within the last 6 months) for the most accurate picture of a hotel's current condition. ${city} is waiting for you.`;
+}
+
+function generateFallbackPost(seedTitle: string, city: string, category: string): GeneratedPost {
+  return {
+    title: seedTitle,
+    excerpt: `Discover the best travel tips and hotel deals for ${city}. Our comprehensive guide covers where to stay, what to see, and how to save money on your trip.`,
+    content: generateContentTemplate(city),
+    tags: ["hotels", "travel-tips", city.toLowerCase().replace(/\s+/g, "-")],
+    category,
+  };
+}
+
+// ============================================================
+// MAIN
+// ============================================================
+
+async function main(): Promise<void> {
   const city = getRandomItem(CITIES);
   const year = new Date().getFullYear();
   const topic = getRandomItem(TOPIC_TEMPLATES);
 
-  const title = topic.template
+  const seedTitle = topic.template
     .replace("{city}", city)
     .replace("{year}", year.toString());
 
-  const slug = slugify(title);
+  const slug = slugify(seedTitle);
+  const contentDir = path.join(process.cwd(), "content", "blog");
+  const filePath = path.join(contentDir, `${slug}.json`);
+
+  if (fs.existsSync(filePath)) {
+    console.log(`Post already exists: ${slug}. Skipping.`);
+    return;
+  }
+
+  let generated: GeneratedPost;
+  let usedAI = false;
+
+  if (process.env.ANTHROPIC_API_KEY) {
+    try {
+      const client = new Anthropic();
+      generated = await generateWithClaude(client, seedTitle, city, topic.category);
+      usedAI = true;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.warn(`Claude generation failed (${msg}). Falling back to template.`);
+      generated = generateFallbackPost(seedTitle, city, topic.category);
+    }
+  } else {
+    console.warn("ANTHROPIC_API_KEY not set. Using template fallback.");
+    generated = generateFallbackPost(seedTitle, city, topic.category);
+  }
+
   const cityTag = city.toLowerCase().replace(/\s+/g, "-");
-  const tags = topic.tags.map((t) => t.replace("{city_tag}", cityTag));
-  const image = IMAGES[city] || IMAGES["default"];
-
-  const date = new Date().toISOString().split("T")[0];
-
-  // Generate a content template (in production, replace this with an AI API call)
-  const content = generateContentTemplate(title, city, topic.category);
-
-  const post = {
+  const post: BlogPostFile = {
     slug,
-    title,
-    excerpt: `Discover the best travel tips and hotel deals for ${city}. Our comprehensive guide covers where to stay, what to see, and how to save money on your trip.`,
-    date,
-    readTime: `${Math.floor(Math.random() * 4) + 5} min read`,
-    category: topic.category,
-    image,
-    tags,
-    content,
+    title: generated.title,
+    excerpt: generated.excerpt,
+    date: new Date().toISOString().split("T")[0],
+    readTime: `${Math.max(4, Math.ceil(countWords(generated.content) / 200))} min read`,
+    category: generated.category,
+    image: IMAGES[city] || IMAGES["default"],
+    tags: generated.tags.length > 0 ? generated.tags : [cityTag],
+    content: generated.content,
     affiliateLinks: [
       {
         label: `Search Hotels in ${city}`,
@@ -120,86 +332,17 @@ function generatePost(): void {
     ],
   };
 
-  // Write to content directory
-  const contentDir = path.join(process.cwd(), "content", "blog");
   if (!fs.existsSync(contentDir)) {
     fs.mkdirSync(contentDir, { recursive: true });
   }
 
-  const filePath = path.join(contentDir, `${slug}.json`);
-
-  if (fs.existsSync(filePath)) {
-    console.log(`Post already exists: ${slug}. Skipping.`);
-    return;
-  }
-
   fs.writeFileSync(filePath, JSON.stringify(post, null, 2));
-  console.log(`Generated: ${filePath}`);
-  console.log(`Title: ${title}`);
-  console.log(`Category: ${topic.category}`);
-  console.log(`Tags: ${tags.join(", ")}`);
+  console.log(`Generated (${usedAI ? "AI" : "template"}): ${filePath}`);
+  console.log(`Title: ${post.title}`);
+  console.log(`Words: ${countWords(post.content)}`);
 }
 
-function generateContentTemplate(title: string, city: string, category: string): string {
-  // This is a template-based generator. For AI-powered content:
-  // 1. Replace this function with an API call to Claude or GPT
-  // 2. Use the title, city, and category as the prompt context
-  // 3. Ask the AI to write a 1500-2000 word SEO-optimized article
-  //
-  // Example prompt for AI:
-  // "Write a 1500-word SEO-optimized travel blog post titled '{title}'.
-  //  Include practical advice, specific hotel recommendations with price ranges,
-  //  local tips, and natural keyword usage. Use ## for section headings.
-  //  Mention comparing prices and booking in advance as tips.
-  //  The article should help travelers planning a trip to {city}."
-
-  return `Planning a trip to ${city}? You've come to the right place. This guide covers everything you need to know about finding the best hotels, saving money, and making the most of your visit to one of the world's most exciting destinations.
-
-## Why Visit ${city}?
-
-${city} attracts millions of visitors each year, and it's easy to see why. From world-class dining and cultural attractions to stunning architecture and vibrant neighborhoods, ${city} delivers an experience that stays with you long after you return home. Whether you're traveling for a romantic getaway, family vacation, or solo adventure, this city has something for everyone.
-
-## Finding the Best Hotels
-
-The key to a great trip starts with choosing the right accommodation. ${city} offers everything from budget hostels and boutique guesthouses to luxury five-star hotels. Here are some tips for finding the best deals:
-
-**Compare Prices Across Platforms**: The same room can vary by 20-40% across different booking sites. Always check at least 3-4 platforms before committing. Price comparison tools make this easy by aggregating rates from hundreds of booking sites in seconds.
-
-**Book at the Right Time**: For ${city}, the ideal booking window is typically 2-8 weeks before your trip for the best balance of availability and pricing. Booking too far in advance or at the last minute often means higher prices.
-
-**Consider the Neighborhood**: Central locations are convenient but expensive. Staying slightly outside the tourist core — even a 10-15 minute transit ride away — can save 30-50% on your nightly rate while still giving easy access to major attractions.
-
-## Best Neighborhoods to Stay
-
-Choosing the right neighborhood can make or break your trip. Here are some top areas to consider:
-
-**Central/Tourist District**: Best for first-time visitors who want walkable access to major attractions. Expect to pay premium rates, but you'll save on transportation costs.
-
-**Arts & Culture District**: Often the best value for travelers who want character and authenticity. These neighborhoods typically feature independent restaurants, galleries, and a more local atmosphere.
-
-**Waterfront/Beach Area**: If ${city} has a waterfront, staying nearby offers scenic views and a relaxed atmosphere. Prices vary widely depending on the specific location and season.
-
-## Saving Money on Your Trip
-
-Beyond hotel savings, there are several ways to stretch your travel budget in ${city}:
-
-**Eat like a local**: Skip tourist-trap restaurants and seek out neighborhoods where locals eat. Street food markets are often the best value and the most authentic culinary experience.
-
-**Free attractions**: Many of ${city}'s best experiences cost nothing — parks, markets, street art, and architectural walks are all free. Check if museums offer free admission days.
-
-**Transportation**: Research public transit options before you go. Day passes and multi-ride cards often save significantly over individual fares or taxis.
-
-## When to Visit
-
-Timing matters for both weather and pricing. Shoulder seasons (the periods between peak and off-peak) typically offer the best combination of pleasant weather, manageable crowds, and reasonable prices. For ${city}, this means visiting during the transition months when tourism slows but conditions remain favorable.
-
-## Final Tips
-
-Book your accommodation through a price comparison tool to ensure you're getting the best rate. Read recent reviews (within the last 6 months) for the most accurate picture of a hotel's current condition. And don't forget travel insurance — it's a small investment that can save thousands if plans change unexpectedly.
-
-${city} is waiting for you. Start planning your trip today and discover why millions of travelers fall in love with this incredible destination every year.`;
-}
-
-// Run the generator
-generatePost();
-console.log("\nDone! Run 'npm run build' to include the new post in your site.");
+main().catch((err) => {
+  console.error("Fatal error:", err);
+  process.exit(1);
+});
