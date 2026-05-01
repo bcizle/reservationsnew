@@ -11,7 +11,10 @@
  *
  * Env vars:
  * - ANTHROPIC_API_KEY (required for AI generation; absent → template fallback)
- * - NEXT_PUBLIC_BOOKING_AID, NEXT_PUBLIC_TRAVELPAYOUTS_TOKEN (affiliate IDs)
+ *
+ * Affiliate links are pre-baked Awin-tracked Booking.com deep links
+ * (Awin Publisher 2793280, Booking.com Advertiser 6776) — no env-var
+ * substitution needed at generation time.
  */
 
 import fs from "fs";
@@ -22,8 +25,16 @@ import Anthropic from "@anthropic-ai/sdk";
 // CONFIGURATION
 // ============================================================
 
-const BOOKING_AID_PLACEHOLDER = "BOOKING_AID";
-const TRAVELPAYOUTS_PLACEHOLDER = "TRAVELPAYOUTS_TOKEN";
+const AWIN_PUBLISHER_ID = "2793280";
+const BOOKING_AWIN_ADVERTISER_ID = "6776";
+
+function awinBookingLink(bookingPath: string, label: string): string {
+  const sep = bookingPath.includes("?") ? "&" : "?";
+  const bookingUrl = `https://www.booking.com${bookingPath}${sep}label=${label}`;
+  return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
+    bookingUrl,
+  )}`;
+}
 
 const VALID_CATEGORIES = [
   "Hotel Tips",
@@ -320,14 +331,20 @@ async function main(): Promise<void> {
     content: generated.content,
     affiliateLinks: [
       {
-        label: `Search Hotels in ${city}`,
-        url: `https://www.booking.com/searchresults.html?aid=${BOOKING_AID_PLACEHOLDER}&ss=${encodeURIComponent(city)}`,
+        label: `Search Hotels in ${city} on Booking.com`,
+        url: awinBookingLink(
+          `/searchresults.html?ss=${encodeURIComponent(city)}`,
+          `reservationsnew-blog-${cityTag}-hotels`,
+        ),
         provider: "Booking.com",
       },
       {
-        label: `Find Flights to ${city}`,
-        url: `https://tp.media/r?marker=${TRAVELPAYOUTS_PLACEHOLDER}&p=4132&u=https%3A%2F%2Fwww.aviasales.com`,
-        provider: "TravelPayouts",
+        label: `Find Flights to ${city} on Booking.com`,
+        url: awinBookingLink(
+          `/flights/index.html?to=${encodeURIComponent(city)}`,
+          `reservationsnew-blog-${cityTag}-flights`,
+        ),
+        provider: "Booking.com",
       },
     ],
   };

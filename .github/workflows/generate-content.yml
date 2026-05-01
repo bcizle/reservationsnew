@@ -29,7 +29,6 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           NEXT_PUBLIC_BOOKING_AID: ${{ secrets.BOOKING_AID }}
-          NEXT_PUBLIC_TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
 
       - name: Check for new content
         id: check_changes

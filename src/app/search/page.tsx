@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BookingSearchWidget from "@/components/BookingSearchWidget";
-import TravelPayoutsFlightWidget from "@/components/TravelPayoutsFlightWidget";
-import TravelPayoutsCarWidget from "@/components/TravelPayoutsCarWidget";
+import BookingFlightWidget from "@/components/BookingFlightWidget";
+import BookingCarWidget from "@/components/BookingCarWidget";
 import AffiliateBanner from "@/components/AffiliateBanner";
 import OptimizedImage from "@/components/OptimizedImage";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/JsonLd";
@@ -414,10 +414,10 @@ export default async function SearchPage({
             checkIn={params.checkin}
             checkOut={params.checkout}
           />
-          <TravelPayoutsFlightWidget destination={matchedDest?.iata || query} />
+          <BookingFlightWidget destination={matchedDest?.iata || query} />
         </div>
         <div className="mt-6">
-          <TravelPayoutsCarWidget destination={ssTarget || query} />
+          <BookingCarWidget destination={ssTarget || query} />
         </div>
       </section>
 

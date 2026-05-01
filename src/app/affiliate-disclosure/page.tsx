@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Affiliate Disclosure",
   description:
-    "As a Booking.com Affiliate, ReservationsNew earns from qualifying transactions. Full transparency on our affiliate partnerships with Booking.com (via Awin), TravelPayouts, and other travel providers.",
+    "As a Booking.com Affiliate, ReservationsNew earns from qualifying transactions. Full transparency on our affiliate partnership with Booking.com via the Awin network.",
 };
 
 export default function AffiliateDisclosure() {
@@ -51,9 +51,6 @@ export default function AffiliateDisclosure() {
               roster of approved Awin partners covering hotels, city passes, eSIMs, campgrounds,
               boutique stays, and other travel services. Each partner is listed on our homepage
               partner section with the relevant category and a transparent affiliate link.
-            </li>
-            <li>
-              <strong>TravelPayouts</strong> — We partner with TravelPayouts, a travel affiliate network that connects us with multiple travel services including Aviasales (flight comparison), Hotellook (hotel comparison), and Economy Bookings (car rentals). Commissions are earned when you click through our links and complete a booking.
             </li>
           </ul>
         </section>

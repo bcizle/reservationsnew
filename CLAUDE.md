@@ -49,9 +49,9 @@ src/
 │   ├── GoogleAnalytics.tsx       # GA4 setup (env var gated)
 │   ├── JsonLd.tsx                # Schema.org structured data
 │   ├── SearchWidget.tsx          # Client-side search form
-│   ├── BookingSearchWidget.tsx   # Booking.com deep-link widget
-│   ├── TravelPayoutsFlightWidget.tsx  # Aviasales flight search
-│   ├── TravelPayoutsCarWidget.tsx     # Economy Bookings car rentals
+│   ├── BookingSearchWidget.tsx   # Booking.com hotel deep-link widget
+│   ├── BookingFlightWidget.tsx   # Booking.com flights deep-link widget
+│   ├── BookingCarWidget.tsx      # Booking.com car rentals deep-link widget
 │   ├── AffiliateLink.tsx         # Affiliate link wrapper (GA event tracking)
 │   └── AffiliateBanner.tsx       # Affiliate disclosure banner
 └── lib/
@@ -74,8 +74,7 @@ scripts/generate-blog-post.ts     # Template-based blog post generator
 - 6 destination detail pages (NYC, Paris, Tokyo, London, Cancun, Dubai) with hotel/flight/car widgets
 - 6 SEO blog posts with affiliate CTAs and related posts
 - Awin affiliate integration: 9 approved partners with deep links
-- Booking.com affiliate widgets (search + deep linking via `aid` param)
-- TravelPayouts integration (Aviasales flights, Economy Bookings cars)
+- Booking.com affiliate integration (hotels, flights, cars) via Awin tracking
 - Affiliate click tracking via Google Analytics events
 - Dynamic sitemap with all pages, destinations, and blog posts
 - robots.txt (disallows /api/ and /search?)
@@ -131,17 +130,13 @@ None currently. All pages are statically rendered or use client-side affiliate l
 - **Link format:** `https://www.awin1.com/cread.php?awinmid={advertiserId}&awinaffid={publisherId}&ued={encodedUrl}`
 - **Link builder:** `buildAwinLink()` in `src/lib/awin.ts` — falls back to direct URL if advertiserId is "TODO"
 
-### Booking.com
-- **Affiliate ID:** env var `NEXT_PUBLIC_BOOKING_AID`
-- **Integration:** `BookingSearchWidget` component builds deep links with `aid` param
-- **Link format:** `https://www.booking.com/searchresults.html?aid={AID}&ss={destination}&checkin={date}&checkout={date}`
-- **Image domain:** `cf.bstatic.com` whitelisted in `next.config.ts`
-
-### TravelPayouts / Aviasales
-- **Token:** env var `NEXT_PUBLIC_TRAVELPAYOUTS_TOKEN`
-- **Flight widget:** `TravelPayoutsFlightWidget` — Aviasales search with marker-based tracking
-- **Car widget:** `TravelPayoutsCarWidget` — Economy Bookings via tp.media redirect
-- **Link format:** `https://tp.media/r?marker={token}&p={productId}&u={encodedUrl}`
+### Booking.com (via Awin)
+- **Awin Publisher ID:** 2793280 (env: `NEXT_PUBLIC_AWIN_PUBLISHER_ID`)
+- **Awin Advertiser ID:** 6776 (Booking.com)
+- **Disclosure language:** "As a Booking.com Affiliate, I earn from qualifying transactions."
+- **Link builders:** `src/lib/booking.ts` exports `buildBookingLink` (hotels), `buildBookingHomeLink` (Booking.com home), `buildBookingCarLink` (cars), `buildBookingFlightLink` (flights). All wrap the destination URL in the Awin `cread.php` tracker.
+- **Components:** `BookingSearchWidget` (hotels), `BookingFlightWidget` (flights), `BookingCarWidget` (cars) — all client-side, all routed through Awin.
+- **Optional aid:** `NEXT_PUBLIC_BOOKING_AID` is an additional Booking.com legacy param appended to the inner URL when set; Awin tracking is the primary attribution path.
 
 ### Affiliate Click Tracking
 All affiliate links use the `AffiliateLink` component which fires GA events:
@@ -158,16 +153,18 @@ gtag("event", "affiliate_click", {
 ## 7. Environment Variables
 
 ```bash
-NEXT_PUBLIC_BOOKING_AID              # Booking.com affiliate ID
-NEXT_PUBLIC_TRAVELPAYOUTS_TOKEN      # TravelPayouts/Aviasales marker token
+NEXT_PUBLIC_BOOKING_AID              # Optional legacy Booking.com aid param (Awin handles primary attribution)
 NEXT_PUBLIC_GA_MEASUREMENT_ID        # Google Analytics 4 measurement ID (G-XXXXXXXXXX)
 NEXT_PUBLIC_SITE_URL                 # Site URL (default: https://reservationsnew.com)
 NEXT_PUBLIC_AWIN_PUBLISHER_ID        # Awin publisher ID (default: 2793280)
+NEXT_PUBLIC_GOOGLE_PLACES_API_KEY    # Google Places (client-side) for autocomplete
+GOOGLE_PLACES_API_KEY                # Google Places (server-side)
+ANTHROPIC_API_KEY                    # Used by the blog generator workflow
 ```
 
-All are `NEXT_PUBLIC_` (client-side accessible). See `.env.local.example` for template.
+All `NEXT_PUBLIC_*` vars are client-side accessible. See `.env.local.example` for template.
 
-Vercel secrets (for GitHub Actions): `BOOKING_AID`, `TRAVELPAYOUTS_TOKEN`.
+Vercel/GitHub Actions secrets: `BOOKING_AID`, `ANTHROPIC_API_KEY`.
 
 ---
 
@@ -200,7 +197,7 @@ Vercel secrets (for GitHub Actions): `BOOKING_AID`, `TRAVELPAYOUTS_TOKEN`.
 - 36 city pool (Paris, London, Tokyo, NYC, Barcelona, Rome, etc.)
 - Template-based (not AI-generated yet — content is repetitive)
 - Includes Unsplash image mapping per city
-- Outputs affiliate links for Booking.com and TravelPayouts
+- Outputs Awin-tracked Booking.com hotel + flight affiliate links
 
 ---
 

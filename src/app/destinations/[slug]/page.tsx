@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BookingSearchWidget from "@/components/BookingSearchWidget";
-import TravelPayoutsFlightWidget from "@/components/TravelPayoutsFlightWidget";
-import TravelPayoutsCarWidget from "@/components/TravelPayoutsCarWidget";
+import BookingFlightWidget from "@/components/BookingFlightWidget";
+import BookingCarWidget from "@/components/BookingCarWidget";
 import AffiliateBanner from "@/components/AffiliateBanner";
 import OptimizedImage from "@/components/OptimizedImage";
 import PhotoGallery from "@/components/PhotoGallery";
@@ -194,10 +194,10 @@ export default async function DestinationPage({
           </h2>
           <div className="grid gap-6 lg:grid-cols-2">
             <BookingSearchWidget destination={dest.name} />
-            <TravelPayoutsFlightWidget destination={dest.iata} />
+            <BookingFlightWidget destination={dest.iata} />
           </div>
           <div className="mt-6">
-            <TravelPayoutsCarWidget destination={dest.name} />
+            <BookingCarWidget destination={dest.name} />
           </div>
         </section>
 

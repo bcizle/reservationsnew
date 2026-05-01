@@ -129,7 +129,7 @@ Content pipeline improvements and SEO hardening to increase organic traffic.
 - [ ] **Optimize page load speed and Core Web Vitals**
   - Audit with Lighthouse and PageSpeed Insights
   - Optimize images: add proper `sizes` attribute, use next/image `priority` on above-fold images
-  - Lazy-load below-fold affiliate widgets (TravelPayouts, Booking.com scripts)
+  - Lazy-load below-fold affiliate widgets (Booking.com flight/car widgets, Awin scripts)
   - **Key files:** `src/app/layout.tsx`, all page components
   - **Done when:** Lighthouse performance score is 90+ on mobile
 

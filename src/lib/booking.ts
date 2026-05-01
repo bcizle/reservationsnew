@@ -80,3 +80,35 @@ export function buildBookingHomeLink(label?: string): string {
     bookingUrl,
   )}`;
 }
+
+/**
+ * Awin-tracked Booking.com car-rental link.
+ * Booking.com's car search lives at /cars/index.html with destination query
+ * params (Booking.com does the geocoding).
+ */
+export function buildBookingCarLink(destination?: string, label?: string): string {
+  const params = new URLSearchParams({
+    label: label ?? "reservationsnew-cars",
+  });
+  if (destination) params.set("ss", destination);
+  const carsUrl = `https://www.booking.com/cars/index.html?${params.toString()}`;
+  return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
+    carsUrl,
+  )}`;
+}
+
+/**
+ * Awin-tracked Booking.com flights link.
+ * Booking.com flights live at /flights/index.html — destination passed via the
+ * `to` param when known.
+ */
+export function buildBookingFlightLink(destination?: string, label?: string): string {
+  const params = new URLSearchParams({
+    label: label ?? "reservationsnew-flights",
+  });
+  if (destination) params.set("to", destination);
+  const flightsUrl = `https://www.booking.com/flights/index.html?${params.toString()}`;
+  return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
+    flightsUrl,
+  )}`;
+}

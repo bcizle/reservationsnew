@@ -51,10 +51,11 @@ export default function About() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">How we make money</h2>
           <p className="mt-3">
-            <strong>We earn affiliate commissions when you book through our links — at no extra
-            cost to you.</strong> When you click a partner link on ReservationsNew and complete a
-            booking, the partner (e.g. Booking.com, Aviasales, Awin merchants) pays us a small
-            referral fee. The price you pay is the same as if you had visited the partner directly.
+            <strong>As a Booking.com Affiliate, we earn from qualifying transactions — at no
+            extra cost to you.</strong> When you click a partner link on ReservationsNew and
+            complete a booking, the partner (Booking.com or another approved Awin merchant) pays
+            us a small referral fee. The price you pay is the same as if you had visited the
+            partner directly.
           </p>
           <p className="mt-3">
             That&apos;s the whole business model. We never charge you, never sell your personal
@@ -70,13 +71,12 @@ export default function About() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">Our partnerships</h2>
           <p className="mt-3">
-            We work with a curated set of trusted booking platforms and travel-services partners.
-            Our primary hotel inventory partner is <strong>Booking.com</strong>, which lists over
-            28 million accommodations worldwide. We also surface flight inventory through the{" "}
-            <strong>Aviasales / TravelPayouts</strong> network and a hand-picked roster of{" "}
-            <strong>{AWIN_PARTNERS.length} approved travel partners</strong> from the Awin
-            affiliate network — covering city passes, eSIMs, campgrounds, boutique hotels, and
-            more.
+            Our primary partner is <strong>Booking.com</strong>, the world&apos;s largest
+            accommodation platform with over 28 million listings. We&apos;re an approved
+            Booking.com Affiliate via the Awin network (Awin Publisher 2793280, Booking.com
+            Advertiser 6776) — covering hotels, flights, and car rentals. We also work with a
+            hand-picked roster of <strong>{AWIN_PARTNERS.length} additional Awin partners</strong>{" "}
+            covering city passes, eSIMs, campgrounds, boutique hotels, and more.
           </p>
           <ul className="mt-4 grid gap-2 sm:grid-cols-2">
             {AWIN_PARTNERS.slice(0, 8).map((p) => (
