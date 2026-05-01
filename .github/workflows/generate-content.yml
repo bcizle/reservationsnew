@@ -6,6 +6,9 @@ on:
     - cron: '0 9 * * 1,4'
   workflow_dispatch: # Allows manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
@@ -16,20 +19,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install ts-node
-        run: npm install -g ts-node typescript
-
       - name: Generate blog post
-        run: npx ts-node scripts/generate-blog-post.ts
+        run: npx tsx scripts/generate-blog-post.ts
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           NEXT_PUBLIC_BOOKING_AID: ${{ secrets.BOOKING_AID }}
           NEXT_PUBLIC_TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
       - name: Check for new content
         id: check_changes
