@@ -52,6 +52,7 @@ export interface AwinPartner {
  *   Station Casinos (US) → 19995
  *   NN Hotels (US)       → 19428
  *   GoWithGuide US       → 87121
+ *   Kiwi MX              → 20563
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
@@ -207,5 +208,15 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Book private, customizable tours with local guides in 500+ cities across 120+ countries — personalized travel experiences worldwide.",
     icon: "🗺️",
     destinationUrl: "https://gowithguide.com/",
+  },
+  {
+    id: "kiwi-mx",
+    name: "Kiwi.com",
+    advertiserId: "20563",
+    category: "Flights",
+    description:
+      "Affordable flights and complete travel itineraries across multiple providers — book single flights or full multi-stop trips at competitive rates.",
+    icon: "✈️",
+    destinationUrl: "https://www.kiwi.com/mx",
   },
 ];
