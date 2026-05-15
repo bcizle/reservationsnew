@@ -45,6 +45,9 @@ const VALID_CATEGORIES = [
   "Car Rental",
 ] as const;
 
+// Template tags are documentation only — the Anthropic call generates its
+// own tag list. They stay here so a future fallback path (or a human
+// editor) has a sensible starting point.
 const TOPIC_TEMPLATES = [
   { template: "Best Budget Hotels in {city} for {year}", category: "Destinations", tags: ["hotels", "budget", "{city_tag}"] },
   { template: "How to Save Money on Hotels in {city}", category: "Hotel Tips", tags: ["savings", "hotels", "{city_tag}"] },
@@ -56,6 +59,24 @@ const TOPIC_TEMPLATES = [
   { template: "Best Hotels Near the Airport in {city}", category: "Destinations", tags: ["airport-hotels", "{city_tag}", "convenience"] },
   { template: "Romantic Hotels in {city} for Couples", category: "Destinations", tags: ["couples", "romantic", "{city_tag}"] },
   { template: "Best Family Hotels in {city}", category: "Destinations", tags: ["family", "kids", "{city_tag}"] },
+  { template: "Hidden Gems in {city}: Off-the-Beaten-Path Neighborhoods", category: "Destinations", tags: ["hidden-gems", "neighborhoods", "{city_tag}"] },
+  { template: "{city} on a Budget: How to Spend Less Than $100 a Day", category: "Budget Travel", tags: ["budget", "daily-spend", "{city_tag}"] },
+  { template: "Best Time of Year to Visit {city}", category: "Travel Guides", tags: ["timing", "seasons", "weather", "{city_tag}"] },
+  { template: "Solo Travel Guide to {city}: Where to Stay and What to Do", category: "Travel Guides", tags: ["solo-travel", "safety", "{city_tag}"] },
+  { template: "Where to Eat in {city} Without Breaking the Bank", category: "Budget Travel", tags: ["food", "budget", "restaurants", "{city_tag}"] },
+  { template: "Public Transit Guide to {city} for Tourists", category: "Travel Guides", tags: ["transit", "transport", "{city_tag}"] },
+  { template: "Best Day Trips from {city}", category: "Travel Guides", tags: ["day-trips", "excursions", "{city_tag}"] },
+  { template: "How to Find Last-Minute Hotel Deals in {city}", category: "Hotel Tips", tags: ["last-minute", "deals", "hotels", "{city_tag}"] },
+  { template: "Digital Nomad Guide to {city}: Coworking and Coffee", category: "Travel Guides", tags: ["digital-nomad", "remote-work", "{city_tag}"] },
+  { template: "{city} Nightlife Guide for Travelers", category: "Destinations", tags: ["nightlife", "bars", "{city_tag}"] },
+  { template: "Best Museums and Culture in {city}", category: "Destinations", tags: ["museums", "culture", "{city_tag}"] },
+  { template: "Affordable Luxury Hotels in {city}", category: "Hotel Tips", tags: ["luxury", "hotels", "value", "{city_tag}"] },
+  { template: "{city} Travel Mistakes Everyone Makes (And How to Avoid Them)", category: "Travel Guides", tags: ["tips", "mistakes", "{city_tag}"] },
+  { template: "Packing List for {city}: What You Actually Need", category: "Travel Guides", tags: ["packing", "tips", "{city_tag}"] },
+  { template: "Airport Transfer Tips for {city}", category: "Travel Guides", tags: ["airport", "transit", "{city_tag}"] },
+  { template: "Seasonal Events and Festivals in {city}", category: "Destinations", tags: ["festivals", "events", "{city_tag}"] },
+  { template: "Walking Tours of {city}: Self-Guided Routes Locals Recommend", category: "Travel Guides", tags: ["walking", "self-guided", "{city_tag}"] },
+  { template: "Cheap Eats in {city}: Where Locals Actually Go", category: "Budget Travel", tags: ["food", "local", "budget", "{city_tag}"] },
 ];
 
 const CITIES = [
@@ -65,6 +86,9 @@ const CITIES = [
   "Copenhagen", "Edinburgh", "Marrakech", "Kyoto", "Seoul", "Montreal",
   "Buenos Aires", "Cape Town", "Reykjavik", "Dubrovnik", "Florence",
   "Porto", "Athens", "Budapest", "Krakow", "Mexico City", "Cartagena",
+  // Added 2026-05: round out global coverage with high-search-volume cities.
+  "Hong Kong", "Madrid", "Milan", "Stockholm", "Munich", "Dublin",
+  "Toronto", "Chicago", "Los Angeles", "Rio de Janeiro", "Cairo", "Hanoi",
 ];
 
 const IMAGES: Record<string, string> = {
