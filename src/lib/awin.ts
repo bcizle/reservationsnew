@@ -53,6 +53,7 @@ export interface AwinPartner {
  *   NN Hotels (US)       → 19428
  *   GoWithGuide US       → 87121
  *   Kiwi MX              → 20563
+ *   Xcaret Global        → 34947
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
@@ -218,5 +219,15 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Affordable flights and complete travel itineraries across multiple providers — book single flights or full multi-stop trips at competitive rates.",
     icon: "✈️",
     destinationUrl: "https://www.kiwi.com/mx",
+  },
+  {
+    id: "xcaret",
+    name: "Xcaret Global",
+    advertiserId: "34947",
+    category: "Tours & Attractions",
+    description:
+      "Eight eco-theme parks across Cancun and the Riviera Maya, plus all-inclusive Xcaret hotels — book unforgettable experiences in Mexico's top vacation region.",
+    icon: "🏝️",
+    destinationUrl: "https://www.xcaret.com/en/",
   },
 ];
