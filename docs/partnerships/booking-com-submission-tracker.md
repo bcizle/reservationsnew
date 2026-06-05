@@ -127,3 +127,4 @@ Use only if current analytics are unavailable:
 Append dated notes here as submissions happen.
 
 - 2026-06-05: Public site copy and approval packet prepared. User confirmed existing CJ and Awin accounts, public application email, applicant entity, and preference for on-site booking rather than redirect-only flow.
+- 2026-06-05: Deployed approval-readiness copy cleanup in commit `3eb9e30`. Live checks passed for the homepage, `/destinations/paris`, and `/search?q=Paris`: public copy now presents ReservationsNew as a destination guide / partner-search referral site and no longer shows the old live-pricing, scan-millions, or hotels-available claims.
