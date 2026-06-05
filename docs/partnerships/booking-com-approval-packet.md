@@ -54,6 +54,16 @@ Use this for the actual content/API request.
 - Demand API overview: https://developers.booking.com/demand/docs/getting-started/overview
 - Demand API prerequisites: https://developers.booking.com/demand/docs/getting-started/prerequisites
 - Demand API authentication: https://developers.booking.com/demand/docs/development-guide/authentication
+- Demand API v3.2 reference: https://developers.booking.com/demand/docs/open-api/3.2/demand-api
+- Orders management guide: https://developers.booking.com/demand/docs/orders-api/overview
+- Create orders guide: https://developers.booking.com/demand/docs/orders-api/order-preview-create
+
+Current docs check on 2026-06-05:
+
+- Booking.com says Demand API v3.2 is live.
+- The v3.2 API reference lists production base URL `https://demandapi.booking.com/3.2/` and sandbox base URL `https://demandapi-sandbox.booking.com/3.2/`.
+- The prerequisites page still requires Managed Affiliate Partner status, Partner Centre access, an API token, and `X-Affiliate-Id`.
+- The orders guide still confirms `/orders` is the non-redirect booking path for booking and payment directly in the partner application.
 
 Booking.com says Demand API use requires:
 
@@ -82,7 +92,7 @@ Rationale:
 
 - Booking.com's Demand API docs list "Search, look and book" as the flow for search, booking, and checkout directly on a partner site.
 - The `/orders` API collection is the on-site booking layer: it lets travelers book and pay directly in the partner application, and supports post-booking retrieval, cancellations, reporting, and support workflows.
-- `/orders/preview` validates final price, payment methods, and booking details before purchase.
+- `/orders/preview` validates final price, payment methods, policies, and booking details before purchase.
 - `/orders/create` confirms the booking and processes payment using the `order_token` from preview.
 
 On-site booking implementation posture:

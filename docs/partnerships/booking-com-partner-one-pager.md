@@ -4,7 +4,7 @@ Last updated: 2026-06-05
 
 ## Request
 
-ReservationsNew LLC is requesting Booking.com Managed Affiliate Partner review, Partner Centre access, and Demand API approval for accommodations search, look, and book.
+ReservationsNew LLC is requesting Booking.com Managed Affiliate Partner review, Partner Centre access, and Demand API v3.2 approval for accommodations search, look, and book.
 
 Preferred approval:
 
@@ -47,7 +47,7 @@ Users currently click through to booking providers for current pricing, availabi
 The target product is a Booking.com-first accommodation booking experience:
 
 1. Traveler searches a destination and dates on ReservationsNew.
-2. ReservationsNew retrieves approved Booking.com content, availability, pricing, policies, and review information through the Demand API.
+2. ReservationsNew retrieves approved Booking.com content, availability, pricing, policies, and review information through Demand API v3.2.
 3. Traveler chooses a Booking.com accommodation/room product on ReservationsNew.
 4. ReservationsNew calls `/orders/preview` to confirm final price, guest allocation, payment options, policies, and order token.
 5. Traveler completes Booking.com-powered checkout on ReservationsNew if approved.

@@ -11,6 +11,7 @@ Use this during a logged-in CJ/Awin/Booking.com session. The goal is to turn acc
 - If a portal asks for CAPTCHA, email verification, legal acceptance, tax, or banking, Brent must complete that step directly.
 - Record statuses and ticket IDs in `booking-com-submission-tracker.md`.
 - Use `booking-com-portal-field-map.md` for form answers.
+- If Codex/Chrome reports that another extension UI is open, Brent should dismiss or complete that Chrome extension popup/window, then ask Codex to continue from the CJ/Awin tabs.
 
 ## CJ Session
 

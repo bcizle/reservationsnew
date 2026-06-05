@@ -101,7 +101,7 @@ Checked 2026-06-05:
 - Primary traffic geography.
 - Planned content volume for the next 90 days.
 - Newsletter/social profiles, if any.
-- CJ publisher ID.
+- CJ publisher ID captured privately in the gitignored applicant details file.
 - Awin publisher ID.
 - Current Booking.com program statuses in CJ and Awin.
 
@@ -128,3 +128,4 @@ Append dated notes here as submissions happen.
 
 - 2026-06-05: Public site copy and approval packet prepared. User confirmed existing CJ and Awin accounts, public application email, applicant entity, and preference for on-site booking rather than redirect-only flow.
 - 2026-06-05: Deployed approval-readiness copy cleanup in commit `3eb9e30`. Live checks passed for the homepage, `/destinations/paris`, and `/search?q=Paris`: public copy now presents ReservationsNew as a destination guide / partner-search referral site and no longer shows the old live-pricing, scan-millions, or hotels-available claims.
+- 2026-06-05: Rechecked official Booking.com Demand API docs. Demand API v3.2 is live; prerequisites still require Managed Affiliate Partner status, Partner Centre access, API token, and `X-Affiliate-Id`; `/orders` remains the on-site booking path. CJ publisher ID captured privately from the CJ sign-in context. CJ/Awin portal automation still requires Brent to dismiss or complete the Chrome extension UI currently blocking page inspection.

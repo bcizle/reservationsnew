@@ -34,7 +34,7 @@ ReservationsNew publishes destination guides, hotel-search entry points, and tra
 
 ### Demand API / Partner Centre Ask
 
-We are seeking Booking.com Managed Affiliate Partner review, Partner Centre access, Demand API sandbox credentials, and production approval for accommodations search, details, availability, order preview, order create, order details, cancellation, and modification support. If full on-site booking cannot be approved initially, we would like content-only or search-look-redirect approval plus the specific upgrade requirements.
+We are seeking Booking.com Managed Affiliate Partner review, Partner Centre access, Demand API v3.2 sandbox credentials, and production approval for accommodations search, details, availability, order preview, order create, order details, cancellation, and modification support. If full on-site booking cannot be approved initially, we would like content-only or search-look-redirect approval plus the specific upgrade requirements.
 
 ## CJ Existing Publisher Flow
 
@@ -81,8 +81,8 @@ Capture:
 - Contract/agreement status.
 - API key generated: yes/no. Do not store the token in Git.
 - `X-Affiliate-Id` received: yes/no. Do not store in Git unless Booking.com explicitly treats it as public.
-- Sandbox access enabled: yes/no.
-- Production access enabled: yes/no.
+- Sandbox access enabled: yes/no. Current v3.2 sandbox base URL: `https://demandapi-sandbox.booking.com/3.2/`.
+- Production access enabled: yes/no. Current v3.2 production base URL: `https://demandapi.booking.com/3.2/`.
 
 Demand API capabilities to request:
 

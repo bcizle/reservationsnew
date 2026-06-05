@@ -8,6 +8,8 @@ This document describes how ReservationsNew would implement Booking.com Demand A
 
 The preferred integration is search, look, and book for accommodations. The fallback is content-only or search-look-redirect while Booking.com reviews the path to on-site order creation.
 
+Official docs check on 2026-06-05: Booking.com Demand API v3.2 is live. Use v3.2 for new planning unless a Booking.com account manager instructs otherwise.
+
 ## Current Application
 
 - Framework: Next.js App Router.
@@ -50,7 +52,7 @@ These routes should:
 
 Suggested names:
 
-- `BOOKING_DEMAND_API_BASE_URL`
+- `BOOKING_DEMAND_API_BASE_URL` (`https://demandapi-sandbox.booking.com/3.2/` for sandbox; `https://demandapi.booking.com/3.2/` for production)
 - `BOOKING_DEMAND_API_TOKEN`
 - `BOOKING_AFFILIATE_ID`
 - `BOOKING_DEMAND_API_ENVIRONMENT`
