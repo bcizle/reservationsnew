@@ -85,6 +85,8 @@ Checked 2026-06-05:
 
 ## Execution Artifacts
 
+- Partner one-pager: `booking-com-partner-one-pager.md`
+- Technical readiness note: `booking-com-technical-readiness.md`
 - Portal field map: `booking-com-portal-field-map.md`
 - Portal session checklist: `booking-com-portal-session-checklist.md`
 - Demand API escalation draft: `outreach-drafts/booking-com-demand-api-escalation.md`

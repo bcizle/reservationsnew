@@ -249,7 +249,7 @@ The user must provide or personally enter:
 3. Complete email verification, tax, banking, and compliance profile directly in CJ/Awin; the account owner must enter sensitive tax/banking data.
 4. Capture evidence: CJ publisher ID, Booking.com program status, Awin publisher ID, Awin Booking.com status, and any program manager/contact details.
 5. Use CJ support/program messages to ask for Booking.com Managed Affiliate Partner / Partner Centre / Demand API escalation.
-6. Submit the Demand API escalation email with the primary ask: search, look, and book. Include fallback language for content-only or search-look-redirect if needed.
+6. Submit the Demand API escalation email with the primary ask: search, look, and book. Include fallback language for content-only or search-look-redirect if needed. Attach or reference the partner one-pager and technical readiness note if the portal/email allows attachments.
 7. If no response after 5 business days, send the CJ follow-up and Awin backup inquiry.
 8. Once Partner Centre access is granted, generate API credentials securely and test only in sandbox first.
 9. Build the approved integration in phases:
@@ -267,6 +267,13 @@ The user must provide or personally enter:
 - After CJ or Awin Booking.com approval: send Demand API search/look/book escalation request.
 - 5 business days after API request: follow up with CJ/Booking contact.
 - 10 business days after API request: try Awin backup/parallel path if not already done.
+
+## Attachment-Ready Supporting Docs
+
+- Partner one-pager: `booking-com-partner-one-pager.md`
+- Technical readiness note: `booking-com-technical-readiness.md`
+- Portal field map: `booking-com-portal-field-map.md`
+- Portal session checklist: `booking-com-portal-session-checklist.md`
 
 ## Red Lines
 
