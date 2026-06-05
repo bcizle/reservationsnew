@@ -83,6 +83,15 @@ Checked 2026-06-05:
 - [ ] If no contact exists, send the CJ support follow-up draft.
 - [ ] Continue Partner Centre account setup.
 
+## Execution Artifacts
+
+- Portal field map: `booking-com-portal-field-map.md`
+- Portal session checklist: `booking-com-portal-session-checklist.md`
+- Demand API escalation draft: `outreach-drafts/booking-com-demand-api-escalation.md`
+- CJ support/message draft: `outreach-drafts/booking-com-cj-support-message.md`
+- Awin support/message draft: `outreach-drafts/booking-com-awin-support-message.md`
+- Awin public email draft: `outreach-drafts/booking-com-awin-public-email.eml`
+
 ## Missing Inputs
 
 - Monthly sessions/users/pageviews.
