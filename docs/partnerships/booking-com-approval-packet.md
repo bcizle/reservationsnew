@@ -33,6 +33,8 @@ Use this for the standard publisher application and affiliate relationship.
 - Booking.com currently routes registration to CJ.
 - CJ Booking.com page: https://www.cj.com/en-gb/publisher/partners/booking.com
 - North America application path starts from CJ region selector.
+- North America signup URL observed on 2026-06-05: https://www.cj.com/en-gb/booking-form?cid=b7f06019-c2c9-4060-80e1-1b44324cbf46
+- Existing CJ publishers should use the "Sign up here instead" path from that page, which routes into the CJ member advertiser/program flow.
 
 CJ describes eligible publishers as travel bloggers, influencers, and website owners with an active website, blog, or social profile, but social-only publishers are not accepted. For ReservationsNew, the active website is the strongest application asset.
 
@@ -40,6 +42,10 @@ Expected outcome:
 
 - Access to Booking.com affiliate links, banners, widgets, and reporting.
 - This does not by itself prove Demand API/content rights.
+- The CJ signup page currently says "Content - Disabled" for the affiliate offer. Treat this as a warning that CJ affiliate approval does not grant a product/property content feed or permission to republish Booking.com property data.
+- The CJ terms shown on the signup page say customers must complete accommodation bookings on Booking.com. That conflicts with the desired ReservationsNew on-site checkout flow, so on-site booking must be requested through Booking.com Managed Affiliate Partner / Demand API review rather than assumed from CJ.
+- The CJ signup page also states no iframes or similar functionality, no software/toolbars/browser extensions, no sub-affiliates without approval, no social-only publisher accounts, no Booking.com voucher-code claims, and no ad hijacking/direct-link PPC behavior.
+- The signup page noted that commission is only paid for accommodation reservations even though other products may track.
 
 ### Route 2 - Booking.com Managed Affiliate Partner + Partner Centre
 
@@ -91,13 +97,17 @@ On-site booking implementation posture:
 Use this as a fallback or parallel inquiry because Booking.com has recently moved affiliate program routing and some regions/programs may still be visible through Awin.
 
 - Awin Booking.com page: https://www.awin.com/us/advertisers/partner/booking.com
+- Awin Booking.com North America express signup URL observed on 2026-06-05: https://ui.awin.com/express-signup/en/awin/6776/8d075a6a-12e4-4552-8643-baf37280b441?t=YW3E6BiLkyO0nOt7dZkHLgC3UM9XOOF9F8pf4icVXVw&utm_campaign=joinbooking&utm_content=northamerica&utm_source=awin.com
 - Awin US contact page: https://www.awin.com/us/contact
 - Awin onboarding email listed publicly: onboarding@awin.com
+- Awin US new business email listed publicly: us-newbusiness@awin.com
+- Awin US publisher support route listed publicly: Partner Success Center / Website Help Ticket.
 
 Expected outcome:
 
 - Clarify whether Booking.com North America is still accepting publishers through Awin.
 - If accepted, request guidance on whether Awin publisher approval can support escalation to Booking.com managed/API access.
+- Awin's public page says Booking.com North America can provide reservation details and dedicated account management. Treat this as useful for escalation and reporting, but not as proof of Demand API property-content or on-site checkout rights.
 
 ## Application Positioning
 

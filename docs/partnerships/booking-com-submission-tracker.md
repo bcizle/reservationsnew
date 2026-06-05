@@ -37,14 +37,47 @@ Fallback if needed: accept content-only or search-look-redirect approval first, 
   - `/orders/create`
   - `/orders/details`
 
+## CJ North America Public Signup Findings
+
+Checked 2026-06-05:
+
+- Public region path: CJ Booking.com page -> North America -> Apply now.
+- Direct public signup URL observed: https://www.cj.com/en-gb/booking-form?cid=b7f06019-c2c9-4060-80e1-1b44324cbf46
+- Existing CJ publishers should choose "Sign up here instead" on the CJ-powered signup page and apply from inside the existing CJ member account.
+- The signup page says "Content - Disabled." This means CJ affiliate approval should not be treated as approval to republish Booking.com property content.
+- The visible terms say customers must complete accommodation bookings on Booking.com. This means on-site ReservationsNew checkout needs separate Booking.com Managed Affiliate Partner / Demand API approval.
+- Important visible restrictions:
+  - No iframes or similar functionality.
+  - No Booking.com voucher-code claims.
+  - No ad hijacking, direct-link PPC, or brand/search behavior that jeopardizes Booking.com.
+  - No toolbars, browser extensions, or similar software.
+  - No sub-affiliates without approval.
+  - Social-only publishers are not allowed.
+  - Commission shown on the signup page is only paid for accommodation reservations.
+
+## Awin Public Program Findings
+
+Checked 2026-06-05:
+
+- Booking.com page: https://www.awin.com/us/advertisers/partner/booking.com
+- North America express signup URL observed: https://ui.awin.com/express-signup/en/awin/6776/8d075a6a-12e4-4552-8643-baf37280b441?t=YW3E6BiLkyO0nOt7dZkHLgC3UM9XOOF9F8pf4icVXVw&utm_campaign=joinbooking&utm_content=northamerica&utm_source=awin.com
+- Public page says Booking.com North America is advertiser/program `6776`.
+- Public page says partners can gain access to reservation details and dedicated account management.
+- Awin contact page lists:
+  - onboarding@awin.com for applying for Awin access.
+  - us-newbusiness@awin.com for new business.
+  - Publisher support through Partner Success Center / Website Help Ticket.
+- Treat Awin approval as useful evidence and a possible escalation route, but not as proof of Booking.com Demand API content or on-site checkout rights.
+
 ## Day 0 Checklist
 
 - [ ] Log in to CJ with the existing publisher account.
-- [ ] Search for Booking.com North America.
+- [ ] Search for Booking.com North America, or open the existing-publisher signup path from the CJ North America form.
 - [ ] Record current status in this tracker.
 - [ ] If not approved, apply with the copy in `booking-com-approval-packet.md`.
 - [ ] Confirm CJ profile, website, tax, and payout settings are complete.
 - [ ] Log in to Awin.
+- [ ] Check advertiser/program `6776` or the Booking.com North America express signup path.
 - [ ] Record Booking.com North America status in this tracker.
 - [ ] If a Booking.com contact or message center exists, send the Demand API escalation ask.
 - [ ] If no contact exists, send the CJ support follow-up draft.
