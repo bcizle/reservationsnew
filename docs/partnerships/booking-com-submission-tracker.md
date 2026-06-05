@@ -11,8 +11,11 @@ Fallback if needed: accept content-only or search-look-redirect approval first, 
 ## Current Account Status
 
 - CJ Publisher: existing account.
+- CJ Booking.com North America program: pending application, verified in CJ on 2026-06-05.
 - Awin Publisher: existing account.
-- Booking.com Partner Centre: account access in progress.
+- Awin Booking.com North America program: public program identified; authenticated status not yet captured.
+- Booking.com Partner Centre: sign-in returned `USER_NOT_FOUND` / no access rights on 2026-06-05.
+- Booking.com Demand API: not approved yet.
 - Public application email: brent@reservationsnew.com.
 - Applicant entity for public forms: ReservationsNew LLC / ReservationsNew.com.
 - Private applicant fields: keep in `docs/partnerships/private/booking-com-applicant-details.local.md` only.
@@ -71,15 +74,15 @@ Checked 2026-06-05:
 
 ## Day 0 Checklist
 
-- [ ] Log in to CJ with the existing publisher account.
-- [ ] Search for Booking.com North America, or open the existing-publisher signup path from the CJ North America form.
-- [ ] Record current status in this tracker.
+- [x] Log in to CJ with the existing publisher account.
+- [x] Search for Booking.com North America, or open the existing-publisher signup path from the CJ North America form.
+- [x] Record current status in this tracker.
 - [ ] If not approved, apply with the copy in `booking-com-approval-packet.md`.
 - [ ] Confirm CJ profile, website, tax, and payout settings are complete.
 - [ ] Log in to Awin.
 - [ ] Check advertiser/program `6776` or the Booking.com North America express signup path.
 - [ ] Record Booking.com North America status in this tracker.
-- [ ] If a Booking.com contact or message center exists, send the Demand API escalation ask.
+- [x] If a Booking.com contact or message center exists, send the Demand API escalation ask.
 - [ ] If no contact exists, send the CJ support follow-up draft.
 - [ ] Continue Partner Centre account setup.
 
@@ -128,5 +131,8 @@ Append dated notes here as submissions happen.
 
 - 2026-06-05: Public site copy and approval packet prepared. User confirmed existing CJ and Awin accounts, public application email, applicant entity, and preference for on-site booking rather than redirect-only flow.
 - 2026-06-05: Deployed approval-readiness copy cleanup in commit `3eb9e30`. Live checks passed for the homepage, `/destinations/paris`, and `/search?q=Paris`: public copy now presents ReservationsNew as a destination guide / partner-search referral site and no longer shows the old live-pricing, scan-millions, or hotels-available claims.
-- 2026-06-05: Rechecked official Booking.com Demand API docs. Demand API v3.2 is live; prerequisites still require Managed Affiliate Partner status, Partner Centre access, API token, and `X-Affiliate-Id`; `/orders` remains the on-site booking path. CJ publisher ID captured privately from the CJ sign-in context. CJ/Awin portal automation still requires Brent to dismiss or complete the Chrome extension UI currently blocking page inspection.
-- 2026-06-05: Retried Chrome automation for Awin and Gmail. Both returned the same blocker: Chrome is blocking automation because another extension UI is open on the page. No email-sending connector is available in this Codex environment. Next user action: dismiss or complete the Chrome extension popup/window, then ask Codex to continue from the open CJ/Awin/Gmail tabs.
+- 2026-06-05: Rechecked official Booking.com Demand API docs. Demand API v3.2 is live; prerequisites still require Managed Affiliate Partner status, Partner Centre access, API token, and `X-Affiliate-Id`; `/orders` remains the on-site booking path. CJ publisher ID captured privately from the CJ sign-in context.
+- 2026-06-05: Earlier Chrome automation retry for Awin and Gmail returned the same blocker: Chrome is blocking automation because another extension UI is open on the page. No email-sending connector is available in this Codex environment.
+- 2026-06-05: Chrome automation connected after Brent closed the extra Chrome windows. CJ Advertisers showed `Booking.com North America` under pending applications. CJ message center was available, and a Demand API v3.2 / Partner Centre escalation was sent to Booking.com North America from CJ mail. Sent Items confirmed the message with date `5-Jun-2026`.
+- 2026-06-05: Booking.com Affiliate Partner Centre sign-in returned `USER_NOT_FOUND` and said the account has no access rights. The public `Sign up now` route redirected back to the Booking.com affiliate landing page, whose registration path points to CJ rather than a standalone Partner Centre signup.
+- 2026-06-05: Retried Awin express signup again after the Chrome cleanup. The existing Awin tab and a fresh Awin tab both still hit Chrome's "another extension UI is open" blocker on the Awin page, so authenticated Awin Booking.com status remains uncaptured.
