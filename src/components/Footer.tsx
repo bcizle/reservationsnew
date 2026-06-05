@@ -10,8 +10,8 @@ export default function Footer() {
               Reservations<span className="text-accent">New</span>
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-gray-400">
-              Compare hotel prices across the world&apos;s top booking platforms. We help travelers
-              save time and money by surfacing the best deals in one place.
+              Travel guides and partner search links for hotels, flights, and car rentals.
+              Confirm current prices, availability, and booking terms on the provider site.
             </p>
           </div>
           <div>

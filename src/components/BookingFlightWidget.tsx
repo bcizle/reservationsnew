@@ -7,12 +7,20 @@ interface BookingFlightWidgetProps {
   destination?: string;
 }
 
+type GtagEvent = (
+  command: "event",
+  eventName: string,
+  params: Record<string, string>,
+) => void;
+
 export default function BookingFlightWidget({ destination }: BookingFlightWidgetProps) {
   const searchUrl = buildBookingFlightLink(destination, "reservationsnew-flight-widget");
 
   function handleClick() {
-    if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "affiliate_click", {
+    const gtag = (window as Window & { gtag?: GtagEvent }).gtag;
+
+    if (typeof gtag === "function") {
+      gtag("event", "affiliate_click", {
         event_category: "affiliate",
         event_label: "Booking.com-Flights",
         destination: destination || "general",
@@ -26,13 +34,13 @@ export default function BookingFlightWidget({ destination }: BookingFlightWidget
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#003580] text-white text-lg">✈️</div>
         <div>
           <p className="text-sm font-semibold text-gray-900">Flights on Booking.com</p>
-          <p className="text-xs text-gray-500">Search and compare airline fares</p>
+          <p className="text-xs text-gray-500">Continue to Booking.com flights</p>
         </div>
       </div>
       <p className="text-sm text-gray-600 mb-4">
         {destination
-          ? `Compare flight prices to ${destination} from hundreds of airlines on Booking.com. Filter by stops, airline, and travel time.`
-          : "Find and compare flights from hundreds of airlines worldwide. Filter by stops, airline, and travel time."}
+          ? `Open Booking.com flight search for ${destination} to review current flight options, filters, and booking terms on Booking.com.`
+          : "Open Booking.com to review current flight options, filters, and booking terms on Booking.com."}
       </p>
       <a
         href={searchUrl}

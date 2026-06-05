@@ -138,14 +138,15 @@ export default async function DestinationPage({
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm">
-                Hotel prices powered by Booking.com
+                Booking.com partner search
               </div>
               <h2 className="mt-3 text-2xl font-bold sm:text-3xl">
                 Search Hotels in {dest.name} on Booking.com
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-blue-100">
-                Compare {dest.hotels} hotels in {dest.name} with live availability, free cancellation
-                on most rooms, and verified guest reviews. Typical rates {dest.avgPrice}.
+                Open Booking.com to review current hotels in {dest.name}, including provider
+                prices, availability, cancellation options, and verified guest reviews. Typical
+                destination-guide rates {dest.avgPrice}.
               </p>
               <a
                 href={bookingLink}
@@ -171,7 +172,7 @@ export default async function DestinationPage({
               <p className="font-semibold">Why Booking.com</p>
               <ul className="mt-2 space-y-1.5 text-xs text-blue-50">
                 <li className="flex items-center gap-2">
-                  <span className="text-amber-300">✓</span> 28M+ accommodations
+                  <span className="text-amber-300">✓</span> Provider search results
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-amber-300">✓</span> Free cancellation on most rooms
@@ -180,7 +181,7 @@ export default async function DestinationPage({
                   <span className="text-amber-300">✓</span> Verified guest reviews
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-amber-300">✓</span> Best price guarantee
+                  <span className="text-amber-300">✓</span> Checkout on Booking.com
                 </li>
               </ul>
             </div>
@@ -280,7 +281,7 @@ export default async function DestinationPage({
             Ready to find your perfect hotel in {dest.name}?
           </h3>
           <p className="mt-2 text-sm text-blue-100">
-            Compare live prices on Booking.com — 28M+ properties, free cancellation, verified reviews.
+            Review current prices, cancellation options, and verified guest reviews on Booking.com.
           </p>
           <a
             href={bookingLink}

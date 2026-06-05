@@ -11,7 +11,7 @@ export default function AffiliateDisclosure() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
       <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Affiliate Disclosure</h1>
-      <p className="mt-2 text-sm text-text-muted">Last updated: April 10, 2026</p>
+      <p className="mt-2 text-sm text-text-muted">Last updated: June 5, 2026</p>
 
       <div className="mt-10 space-y-8 text-sm leading-relaxed text-gray-700">
         <section className="rounded-2xl border border-blue-100 bg-blue-50/40 p-5">
@@ -23,6 +23,11 @@ export default function AffiliateDisclosure() {
             Awin affiliate network (Awin Publisher ID 2793280, Booking.com Advertiser ID 6776).
             When you click a Booking.com link on this site and complete a booking, we may earn a
             commission — at no extra cost to you.
+          </p>
+          <p className="mt-2 text-sm text-gray-700">
+            Affiliate approval does not grant us unrestricted rights to republish Booking.com
+            property content. We are pursuing approved Booking.com content/API access before adding
+            richer Booking.com property content directly on ReservationsNew.
           </p>
         </section>
 
@@ -36,15 +41,15 @@ export default function AffiliateDisclosure() {
         <section>
           <h2 className="text-lg font-semibold text-foreground">Our Affiliate Partners</h2>
           <p className="mt-2">
-            We work with the following affiliate partners and networks to bring you the best travel deals:
+            We work with the following affiliate partners and networks to help you start travel searches:
           </p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>
               <strong>Booking.com (via Awin)</strong> — As a Booking.com Affiliate, we earn from
               qualifying transactions. Bookings made through our Booking.com links are tracked
               through the Awin affiliate network. Booking.com is the world&apos;s largest
-              accommodation platform with over 28 million listings, free cancellation on most
-              rooms, and verified guest reviews.
+              accommodation platform. Current prices, availability, cancellation options, and
+              verified guest reviews are shown on Booking.com after you click through.
             </li>
             <li>
               <strong>Awin partner network</strong> — Beyond Booking.com, we work with a curated
@@ -64,7 +69,7 @@ export default function AffiliateDisclosure() {
 
         <section>
           <h2 className="text-lg font-semibold text-foreground">How We Choose What to Recommend</h2>
-          <p className="mt-2">Our recommendations and comparison results are based on the following criteria, in order of priority:</p>
+          <p className="mt-2">Our editorial recommendations and referral links are based on the following criteria, in order of priority:</p>
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>Price and overall value for the traveler</li>
             <li>User ratings and review scores</li>
@@ -72,7 +77,7 @@ export default function AffiliateDisclosure() {
             <li>Cancellation policy flexibility</li>
           </ul>
           <p className="mt-2">
-            We do <strong>not</strong> prioritize results based on commission rates. A partner offering a higher commission will not receive preferential placement in our search results or recommendations.
+            We do <strong>not</strong> prioritize editorial recommendations based on commission rates. A partner offering a higher commission will not receive preferential placement in our editorial guidance.
           </p>
         </section>
 

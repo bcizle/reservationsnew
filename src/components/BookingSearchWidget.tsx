@@ -8,14 +8,22 @@ interface BookingSearchWidgetProps {
   checkOut?: string;
 }
 
+type GtagEvent = (
+  command: "event",
+  eventName: string,
+  params: Record<string, string>,
+) => void;
+
 export default function BookingSearchWidget({ destination, checkIn, checkOut }: BookingSearchWidgetProps) {
   const bookingUrl = buildBookingLink(destination, checkIn, checkOut, {
     label: "reservationsnew-widget",
   });
 
   function handleClick() {
-    if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "affiliate_click", {
+    const gtag = (window as Window & { gtag?: GtagEvent }).gtag;
+
+    if (typeof gtag === "function") {
+      gtag("event", "affiliate_click", {
         event_category: "affiliate",
         event_label: "Booking.com",
         destination: destination || "general",
@@ -29,13 +37,13 @@ export default function BookingSearchWidget({ destination, checkIn, checkOut }: 
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white font-bold text-sm">B</div>
         <div>
           <p className="text-sm font-semibold text-gray-900">Booking.com</p>
-          <p className="text-xs text-gray-500">Search real-time hotel prices</p>
+          <p className="text-xs text-gray-500">Continue to Booking.com search</p>
         </div>
       </div>
       <p className="text-sm text-gray-600 mb-4">
         {destination
-          ? `Find the best hotel deals in ${destination}. Compare prices, read reviews, and book with free cancellation on most rooms.`
-          : "Search over 28 million accommodation listings. Free cancellation on most rooms."}
+          ? `Open Booking.com results for ${destination} to review current prices, room details, guest reviews, and cancellation options.`
+          : "Open Booking.com to search accommodations, review current prices, and complete booking on Booking.com."}
       </p>
       <a
         href={bookingUrl}

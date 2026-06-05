@@ -9,11 +9,18 @@ interface AffiliateLinkProps {
   className?: string;
 }
 
+type GtagEvent = (
+  command: "event",
+  eventName: string,
+  params: Record<string, string>,
+) => void;
+
 export default function AffiliateLink({ href, provider, children, className }: AffiliateLinkProps) {
   function handleClick() {
-    // Track affiliate click in Google Analytics
-    if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "affiliate_click", {
+    const gtag = (window as Window & { gtag?: GtagEvent }).gtag;
+
+    if (typeof gtag === "function") {
+      gtag("event", "affiliate_click", {
         event_category: "affiliate",
         event_label: provider,
         affiliate_url: href,

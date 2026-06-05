@@ -11,13 +11,14 @@
 
 These tasks directly increase affiliate click-through and conversion rates. Each one moves closer to real revenue.
 
-- [ ] **Replace static hotel cards with live Booking.com API data**
-  - Currently search results show hardcoded sample hotels with fake prices
-  - Integrate Booking.com Affiliate API (or Rapid API Hotels) to fetch real availability and pricing
-  - Display actual prices, ratings, availability, and real booking links
-  - Keep existing `BookingSearchWidget` as fallback for destinations without API coverage
-  - **Key files:** `src/app/search/page.tsx`, `src/components/BookingSearchWidget.tsx`
-  - **Done when:** Search results show real hotel prices and clicking "View Deal" leads to a bookable page
+- [ ] **Get approved for Booking.com content/API access**
+  - Current search page uses partner referral links and no longer displays fake hotel cards or fake prices
+  - Apply through the current Booking.com/CJ affiliate route, then request Booking.com Managed Affiliate Partner / Demand API access
+  - Start with a content-only or search-look-redirect integration that sends travelers to Booking.com for live availability, pricing, policies, and booking
+  - Do not scrape, copy, cache, or republish Booking.com property content before approval
+  - Keep existing `BookingSearchWidget` and partner search cards as the fallback until approved API credentials exist
+  - **Key files:** `docs/partnerships/booking-com-approval-packet.md`, `src/app/search/page.tsx`, `src/components/BookingSearchWidget.tsx`
+  - **Done when:** Booking.com/CJ approval is documented, Partner Centre/Demand API access is granted, sandbox requests work, and approved Booking.com content can be rendered without violating partner terms
 
 - [ ] **Fix conversion flow: search → results → affiliate click**
   - Audit the full user journey from homepage search to affiliate click

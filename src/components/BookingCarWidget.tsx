@@ -6,12 +6,20 @@ interface BookingCarWidgetProps {
   destination?: string;
 }
 
+type GtagEvent = (
+  command: "event",
+  eventName: string,
+  params: Record<string, string>,
+) => void;
+
 export default function BookingCarWidget({ destination }: BookingCarWidgetProps) {
   const searchUrl = buildBookingCarLink(destination, "reservationsnew-car-widget");
 
   function handleClick() {
-    if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "affiliate_click", {
+    const gtag = (window as Window & { gtag?: GtagEvent }).gtag;
+
+    if (typeof gtag === "function") {
+      gtag("event", "affiliate_click", {
         event_category: "affiliate",
         event_label: "Booking.com-Cars",
         destination: destination || "general",
@@ -25,13 +33,13 @@ export default function BookingCarWidget({ destination }: BookingCarWidgetProps)
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#003580] text-white text-lg">🚗</div>
         <div>
           <p className="text-sm font-semibold text-gray-900">Car Rentals on Booking.com</p>
-          <p className="text-xs text-gray-500">Compare rates from top rental brands</p>
+          <p className="text-xs text-gray-500">Continue to Booking.com cars</p>
         </div>
       </div>
       <p className="text-sm text-gray-600 mb-4">
         {destination
-          ? `Find the best car rental deals in ${destination}. Compare prices across major rental brands with free cancellation on most bookings.`
-          : "Compare car rental prices across major rental brands worldwide. Free cancellation available on most bookings."}
+          ? `Open Booking.com car rental search for ${destination} to review current pickup options, prices, cancellation terms, and booking details.`
+          : "Open Booking.com to review current car rental options, prices, cancellation terms, and booking details."}
       </p>
       <a
         href={searchUrl}

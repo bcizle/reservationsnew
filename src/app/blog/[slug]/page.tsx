@@ -166,15 +166,15 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         {/* End-of-post Booking.com CTA */}
         <div className="mt-10 overflow-hidden rounded-2xl bg-gradient-to-br from-[#003580] via-[#013d92] to-[#0f4c75] p-6 text-white shadow-lg sm:p-8">
           <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm">
-            Hotel prices powered by Booking.com
+            Booking.com partner search
           </div>
           <h3 className="mt-3 text-xl font-bold sm:text-2xl">
             Ready to book your next trip?
           </h3>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-blue-100">
-            Search 28+ million accommodations on Booking.com — live availability, free
-            cancellation on most rooms, and verified guest reviews. As a Booking.com Affiliate,
-            we earn from qualifying transactions.
+            Open Booking.com to review current accommodation options, prices, cancellation
+            policies, and verified guest reviews. As a Booking.com Affiliate, we earn from
+            qualifying transactions.
           </p>
           <a
             href={bookingLink}

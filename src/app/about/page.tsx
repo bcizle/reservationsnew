@@ -5,14 +5,14 @@ import { AWIN_PARTNERS } from "@/lib/awin";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
 
 export const metadata: Metadata = {
-  title: "About Us — ReservationsNew",
+  title: "About Us - ReservationsNew",
   description:
-    "ReservationsNew is a travel price comparison platform that helps travelers find the best hotel deals across top booking platforms. Learn about our mission, partnerships, and how we make money.",
+    "ReservationsNew is a travel planning and partner referral site that helps travelers start hotel, flight, and car rental searches on trusted booking platforms.",
   alternates: { canonical: `${siteUrl}/about` },
   openGraph: {
     title: "About ReservationsNew",
     description:
-      "A travel price comparison platform helping travelers find the best hotel deals across top booking platforms.",
+      "A travel planning and partner referral site helping travelers start searches on trusted booking platforms.",
     url: `${siteUrl}/about`,
   },
 };
@@ -22,13 +22,12 @@ export default function About() {
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
       <p className="text-xs font-semibold uppercase tracking-widest text-primary">About us</p>
       <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-        We help travelers compare hotel prices in one place
+        We help travelers start booking searches with confidence
       </h1>
       <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-600">
-        ReservationsNew is a travel price comparison platform that helps travelers find the best
-        hotel deals across top booking platforms. We exist for one reason: searching multiple
-        booking sites for the same room is slow, repetitive, and easy to get wrong. We bring the
-        deals together.
+        ReservationsNew is a travel planning and partner referral site that helps travelers
+        research destinations and continue to trusted booking platforms for current prices,
+        availability, reviews, policies, and checkout.
       </p>
 
       <div className="mt-12 space-y-12 text-sm leading-relaxed text-gray-700">
@@ -36,10 +35,9 @@ export default function About() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">Our mission</h2>
           <p className="mt-3">
-            Every traveler deserves a great trip without overpaying. We build editorial destination
-            guides and pass your search through to the booking platforms with the largest live
-            inventory — so you can compare real-time prices, read verified reviews, and book with
-            confidence in a few clicks.
+            Every traveler deserves a great trip without a maze of tabs. We build editorial
+            destination guides and partner search paths that send travelers to booking providers
+            where the provider displays current prices, availability, reviews, and policies.
           </p>
           <p className="mt-3">
             We don&apos;t hold inventory. We don&apos;t take payment. The price you see on the
@@ -71,10 +69,12 @@ export default function About() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">Our partnerships</h2>
           <p className="mt-3">
-            Our primary partner is <strong>Booking.com</strong>, the world&apos;s largest
-            accommodation platform with over 28 million listings. We&apos;re an approved
+            Our primary affiliate path is <strong>Booking.com</strong>. We&apos;re an approved
             Booking.com Affiliate via the Awin network (Awin Publisher 2793280, Booking.com
-            Advertiser 6776) — covering hotels, flights, and car rentals. We also work with a
+            Advertiser 6776), which lets us earn from qualifying transactions through partner
+            referral links. Affiliate approval is separate from Booking.com content or API access;
+            we are pursuing approved content/API access before republishing richer Booking.com
+            property content on ReservationsNew. We also work with a
             hand-picked roster of <strong>{AWIN_PARTNERS.length} additional Awin partners</strong>{" "}
             covering city passes, eSIMs, campgrounds, boutique hotels, and more.
           </p>
@@ -108,8 +108,8 @@ export default function About() {
             <div className="rounded-xl border border-gray-100 p-5">
               <h3 className="font-semibold text-foreground">Honest comparisons</h3>
               <p className="mt-1 text-text-muted">
-                We send your search directly to the booking platform with the broadest inventory.
-                No bait-and-switch.
+                We send your search directly to booking providers so you can confirm current
+                details before booking. No bait-and-switch.
               </p>
             </div>
             <div className="rounded-xl border border-gray-100 p-5">
@@ -164,8 +164,8 @@ export default function About() {
               question: does it actually help the traveler get a better price or a better trip?
             </li>
             <li>
-              <strong>Accuracy.</strong> Pricing and availability come from the booking platform in
-              real time — not from cached data we hope is still right.
+              <strong>Accuracy.</strong> Prices, availability, fees, and cancellation terms should
+              be confirmed on the booking provider&apos;s site before purchase.
             </li>
             <li>
               <strong>Simplicity.</strong> The whole site should fit in a few clicks, not a funnel.

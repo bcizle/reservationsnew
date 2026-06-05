@@ -13,22 +13,22 @@ const dealTypes = [
   {
     icon: "🏨",
     title: "Hotels",
-    description: "From budget-friendly stays to luxury resorts — find the perfect room at the best price.",
+    description: "Open partner hotel searches and finish booking directly with the provider.",
   },
   {
     icon: "🏖️",
     title: "Vacation Rentals",
-    description: "Homes, apartments, and villas for a more personal travel experience.",
+    description: "Explore homes, apartments, villas, and unique stays through partner platforms.",
   },
   {
     icon: "✈️",
     title: "Flight + Hotel",
-    description: "Bundle your flights and hotels together for even bigger savings.",
+    description: "Use partner tools to compare bundled trip options when available.",
   },
   {
     icon: "🚗",
     title: "Car Rentals",
-    description: "Get around with ease. Compare car rental deals from top providers.",
+    description: "Continue to trusted car-rental partners for current pickup options and prices.",
   },
 ];
 
@@ -41,16 +41,17 @@ export default function Home() {
         <div className="relative mx-auto max-w-7xl text-center">
           <div className="mx-auto inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm">
             <span className="flex h-4 w-4 items-center justify-center rounded bg-white text-[10px] font-extrabold text-[#003580]">B</span>
-            Hotel prices powered by Booking.com
+            Booking.com partner search links
           </div>
           <h1 className="mx-auto mt-4 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
             Your Next Adventure Starts with the{" "}
             <span className="text-amber-300">Perfect Stay</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-blue-100 sm:text-xl">
-            Compare live hotel prices from Booking.com and the world&apos;s top travel partners.
-            28+ million stays, free cancellation on most rooms, and verified guest reviews — all
-            in one place.
+            Explore destination guides and partner search tools for hotels,
+            vacation rentals, flights, and car rentals. Continue to Booking.com
+            and other providers for current prices, availability, policies, and
+            checkout.
           </p>
 
           <SearchWidget />
@@ -64,19 +65,19 @@ export default function Home() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-blue-200">
             <span className="flex items-center gap-1.5">
               <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-              No booking fees
+              No booking fees from us
             </span>
             <span className="flex items-center gap-1.5">
               <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-              Price comparison
+              Partner search links
             </span>
             <span className="flex items-center gap-1.5">
               <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-              Millions of reviews
+              Destination guides
             </span>
             <span className="flex items-center gap-1.5">
               <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-              Best price guarantee
+              Clear affiliate disclosure
             </span>
           </div>
         </div>
@@ -90,7 +91,8 @@ export default function Home() {
               Popular Destinations
             </h2>
             <p className="mt-3 text-lg text-text-muted">
-              Explore top-rated hotels in the world&apos;s most visited cities.
+              Start with practical destination pages, then continue to partner
+              booking platforms for current rates and availability.
             </p>
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -114,7 +116,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-white">{dest.name}</h3>
                   <p className="text-sm text-gray-200">{dest.country}</p>
                   <span className="mt-2 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                    {dest.hotels} hotels
+                    Destination guide
                   </span>
                 </div>
               </Link>
@@ -133,10 +135,11 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Everything You Need to Travel
+              Everything You Need to Start Planning
             </h2>
             <p className="mt-3 text-lg text-text-muted">
-              One-stop comparison for all your travel booking needs.
+              One place to begin your hotel, vacation rental, flight, and car
+              rental searches.
             </p>
           </div>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -172,7 +175,7 @@ export default function Home() {
               How It Works
             </h2>
             <p className="mt-3 text-lg text-text-muted">
-              Save money in three simple steps.
+              Plan and book through partner platforms in three simple steps.
             </p>
           </div>
           <div className="mt-12 grid gap-8 sm:grid-cols-3">
@@ -181,19 +184,19 @@ export default function Home() {
                 step: "1",
                 title: "Search",
                 description:
-                  "Enter your destination, dates, and number of guests. We search hundreds of booking sites instantly.",
+                  "Enter your destination and travel dates to open relevant partner search options.",
               },
               {
                 step: "2",
                 title: "Compare",
                 description:
-                  "See prices side by side from all major platforms. Filter by price, rating, amenities, and more.",
+                  "Review current prices, room details, availability, and policies on the partner platform.",
               },
               {
                 step: "3",
-                title: "Book & Save",
+                title: "Book Directly",
                 description:
-                  "Click through to the best deal and book directly. No hidden fees — what you see is what you pay.",
+                  "Complete your reservation directly with the booking provider. We do not add markups.",
               },
             ].map((item) => (
               <div key={item.step} className="text-center">
@@ -219,7 +222,8 @@ export default function Home() {
             Ready to Find Your Perfect Hotel?
           </h2>
           <p className="mt-4 text-lg text-blue-100">
-            Start comparing prices now and save up to 60% on your next booking.
+            Search partner platforms for current prices and availability when
+            you are ready to book.
           </p>
           <a
             href={bookingCtaUrl}

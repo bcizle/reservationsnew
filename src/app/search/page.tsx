@@ -11,9 +11,9 @@ import { destinations, matchDestination, type Destination } from "@/lib/destinat
 import { buildBookingLink } from "@/lib/booking";
 
 export const metadata: Metadata = {
-  title: "Search Hotel Deals on Booking.com — ReservationsNew",
+  title: "Search Booking.com Partner Links - ReservationsNew",
   description:
-    "Hotel prices powered by Booking.com. Search 28+ million accommodations worldwide with free cancellation, verified reviews, and live availability.",
+    "Start hotel searches through Booking.com partner links. Confirm current prices, availability, reviews, and policies on Booking.com before booking.",
 };
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
@@ -21,26 +21,19 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com
 interface CategoryCard {
   key: string;
   title: string;
-  priceRange: string;
+  filterLabel: string;
   starRatings: number[];
   description: string;
   icon: string;
   accent: string;
 }
 
-function categoryCards(dest: Destination | null): CategoryCard[] {
-  // Pull min/max from "$120 – $350 per night" style strings; fall back to generic.
-  const range = dest?.avgPrice ?? "$80 – $400 per night";
-  const match = range.match(/\$(\d+)\s*[–-]\s*\$(\d+)/);
-  const min = match ? Number(match[1]) : 80;
-  const max = match ? Number(match[2]) : 400;
-  const mid = Math.round((min + max) / 2);
-
+function categoryCards(): CategoryCard[] {
   return [
     {
       key: "budget",
       title: "Budget Hotels",
-      priceRange: `From $${Math.max(40, Math.round(min * 0.75))}/night`,
+      filterLabel: "Budget-friendly search",
       starRatings: [2, 3],
       description: "Clean, comfortable rooms with the essentials — perfect for travelers who plan to spend more time exploring than in their hotel room.",
       icon: "💰",
@@ -49,7 +42,7 @@ function categoryCards(dest: Destination | null): CategoryCard[] {
     {
       key: "mid",
       title: "Mid-Range Hotels",
-      priceRange: `From $${mid}/night`,
+      filterLabel: "Mid-range search",
       starRatings: [3, 4],
       description: "The sweet spot — modern amenities, great locations, and quality service without the luxury price tag.",
       icon: "⭐",
@@ -58,7 +51,7 @@ function categoryCards(dest: Destination | null): CategoryCard[] {
     {
       key: "luxury",
       title: "Luxury Hotels",
-      priceRange: `From $${Math.round(max * 0.9)}/night`,
+      filterLabel: "Luxury search",
       starRatings: [5],
       description: "Five-star service, premium locations, and full amenity packages — spas, fine dining, concierge, and signature suites.",
       icon: "✨",
@@ -72,7 +65,7 @@ function buildFaqs(dest: Destination | null, displayQuery: string) {
     return [
       {
         question: `Is ${dest.name} expensive?`,
-        answer: `Hotel prices in ${dest.name} typically range from ${dest.avgPrice}, so there's something for every budget. Mid-range hotels strike the best balance between location and value, while luxury properties offer five-star service at the top of that range. ${dest.tips[0] ?? ""}`,
+        answer: `Our destination guide estimates typical hotel budgets around ${dest.avgPrice}, so there are options for several trip styles. Confirm current rates, availability, and policies on Booking.com before booking. ${dest.tips[0] ?? ""}`,
       },
       {
         question: `What's the best area to stay in ${dest.name}?`,
@@ -89,14 +82,14 @@ function buildFaqs(dest: Destination | null, displayQuery: string) {
       },
       {
         question: `How many hotels are available in ${dest.name}?`,
-        answer: `Booking.com lists ${dest.hotels} accommodations in ${dest.name}, ranging from budget guesthouses to five-star resorts. You can filter by price, star rating, guest review score, and amenities.`,
+        answer: `Our guide currently references ${dest.hotels} accommodations in ${dest.name}. Click through to Booking.com to review current inventory, prices, star ratings, guest review scores, and amenities.`,
       },
     ];
   }
   return [
     {
       question: `How do I find the best hotel deal in ${displayQuery}?`,
-      answer: `Search Booking.com directly using the button above — they aggregate live pricing from millions of properties and apply real-time availability. Filtering by free cancellation lets you lock in a refundable rate while you keep planning.`,
+      answer: `Use the button above to open Booking.com directly. Booking.com shows current pricing, availability, cancellation policies, and guest reviews so you can compare options on the provider site before booking.`,
     },
     {
       question: `Should I book in advance or wait?`,
@@ -125,7 +118,7 @@ export default async function SearchPage({
     label: "reservationsnew-search-primary",
   });
 
-  const cards = categoryCards(matchedDest);
+  const cards = categoryCards();
   const cardLink = (card: CategoryCard) =>
     buildBookingLink(ssTarget, params.checkin, params.checkout, {
       label: `reservationsnew-search-${card.key}`,
@@ -160,7 +153,7 @@ export default async function SearchPage({
       <div>
         <div className="inline-flex items-center gap-2 rounded-full border border-[#003580]/20 bg-[#003580]/5 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#003580]">
           <span className="flex h-4 w-4 items-center justify-center rounded bg-[#003580] text-[10px] font-extrabold text-white">B</span>
-          Hotel prices powered by Booking.com
+          Booking.com partner search
         </div>
         <h1 className="mt-3 text-3xl font-extrabold text-foreground sm:text-4xl">
           {headerTitle}
@@ -251,11 +244,11 @@ export default async function SearchPage({
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="max-w-xl">
               <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-                {query ? `See live prices in ${displayQuery}` : "Search 28+ million stays worldwide"}
+                {query ? `Open Booking.com for ${displayQuery}` : "Start a Booking.com accommodation search"}
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                We send your search directly to Booking.com — the world&apos;s largest accommodation
-                platform. Live availability, free cancellation on most rooms, verified guest reviews.
+                We send your search directly to Booking.com, where Booking.com shows current
+                availability, prices, guest reviews, cancellation terms, and checkout details.
               </p>
               <a
                 href={primaryBookingUrl}
@@ -272,10 +265,10 @@ export default async function SearchPage({
             <div className="hidden shrink-0 rounded-xl border border-blue-100 bg-white p-5 text-sm text-gray-600 shadow-sm sm:block">
               <p className="font-semibold text-foreground">What you get</p>
               <ul className="mt-2 space-y-1.5 text-xs">
-                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> 28M+ accommodation listings</li>
-                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Free cancellation on most rooms</li>
-                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Verified guest reviews</li>
-                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Best price guarantee</li>
+                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Booking.com search results</li>
+                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Current provider availability</li>
+                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Guest reviews on Booking.com</li>
+                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Checkout with the provider</li>
               </ul>
             </div>
           </div>
@@ -288,7 +281,8 @@ export default async function SearchPage({
           Browse by category{matchedDest ? ` in ${matchedDest.name}` : ""}
         </h2>
         <p className="mt-2 text-sm text-text-muted">
-          Filtered Booking.com searches for the budget that fits your trip. Prices update in real time.
+          Filtered Booking.com searches for the stay style that fits your trip. Booking.com displays
+          current prices and availability after you click through.
         </p>
         <div className="mt-6 grid gap-5 sm:grid-cols-3">
           {cards.map((card) => (
@@ -301,7 +295,7 @@ export default async function SearchPage({
             >
               <div className="text-2xl">{card.icon}</div>
               <h3 className="mt-3 text-base font-bold text-foreground">{card.title}</h3>
-              <p className="mt-1 text-xs font-semibold text-primary">{card.priceRange}</p>
+              <p className="mt-1 text-xs font-semibold text-primary">{card.filterLabel}</p>
               <p className="mt-2 flex-1 text-xs leading-relaxed text-gray-600">{card.description}</p>
               <span className="mt-4 inline-flex items-center gap-1 text-xs font-bold text-[#003580] group-hover:gap-1.5">
                 Search {card.starRatings.length === 1 ? `${card.starRatings[0]}-star` : "these"} hotels
@@ -500,10 +494,10 @@ export default async function SearchPage({
         </h2>
         <div className="mt-4 space-y-3 text-sm leading-relaxed text-gray-700">
           <p>
-            Hotel pricing varies widely between booking platforms — the same room can cost
-            20% to 40% more or less depending on where you book. We send your search directly
-            to Booking.com, which tracks live availability for over 28 million properties
-            worldwide{matchedDest ? ` — including ${matchedDest.hotels} in ${matchedDest.name}` : ""}.
+            Hotel pricing can vary by provider, date, room type, fees, and cancellation policy.
+            We send your search directly to Booking.com so you can review the provider&apos;s
+            current availability, prices, room details, and checkout terms
+            {matchedDest ? ` for ${matchedDest.name}` : ""}.
           </p>
           <p>
             <strong>Be flexible with dates.</strong> Midweek stays and shoulder-season travel
@@ -528,14 +522,14 @@ export default async function SearchPage({
       {/* Final CTA */}
       <section className="mt-12 overflow-hidden rounded-2xl bg-gradient-to-br from-[#003580] via-[#013d92] to-[#0f4c75] p-8 text-center text-white shadow-lg">
         <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
-          Powered by Booking.com
+          Booking.com partner search
         </div>
         <h3 className="mt-4 text-2xl font-bold sm:text-3xl">
           Ready to book {matchedDest ? `in ${matchedDest.name}` : "your stay"}?
         </h3>
         <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-blue-100">
-          Live prices, free cancellation on most rooms, and verified guest reviews —
-          all on Booking.com.
+          Review current prices, cancellation options, and verified guest reviews on Booking.com
+          before you book.
         </p>
         <a
           href={primaryBookingUrl}
