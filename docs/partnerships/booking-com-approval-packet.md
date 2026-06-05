@@ -4,9 +4,9 @@ Last updated: 2026-06-05
 
 ## Goal
 
-Get ReservationsNew approved to use Booking.com content in a compliant way, ideally through Booking.com Demand API access for a content-only or search-look-redirect integration.
+Get ReservationsNew approved to use Booking.com content in a compliant way, ideally through Booking.com Demand API access for a search, look, and book integration that lets travelers complete accommodation bookings on ReservationsNew.
 
-The desired end state is not just affiliate links. The desired end state is permission to populate ReservationsNew with Booking.com accommodation content such as property details, photos where allowed, review scores, availability, and pricing through an approved integration.
+The desired end state is not just affiliate links. The desired end state is permission to populate ReservationsNew with Booking.com accommodation content such as property details, photos where allowed, review scores, availability, pricing, order preview, payment, booking confirmation, and post-booking order management through an approved integration.
 
 ## Current Status
 
@@ -15,6 +15,13 @@ The desired end state is not just affiliate links. The desired end state is perm
 - Booking flow today: users click through to partner platforms; ReservationsNew does not complete bookings.
 - API/content status: not approved yet. Do not scrape, copy, cache, or republish Booking.com property content outside approved tools/API terms.
 - Reviewer-readiness change made: public copy now states that live prices and availability are shown by partner platforms after click-through, while ReservationsNew is pursuing approved Booking.com content/API access.
+- Account status from Brent Christensen on 2026-06-05:
+  - CJ Publisher account exists.
+  - Awin publisher account exists.
+  - Booking.com Partner Centre account is in progress.
+  - Application email: brent@reservationsnew.com.
+  - Applicant entity: ReservationsNew LLC / ReservationsNew.com, United States.
+- Private applicant details for form filling are stored locally in `docs/partnerships/private/booking-com-applicant-details.local.md`. Do not commit or paste those details into public docs.
 
 ## Verified Approval Routes
 
@@ -55,11 +62,29 @@ Demand API supports integration types relevant to ReservationsNew:
 - Content only: display Booking.com travel content and redirect users to Booking.com for availability, pricing, and bookings.
 - Search, look, and redirect: let users explore prices and availability on the site, then redirect to Booking.com for reservation completion.
 
-Recommended initial ask:
+Recommended ask:
 
-- Request content-only Demand API access first.
-- Offer search-look-redirect as the next phase only after content-only approval is clear.
-- Avoid asking for full checkout/order creation until there is meaningful traffic and a stronger compliance case.
+- Primary request: search, look, and book / entire booking journey Demand API access for accommodations.
+- Required endpoint families for the target product:
+  - Accommodation search, availability, details, reviews, and pricing endpoints.
+  - Common locations, languages, currencies, and supported payment-card metadata.
+  - Orders preview, create, details, cancel, and modification endpoints.
+- Fallback request: if full booking access is not available at first review, request content-only or search-look-redirect access immediately and ask for the explicit milestone needed to upgrade to on-site booking.
+- Avoid asking for post-booking loyalty or messaging pilots unless Booking.com raises them; focus the first approval on accommodation search, checkout, and order support.
+
+Rationale:
+
+- Booking.com's Demand API docs list "Search, look and book" as the flow for search, booking, and checkout directly on a partner site.
+- The `/orders` API collection is the on-site booking layer: it lets travelers book and pay directly in the partner application, and supports post-booking retrieval, cancellations, reporting, and support workflows.
+- `/orders/preview` validates final price, payment methods, and booking details before purchase.
+- `/orders/create` confirms the booking and processes payment using the `order_token` from preview.
+
+On-site booking implementation posture:
+
+- All Booking.com API calls, affiliate IDs, and API tokens must be server-side only.
+- Payment details must never be logged, stored, sent to analytics, or exposed in client-side JavaScript.
+- Before production booking goes live, implement a secure checkout architecture, privacy policy updates, support process, cancellation/modification flow, and audit logs for booking attempts.
+- Assume Booking.com may require contract review, account manager review, security review, sandbox validation, and possibly payment-processing controls before enabling production order creation.
 
 ### Route 3 - Awin Backup / Parallel Outreach
 
@@ -78,7 +103,7 @@ Expected outcome:
 
 Use this concise story in application forms and emails:
 
-> ReservationsNew is a US-based travel planning and affiliate site that helps travelers begin hotel, vacation rental, flight, and car-rental searches with destination guides, transparent disclosures, and partner search links. Users complete reservations directly with booking providers. We want to promote Booking.com as a primary accommodation partner and are seeking approved access to Booking.com content through the appropriate partner path, starting with a content-only integration that redirects users to Booking.com for live availability, pricing, and booking.
+> ReservationsNew is a US-based travel planning and affiliate site that helps travelers research destinations and start hotel, vacation rental, flight, and car-rental searches with transparent disclosures and partner search links. Users currently complete reservations directly with booking providers. We want to make Booking.com the primary accommodation partner and are seeking approved Demand API access for a compliant on-site Booking.com accommodation experience, ideally search, look, and book. If full booking access is not available immediately, we would like content-only or search-look-redirect approval as the first phase with a clear upgrade path.
 
 Short description:
 
@@ -86,7 +111,7 @@ Short description:
 
 Why Booking.com:
 
-> Booking.com is a natural primary partner because ReservationsNew focuses on accommodation discovery and destination-based hotel search. Approved content access would let us show richer, more accurate accommodation information while preserving Booking.com as the checkout and source-of-truth provider.
+> Booking.com is a natural primary partner because ReservationsNew focuses on accommodation discovery and destination-based hotel search. Approved Demand API access would let us show richer, more accurate accommodation information and reduce booking friction by allowing travelers to complete reservations on ReservationsNew where permitted by Booking.com's integration terms.
 
 Traffic source statement:
 
@@ -94,7 +119,7 @@ Traffic source statement:
 
 Compliance statement:
 
-> ReservationsNew will not scrape Booking.com, will not cache dynamic availability/pricing outside approved terms, will display affiliate disclosures, will use sponsored link attributes, and will send users to Booking.com or approved provider pages for final booking details unless separately approved for a deeper API flow.
+> ReservationsNew will not scrape Booking.com, will not cache dynamic availability/pricing outside approved terms, will display affiliate disclosures, will use sponsored link attributes, and will keep Booking.com as the source of truth for property content, availability, pricing, payment, order, cancellation, and support data through approved Demand API flows.
 
 ## CJ Application Answers
 
@@ -102,41 +127,70 @@ Use these draft answers after the user provides legal/account details.
 
 - Website: `https://reservationsnew.com`
 - Region: North America if applying as US/Canada traffic.
+- Applicant: ReservationsNew LLC / ReservationsNew.com.
+- Preferred contact: Brent Christensen.
+- Application email: brent@reservationsnew.com.
 - Publisher type: Content / travel website / comparison and destination guide.
 - Promotional methods: SEO content, destination guides, on-site search referral links, email newsletter if/when launched.
 - Restricted methods to avoid: PPC brand bidding, coupon/voucher pages, browser extensions, incentivized traffic unless separately approved, social-only profile application.
 - Site description: ReservationsNew is a travel planning and partner search site that helps users start hotel and trip searches with destination context and then click through to booking providers for live prices, policies, and checkout.
-- Booking.com placement: homepage search, destination guides, search results page, blog CTAs, and partner sections with affiliate disclosure.
+- Booking.com placement today: homepage search, destination guides, search results page, blog CTAs, and partner sections with affiliate disclosure.
+- Booking.com placement requested: approved Booking.com accommodation search/detail/availability/order flow on ReservationsNew, with Booking.com powering content, pricing, payment, and order data.
 - Monthly traffic: USER NEEDED.
 - Audience geography: USER NEEDED, likely United States first unless analytics says otherwise.
-- Contact email: USER NEEDED.
-- Legal/business name: USER NEEDED.
-- Tax/banking details: USER NEEDED, must be entered by the account owner.
+- Tax/banking details: must be entered by the account owner inside CJ/Awin/Booking.com systems only.
 
 ## Demand API Escalation Ask
 
-Use this after CJ approval or when contacting a Booking.com affiliate/contact/account manager.
+Use this after confirming the Booking.com program status in CJ/Awin, or when contacting a Booking.com affiliate/contact/account manager.
 
 Subject:
 
-> ReservationsNew request for Booking.com content-only Demand API access
+> ReservationsNew request for Booking.com Demand API search/look/book access
 
 Body:
 
 > Hello,
 >
-> I operate ReservationsNew (https://reservationsnew.com), a travel planning and affiliate referral site focused on hotel search, destination guides, and partner booking links. Users complete reservations directly with booking providers.
+> I operate ReservationsNew (https://reservationsnew.com), a US-based travel planning and affiliate referral site focused on hotel search, destination guides, and partner booking links. The applicant entity is ReservationsNew LLC and the primary contact is Brent Christensen at brent@reservationsnew.com.
 >
-> We would like to make Booking.com our primary accommodation content partner and are requesting guidance on the correct path to become a Booking.com Managed Affiliate Partner with Partner Centre access and Demand API credentials.
+> We would like to make Booking.com our primary accommodation partner and are requesting guidance on the correct path to become a Booking.com Managed Affiliate Partner with Partner Centre access and Demand API credentials.
 >
-> Our preferred first integration is content-only: display approved Booking.com accommodation content on ReservationsNew and redirect users to Booking.com for live availability, pricing, policies, and booking. We will not scrape Booking.com, cache dynamic pricing/availability outside approved terms, use Booking.com content with competitor content in a prohibited way, or bid on Booking.com brand terms. Affiliate disclosures and `rel="sponsored"` links are already present on the site.
+> Our preferred integration is search, look, and book for accommodations: display approved Booking.com accommodation content, availability, pricing, cancellation policies, order preview, payment, booking confirmation, and post-booking order details on ReservationsNew through the Demand API. We understand this likely requires account manager review, contract approval, Partner Centre access, sandbox validation, and production approval before launch.
 >
-> Could you please advise the requirements for account manager review, contract approval, Partner Centre access, and Demand API sandbox credentials?
+> If full on-site booking access is not available as the first approval step, we would like to start with content-only or search-look-redirect access and get a clear list of requirements to upgrade to order creation and on-site checkout.
+>
+> We will not scrape Booking.com, cache dynamic pricing/availability outside approved terms, use Booking.com content with competitor content in a prohibited way, bid on Booking.com brand terms, expose API credentials client-side, or store payment card details. Affiliate disclosures and `rel="sponsored"` links are already present on the site.
+>
+> Could you please advise the requirements for Managed Affiliate Partner approval, Partner Centre access, Demand API sandbox credentials, and production approval for the search/look/book flow?
 >
 > Thank you,
-> USER NAME
+> Brent Christensen
 > ReservationsNew
-> USER EMAIL
+> brent@reservationsnew.com
+
+## CJ / Booking.com Support Follow-Up
+
+Use this inside CJ support/messages if there is no obvious Booking.com program contact.
+
+Subject:
+
+> Booking.com Demand API / Partner Centre escalation for ReservationsNew
+
+Body:
+
+> Hello,
+>
+> ReservationsNew LLC is an existing CJ publisher applicant/publisher for ReservationsNew.com. We are trying to identify the correct Booking.com contact or process for Managed Affiliate Partner / Partner Centre / Demand API approval.
+>
+> The target integration is Booking.com accommodations search, look, and book on ReservationsNew through the Demand API. If full booking is not available initially, we would like content-only or search-look-redirect access with the upgrade requirements for order creation.
+>
+> Could you route this request to the Booking.com affiliate program manager or confirm where we should submit the Partner Centre / Demand API access request?
+>
+> Thank you,
+> Brent Christensen
+> ReservationsNew LLC
+> brent@reservationsnew.com
 
 ## Awin Backup Email
 
@@ -150,26 +204,27 @@ Body:
 
 > Hello Awin Onboarding,
 >
-> I operate ReservationsNew (https://reservationsnew.com), a US-focused travel planning and affiliate referral site. We are seeking the correct current path to promote Booking.com and eventually request approved Booking.com content/API access.
+> I operate ReservationsNew (https://reservationsnew.com), a US-focused travel planning and affiliate referral site. The applicant entity is ReservationsNew LLC and the primary contact is Brent Christensen at brent@reservationsnew.com.
 >
-> Booking.com's affiliate page currently points us to CJ, but Awin also has a Booking.com North America program page. Can you confirm whether Booking.com North America is currently accepting new publishers through Awin, and whether Awin approval can support escalation toward Booking.com Managed Affiliate Partner / Demand API access?
+> Booking.com's affiliate page currently points us to CJ, but Awin also has a Booking.com North America program page. Can you confirm whether Booking.com North America is currently accepting publishers through Awin, and whether Awin approval can support escalation toward Booking.com Managed Affiliate Partner / Demand API access?
+>
+> Our preferred end state is Booking.com accommodations search, look, and book on ReservationsNew through approved Demand API access. If that cannot be requested through Awin, could you point us to the correct Booking.com Partner Centre or account manager escalation path?
 >
 > Our promotional methods are travel content, destination guides, and on-site partner search links. We do not use coupon/voucher claims, browser extensions, sub-affiliate traffic, or Booking.com brand bidding.
 >
 > Thank you,
-> USER NAME
+> Brent Christensen
 > ReservationsNew
-> USER EMAIL
+> brent@reservationsnew.com
 
 ## User-Owned Information Needed
 
 The user must provide or personally enter:
 
-- CJ account status: existing account or new account.
-- Awin account status: existing account or new account.
-- Booking.com Partner Centre status: existing login or no access.
-- Applicant legal name or company name.
-- Country, business address, phone number, and contact email.
+- CJ account status: existing account.
+- Awin account status: existing account.
+- Booking.com Partner Centre status: trying to get account access.
+- Applicant legal name/company/contact details: provided by Brent; stored only in the local private applicant details file.
 - Tax country and tax form information.
 - Banking/payout details.
 - Website traffic numbers from GA, Vercel, Search Console, or another analytics source.
@@ -179,23 +234,27 @@ The user must provide or personally enter:
 
 ## Submission Sequence
 
-1. Apply through CJ Booking.com North America.
-2. Complete email verification, tax, banking, and compliance profile.
-3. After CJ acceptance, collect the CJ publisher ID and Booking.com program approval evidence.
-4. Ask CJ support or the Booking.com program contact for the managed affiliate / Demand API escalation path.
-5. Submit the Demand API escalation email.
-6. If no response after 5 business days, send Awin backup inquiry and/or CJ support follow-up.
-7. Once Partner Centre access is granted, generate API credentials securely and test only in sandbox first.
-8. Build a content-only integration against approved endpoints.
-9. Request/complete any Booking.com integration review before publishing API-driven content.
+1. In CJ, confirm whether ReservationsNew is already approved for Booking.com North America or still needs to apply.
+2. If not approved in CJ, apply through the CJ Booking.com North America program with the draft answers above.
+3. Complete email verification, tax, banking, and compliance profile directly in CJ/Awin; the account owner must enter sensitive tax/banking data.
+4. Capture evidence: CJ publisher ID, Booking.com program status, Awin publisher ID, Awin Booking.com status, and any program manager/contact details.
+5. Use CJ support/program messages to ask for Booking.com Managed Affiliate Partner / Partner Centre / Demand API escalation.
+6. Submit the Demand API escalation email with the primary ask: search, look, and book. Include fallback language for content-only or search-look-redirect if needed.
+7. If no response after 5 business days, send the CJ follow-up and Awin backup inquiry.
+8. Once Partner Centre access is granted, generate API credentials securely and test only in sandbox first.
+9. Build the approved integration in phases:
+   - Phase 1: server-side authentication, locations, accommodation search/details/availability.
+   - Phase 2: order preview, checkout page, order create in sandbox, confirmation page.
+   - Phase 3: order details, cancellation/modification support, customer support workflow, audit logging.
+10. Request/complete any Booking.com integration/security/production review before publishing API-driven Booking.com content or on-site checkout.
 
 ## Follow-Up Cadence
 
-- Day 0: submit CJ application.
+- Day 0: verify CJ and Awin Booking.com status; submit CJ application if not already approved.
 - Day 1: verify email and complete CJ profile.
 - Day 3: check application status; respond to any reviewer questions.
 - Day 5: if pending, send polite support follow-up.
-- After CJ approval: send Demand API escalation request.
+- After CJ or Awin Booking.com approval: send Demand API search/look/book escalation request.
 - 5 business days after API request: follow up with CJ/Booking contact.
 - 10 business days after API request: try Awin backup/parallel path if not already done.
 
@@ -208,4 +267,6 @@ The user must provide or personally enter:
 - Do not use fake hotel cards, fake prices, fake reviews, or unverifiable testimonials.
 - Do not run Booking.com brand PPC campaigns or voucher/coupon pages.
 - Do not publish API credentials to GitHub or expose them in client-side code.
+- Do not collect real payment cards on ReservationsNew until Booking.com has approved the order creation flow and the production checkout architecture is reviewed.
+- Do not log payment card fields, API tokens, order tokens, or personal booking data.
 

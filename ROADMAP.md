@@ -14,11 +14,12 @@ These tasks directly increase affiliate click-through and conversion rates. Each
 - [ ] **Get approved for Booking.com content/API access**
   - Current search page uses partner referral links and no longer displays fake hotel cards or fake prices
   - Apply through the current Booking.com/CJ affiliate route, then request Booking.com Managed Affiliate Partner / Demand API access
-  - Start with a content-only or search-look-redirect integration that sends travelers to Booking.com for live availability, pricing, policies, and booking
+  - Primary ask is search-look-book access so travelers can search, preview orders, pay, and book Booking.com accommodations on ReservationsNew through approved Demand API endpoints
+  - Accept content-only or search-look-redirect as a fallback only if Booking.com gives a clear path to upgrade to on-site order creation
   - Do not scrape, copy, cache, or republish Booking.com property content before approval
   - Keep existing `BookingSearchWidget` and partner search cards as the fallback until approved API credentials exist
-  - **Key files:** `docs/partnerships/booking-com-approval-packet.md`, `src/app/search/page.tsx`, `src/components/BookingSearchWidget.tsx`
-  - **Done when:** Booking.com/CJ approval is documented, Partner Centre/Demand API access is granted, sandbox requests work, and approved Booking.com content can be rendered without violating partner terms
+  - **Key files:** `docs/partnerships/booking-com-approval-packet.md`, `docs/partnerships/booking-com-submission-tracker.md`, `src/app/search/page.tsx`, `src/components/BookingSearchWidget.tsx`
+  - **Done when:** Booking.com/CJ approval is documented, Partner Centre/Demand API access is granted, sandbox search/details/availability/order-preview/order-create requests work, and approved Booking.com content plus booking flow can be rendered without violating partner terms
 
 - [ ] **Fix conversion flow: search → results → affiliate click**
   - Audit the full user journey from homepage search to affiliate click
