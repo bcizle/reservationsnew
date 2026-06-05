@@ -13,7 +13,8 @@ Fallback if needed: accept content-only or search-look-redirect approval first, 
 - CJ Publisher: existing account.
 - CJ Booking.com North America program: pending application, verified in CJ on 2026-06-05.
 - Awin Publisher: existing account.
-- Awin Booking.com North America program: public program identified; authenticated status not yet captured.
+- Awin publisher ID: `2793280`.
+- Awin Booking.com North America program: joined, verified in Awin on 2026-06-05.
 - Booking.com Partner Centre: sign-in returned `USER_NOT_FOUND` / no access rights on 2026-06-05.
 - Booking.com Demand API: not approved yet.
 - Public application email: brent@reservationsnew.com.
@@ -72,6 +73,20 @@ Checked 2026-06-05:
   - Publisher support through Partner Success Center / Website Help Ticket.
 - Treat Awin approval as useful evidence and a possible escalation route, but not as proof of Booking.com Demand API content or on-site checkout rights.
 
+## Awin Authenticated Program Findings
+
+Checked 2026-06-05:
+
+- Awin dashboard account: `reservationsnew.com (2793280)`.
+- Booking.com North America profile URL: https://ui.awin.com/awin/affiliate/2793280/merchant-profile/6776
+- Authenticated status: `Joined`.
+- Advertiser/program ID: `6776`.
+- Date joined: `Apr 28, 2026`.
+- Link status: `Online`.
+- Program contact shown in Awin: `global-booking.com@awin.com`.
+- Awin compose sender shown after Brent logged in as the application account: `brent@reservationsnew.com`.
+- Internal Awin message to Booking.com North America requesting Booking.com Managed Affiliate Partner / Demand API v3.2 escalation was sent on 2026-06-05.
+
 ## Day 0 Checklist
 
 - [x] Log in to CJ with the existing publisher account.
@@ -79,9 +94,9 @@ Checked 2026-06-05:
 - [x] Record current status in this tracker.
 - [ ] If not approved, apply with the copy in `booking-com-approval-packet.md`.
 - [ ] Confirm CJ profile, website, tax, and payout settings are complete.
-- [ ] Log in to Awin.
-- [ ] Check advertiser/program `6776` or the Booking.com North America express signup path.
-- [ ] Record Booking.com North America status in this tracker.
+- [x] Log in to Awin.
+- [x] Check advertiser/program `6776` or the Booking.com North America express signup path.
+- [x] Record Booking.com North America status in this tracker.
 - [x] If a Booking.com contact or message center exists, send the Demand API escalation ask.
 - [ ] If no contact exists, send the CJ support follow-up draft.
 - [ ] Continue Partner Centre account setup.
@@ -105,8 +120,6 @@ Checked 2026-06-05:
 - Planned content volume for the next 90 days.
 - Newsletter/social profiles, if any.
 - CJ publisher ID captured privately in the gitignored applicant details file.
-- Awin publisher ID.
-- Current Booking.com program statuses in CJ and Awin.
 
 ## Traffic Pitch Defaults
 
@@ -135,4 +148,5 @@ Append dated notes here as submissions happen.
 - 2026-06-05: Earlier Chrome automation retry for Awin and Gmail returned the same blocker: Chrome is blocking automation because another extension UI is open on the page. No email-sending connector is available in this Codex environment.
 - 2026-06-05: Chrome automation connected after Brent closed the extra Chrome windows. CJ Advertisers showed `Booking.com North America` under pending applications. CJ message center was available, and a Demand API v3.2 / Partner Centre escalation was sent to Booking.com North America from CJ mail. Sent Items confirmed the message with date `5-Jun-2026`.
 - 2026-06-05: Booking.com Affiliate Partner Centre sign-in returned `USER_NOT_FOUND` and said the account has no access rights. The public `Sign up now` route redirected back to the Booking.com affiliate landing page, whose registration path points to CJ rather than a standalone Partner Centre signup.
-- 2026-06-05: Retried Awin express signup again after the Chrome cleanup. The existing Awin tab and a fresh Awin tab both still hit Chrome's "another extension UI is open" blocker on the Awin page, so authenticated Awin Booking.com status remains uncaptured.
+- 2026-06-05: Retried Awin express signup again after the Chrome cleanup. The existing Awin tab and a fresh Awin tab both still hit Chrome's "another extension UI is open" blocker on the Awin page, so authenticated Awin Booking.com status was not captured in that pass.
+- 2026-06-05: Brent logged into Awin as `brent@reservationsnew.com`. Awin showed ReservationsNew already joined to Booking.com North America advertiser/program `6776`, with date joined `Apr 28, 2026`, link status `Online`, and Awin publisher ID `2793280`. Brent confirmed the internal Awin message requesting Booking.com Managed Affiliate Partner / Demand API v3.2 escalation was sent from the open Awin compose modal.
