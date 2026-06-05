@@ -109,11 +109,11 @@ export default function About() {
               <h3 className="font-semibold text-foreground">Honest comparisons</h3>
               <p className="mt-1 text-text-muted">
                 We send your search directly to booking providers so you can confirm current
-                details before booking. No bait-and-switch.
+                details before booking. No pretending we host the reservation.
               </p>
             </div>
             <div className="rounded-xl border border-gray-100 p-5">
-              <h3 className="font-semibold text-foreground">No hidden fees</h3>
+              <h3 className="font-semibold text-foreground">Free to use</h3>
               <p className="mt-1 text-text-muted">
                 Our service is free. We never add markups. Affiliate commissions come from the
                 partner, not from you.
@@ -146,8 +146,8 @@ export default function About() {
           </p>
           <p className="mt-3">
             We don&apos;t accept paid placements in our editorial guides. Hotels and partners
-            cannot pay to be ranked higher. Recommendations are based on inventory breadth,
-            booking-platform reputation, and traveler reviews.
+            cannot pay to be ranked higher. Recommendations are based on destination fit,
+            booking-platform reputation, and traveler research signals.
           </p>
         </section>
 

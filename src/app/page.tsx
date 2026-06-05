@@ -44,8 +44,7 @@ export default function Home() {
             Booking.com partner search links
           </div>
           <h1 className="mx-auto mt-4 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Your Next Adventure Starts with the{" "}
-            <span className="text-amber-300">Perfect Stay</span>
+            Start Planning Your Next Stay
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-blue-100 sm:text-xl">
             Explore destination guides and partner search tools for hotels,
@@ -219,7 +218,7 @@ export default function Home() {
       <section className="bg-gradient-to-r from-[#0f4c75] to-[#3282b8] px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">
-            Ready to Find Your Perfect Hotel?
+            Ready to Start Your Hotel Search?
           </h2>
           <p className="mt-4 text-lg text-blue-100">
             Search partner platforms for current prices and availability when

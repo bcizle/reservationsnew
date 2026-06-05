@@ -81,8 +81,8 @@ function buildFaqs(dest: Destination | null, displayQuery: string) {
           `Most major attractions in ${dest.name} are accessible by public transit, taxi, or rideshare. Hotels in central neighborhoods minimize commute times.`}`,
       },
       {
-        question: `How many hotels are available in ${dest.name}?`,
-        answer: `Our guide currently references ${dest.hotels} accommodations in ${dest.name}. Click through to Booking.com to review current inventory, prices, star ratings, guest review scores, and amenities.`,
+        question: `How can I compare hotel options in ${dest.name}?`,
+        answer: `Use this guide to narrow your neighborhood, timing, and budget, then continue to Booking.com to review current provider search results, prices, reviews, policies, and checkout terms.`,
       },
     ];
   }
@@ -93,7 +93,7 @@ function buildFaqs(dest: Destination | null, displayQuery: string) {
     },
     {
       question: `Should I book in advance or wait?`,
-      answer: `For popular destinations and high-season dates, book 6-8 weeks ahead. For flexible dates and shoulder seasons, last-minute deals can save 20-40%. Setting a price alert on Booking.com lets you watch a specific property without committing.`,
+      answer: `For popular destinations and high-season dates, booking 6-8 weeks ahead can give you more choice. If your dates are flexible, compare nearby dates on the provider site before committing.`,
     },
     {
       question: `What does "free cancellation" actually mean?`,
@@ -195,13 +195,13 @@ export default async function SearchPage({
               <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
                 <div className="rounded-lg bg-surface px-3 py-2">
                   <dt className="text-[10px] font-semibold uppercase tracking-wider text-text-muted">
-                    Hotels
+                    Guide scope
                   </dt>
-                  <dd className="mt-0.5 text-sm font-bold text-foreground">{matchedDest.hotels}</dd>
+                  <dd className="mt-0.5 text-sm font-bold text-foreground">City guide</dd>
                 </div>
                 <div className="rounded-lg bg-surface px-3 py-2">
                   <dt className="text-[10px] font-semibold uppercase tracking-wider text-text-muted">
-                    Avg price
+                    Guide budget
                   </dt>
                   <dd className="mt-0.5 text-sm font-bold text-foreground">{matchedDest.avgPrice}</dd>
                 </div>
@@ -266,7 +266,7 @@ export default async function SearchPage({
               <p className="font-semibold text-foreground">What you get</p>
               <ul className="mt-2 space-y-1.5 text-xs">
                 <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Booking.com search results</li>
-                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Current provider availability</li>
+                <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Provider availability after click-through</li>
                 <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Guest reviews on Booking.com</li>
                 <li className="flex items-center gap-2"><span className="text-green-600">✓</span> Checkout with the provider</li>
               </ul>
@@ -337,10 +337,10 @@ export default async function SearchPage({
         <section className="mt-12 grid gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
             <h2 className="text-lg font-bold text-foreground">
-              What travelers say about {matchedDest.name}
+              Planning notes for {matchedDest.name}
             </h2>
             <p className="mt-1 text-xs text-text-muted">
-              Insider tips from our editorial team and guest review patterns on Booking.com.
+              Editorial tips to help you narrow neighborhoods, timing, and stay style.
             </p>
             <ul className="mt-4 space-y-3">
               {matchedDest.tips.map((tip) => (
@@ -356,7 +356,7 @@ export default async function SearchPage({
               Top things to see in {matchedDest.name}
             </h2>
             <p className="mt-1 text-xs text-text-muted">
-              The destinations and attractions most reviewed by Booking.com guests.
+              Useful highlights to consider while planning your stay.
             </p>
             <ul className="mt-4 space-y-2.5">
               {matchedDest.highlights.slice(0, 6).map((h) => (
@@ -490,7 +490,7 @@ export default async function SearchPage({
       {/* SEO content */}
       <section className="mt-12 rounded-xl bg-surface p-8">
         <h2 className="text-lg font-bold text-foreground">
-          {matchedDest ? `How to find the best hotel deals in ${matchedDest.name}` : "How to find the best hotel deals"}
+          {matchedDest ? `How to start a hotel search in ${matchedDest.name}` : "How to start a hotel search"}
         </h2>
         <div className="mt-4 space-y-3 text-sm leading-relaxed text-gray-700">
           <p>
@@ -501,7 +501,7 @@ export default async function SearchPage({
           </p>
           <p>
             <strong>Be flexible with dates.</strong> Midweek stays and shoulder-season travel
-            often save 30–50% over weekend or peak-season rates. {matchedDest && `In ${matchedDest.name} specifically, ${matchedDest.bestTime.split(".")[0].toLowerCase()}.`}
+            can change the options and prices providers show. {matchedDest && `In ${matchedDest.name} specifically, ${matchedDest.bestTime.split(".")[0].toLowerCase()}.`}
           </p>
           <p>
             <strong>Filter by free cancellation.</strong> When you&apos;re early in trip
@@ -525,7 +525,7 @@ export default async function SearchPage({
           Booking.com partner search
         </div>
         <h3 className="mt-4 text-2xl font-bold sm:text-3xl">
-          Ready to book {matchedDest ? `in ${matchedDest.name}` : "your stay"}?
+          Ready to search {matchedDest ? `in ${matchedDest.name}` : "for your stay"}?
         </h3>
         <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-blue-100">
           Review current prices, cancellation options, and verified guest reviews on Booking.com

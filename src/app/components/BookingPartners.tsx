@@ -17,7 +17,7 @@ interface BookingPartner {
 const partners: BookingPartner[] = [
   {
     name: "Booking.com",
-    tagline: "28M+ listings — Featured Partner",
+    tagline: "Partner search link",
     textClass: "text-[#003580]",
     swatchClass: "bg-[#003580]",
     mark: "B.",
@@ -26,7 +26,7 @@ const partners: BookingPartner[] = [
   },
   {
     name: "Expedia",
-    tagline: "Flight + hotel bundles",
+    tagline: "Provider search",
     textClass: "text-[#fcc700]",
     swatchClass: "bg-[#00355F]",
     mark: "e",
@@ -34,7 +34,7 @@ const partners: BookingPartner[] = [
   },
   {
     name: "Hotels.com",
-    tagline: "Earn reward nights",
+    tagline: "Provider search",
     textClass: "text-[#d32f2f]",
     swatchClass: "bg-[#d32f2f]",
     mark: "H",
@@ -42,7 +42,7 @@ const partners: BookingPartner[] = [
   },
   {
     name: "Trivago",
-    tagline: "Compare 100s of sites",
+    tagline: "Provider search",
     textClass: "text-[#d12b1a]",
     swatchClass: "bg-[#d12b1a]",
     mark: "t",
@@ -56,13 +56,13 @@ export function BookingPartners() {
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-[#3282b8]">
-            Compare Across
+            Partner Search Links
           </p>
           <h2 className="mt-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            The World&apos;s Top Booking Platforms
+            Start Searches With Booking Platforms
           </h2>
           <p className="mt-3 text-base text-gray-500">
-            We scan millions of listings from the sites you already trust.
+            Continue to provider sites to confirm current listings, prices, policies, and checkout.
           </p>
         </div>
 

@@ -17,17 +17,17 @@ const gtmId = "GTM-N8HJKJ3S";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "ReservationsNew — Find & Book the Best Hotel Deals",
+    default: "ReservationsNew - Travel Planning and Partner Search",
     template: "%s | ReservationsNew",
   },
   description:
-    "Compare hotel prices across top booking platforms. Find exclusive deals on hotels, resorts, and vacation rentals worldwide. Book your perfect stay today.",
+    "Research destinations and start hotel, flight, and car rental searches through partner booking platforms. Confirm current prices, availability, and checkout terms with the provider.",
   keywords:
     "hotel deals, cheap hotels, hotel booking, travel deals, vacation rentals, resort deals, hotel comparison, flight deals, car rentals",
   openGraph: {
-    title: "ReservationsNew — Find & Book the Best Hotel Deals",
+    title: "ReservationsNew - Travel Planning and Partner Search",
     description:
-      "Compare hotel prices across top booking platforms. Find exclusive deals worldwide.",
+      "Research destinations and continue to partner booking platforms for current prices, availability, and checkout.",
     url: siteUrl,
     siteName: "ReservationsNew",
     type: "website",
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ReservationsNew — Find & Book the Best Hotel Deals",
-    description: "Compare hotel prices across top booking platforms.",
+    title: "ReservationsNew - Travel Planning and Partner Search",
+    description: "Research destinations and start searches through partner booking platforms.",
   },
   alternates: {
     canonical: siteUrl,
@@ -75,7 +75,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <WebSiteJsonLd
           name="ReservationsNew"
           url={siteUrl}
-          description="Compare hotel prices across top booking platforms. Find exclusive deals on hotels, resorts, and vacation rentals worldwide."
+          description="Research destinations and start hotel, flight, and car rental searches through partner booking platforms."
         />
       </head>
       <body className={`${inter.variable} antialiased`}>

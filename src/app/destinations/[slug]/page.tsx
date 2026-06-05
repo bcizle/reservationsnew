@@ -27,11 +27,11 @@ export async function generateMetadata({
   const dest = getDestination(slug);
   if (!dest) return { title: "Destination Not Found" };
   return {
-    title: `Hotels in ${dest.name} — Compare Booking.com Deals`,
-    description: `Find the best hotel deals in ${dest.name}, ${dest.country} on Booking.com. Compare ${dest.hotels} hotels with free cancellation, verified reviews, and live pricing — typical rates ${dest.avgPrice}.`,
+    title: `${dest.name} Hotel Search Guide`,
+    description: `Research where to stay in ${dest.name}, ${dest.country}, then continue to Booking.com to confirm current accommodation options, prices, reviews, policies, and checkout terms. Typical guide budget: ${dest.avgPrice}.`,
     openGraph: {
-      title: `Hotels in ${dest.name} — Compare Booking.com Deals | ReservationsNew`,
-      description: `Search ${dest.hotels} hotels in ${dest.name}, ${dest.country} on Booking.com. Live prices, free cancellation, verified guest reviews.`,
+      title: `${dest.name} Hotel Search Guide | ReservationsNew`,
+      description: `Research where to stay in ${dest.name}, ${dest.country}, then continue to Booking.com for current provider search results and checkout.`,
       images: [{ url: dest.heroImage, alt: `Hotels in ${dest.name}` }],
     },
     alternates: {
@@ -66,8 +66,8 @@ export default async function DestinationPage({
       answer: dest.bestTime,
     },
     {
-      question: `How many hotels are available in ${dest.name}?`,
-      answer: `There are ${dest.hotels} hotels and accommodations available in ${dest.name} across all major booking platforms.`,
+      question: `How can I compare hotel options in ${dest.name}?`,
+      answer: `Use this guide to understand neighborhoods, timing, and typical budgets, then continue to Booking.com to review current provider search results, prices, reviews, policies, and checkout terms.`,
     },
   ];
 
@@ -102,10 +102,10 @@ export default async function DestinationPage({
           <p className="mt-3 max-w-2xl text-base text-blue-100 sm:text-lg">{dest.tagline}</p>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <span className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
-              {dest.hotels} hotels available
+              Destination hotel guide
             </span>
             <span className="rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
-              {dest.avgPrice}
+              Typical guide budget: {dest.avgPrice}
             </span>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default async function DestinationPage({
         {/* Quick Stats */}
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-gray-100 p-4 text-center">
-            <p className="text-xs font-medium text-text-muted">Average Price</p>
+            <p className="text-xs font-medium text-text-muted">Guide Budget</p>
             <p className="mt-1 text-lg font-bold text-foreground">{dest.avgPrice}</p>
           </div>
           <div className="rounded-xl border border-gray-100 p-4 text-center">
@@ -128,8 +128,8 @@ export default async function DestinationPage({
             </p>
           </div>
           <div className="rounded-xl border border-gray-100 p-4 text-center">
-            <p className="text-xs font-medium text-text-muted">Hotels Available</p>
-            <p className="mt-1 text-lg font-bold text-foreground">{dest.hotels}</p>
+            <p className="text-xs font-medium text-text-muted">Partner Search</p>
+            <p className="mt-1 text-lg font-bold text-foreground">Booking.com</p>
           </div>
         </div>
 
@@ -144,9 +144,9 @@ export default async function DestinationPage({
                 Search Hotels in {dest.name} on Booking.com
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-blue-100">
-                Open Booking.com to review current hotels in {dest.name}, including provider
-                prices, availability, cancellation options, and verified guest reviews. Typical
-                destination-guide rates {dest.avgPrice}.
+                Open Booking.com through our partner link to review provider search results for
+                {` ${dest.name}`}, including current prices, availability, cancellation options,
+                and verified guest reviews. Typical destination-guide budget: {dest.avgPrice}.
               </p>
               <a
                 href={bookingLink}
@@ -172,13 +172,13 @@ export default async function DestinationPage({
               <p className="font-semibold">Why Booking.com</p>
               <ul className="mt-2 space-y-1.5 text-xs text-blue-50">
                 <li className="flex items-center gap-2">
-                  <span className="text-amber-300">✓</span> Provider search results
+                  <span className="text-amber-300">✓</span> Booking.com search filters
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-amber-300">✓</span> Free cancellation on most rooms
+                  <span className="text-amber-300">✓</span> Cancellation terms shown by provider
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-amber-300">✓</span> Verified guest reviews
+                  <span className="text-amber-300">✓</span> Verified guest reviews on Booking.com
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-amber-300">✓</span> Checkout on Booking.com

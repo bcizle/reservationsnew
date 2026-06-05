@@ -62,7 +62,7 @@ export const AWIN_PARTNERS: AwinPartner[] = [
     advertiserId: "6776",
     category: "Hotels",
     description:
-      "The world's largest accommodation platform — 28+ million listings, free cancellation on most rooms, and verified guest reviews.",
+      "Start a Booking.com accommodation search and confirm current prices, availability, reviews, policies, and checkout terms with the provider.",
     icon: "🏨",
     destinationUrl: "https://www.booking.com/",
     badge: "Featured Partner",
