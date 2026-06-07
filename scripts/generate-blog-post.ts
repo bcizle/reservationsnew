@@ -307,20 +307,38 @@ function generateFallbackPost(seedTitle: string, city: string, category: string)
 // ============================================================
 
 async function main(): Promise<void> {
-  const city = getRandomItem(CITIES);
   const year = new Date().getFullYear();
-  const topic = getRandomItem(TOPIC_TEMPLATES);
-
-  const seedTitle = topic.template
-    .replace("{city}", city)
-    .replace("{year}", year.toString());
-
-  const slug = slugify(seedTitle);
   const contentDir = path.join(process.cwd(), "content", "blog");
-  const filePath = path.join(contentDir, `${slug}.json`);
+  const MAX_ATTEMPTS = 10;
 
-  if (fs.existsSync(filePath)) {
-    console.log(`Post already exists: ${slug}. Skipping.`);
+  let city = "";
+  let topic = TOPIC_TEMPLATES[0];
+  let seedTitle = "";
+  let slug = "";
+  let filePath = "";
+  let found = false;
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    city = getRandomItem(CITIES);
+    topic = getRandomItem(TOPIC_TEMPLATES);
+    seedTitle = topic.template
+      .replace("{city}", city)
+      .replace("{year}", year.toString());
+    slug = slugify(seedTitle);
+    filePath = path.join(contentDir, `${slug}.json`);
+
+    if (fs.existsSync(filePath)) {
+      console.log(`Attempt ${attempt}/${MAX_ATTEMPTS}: slug "${slug}" already exists, retrying.`);
+      continue;
+    }
+
+    console.log(`Attempt ${attempt}/${MAX_ATTEMPTS}: selected fresh slug "${slug}" (city: ${city}).`);
+    found = true;
+    break;
+  }
+
+  if (!found) {
+    console.warn(`Could not find an unused topic/city combo after ${MAX_ATTEMPTS} attempts. Exiting without generating a post.`);
     return;
   }
 
