@@ -306,41 +306,55 @@ function generateFallbackPost(seedTitle: string, city: string, category: string)
 // MAIN
 // ============================================================
 
+function buildSlug(seedTitle: string, year: number): string {
+  const base = slugify(seedTitle);
+  return base.endsWith(`-${year}`) ? base : `${base}-${year}`;
+}
+
 async function main(): Promise<void> {
   const year = new Date().getFullYear();
   const contentDir = path.join(process.cwd(), "content", "blog");
-  const MAX_ATTEMPTS = 10;
 
-  let city = "";
-  let topic = TOPIC_TEMPLATES[0];
-  let seedTitle = "";
-  let slug = "";
-  let filePath = "";
-  let found = false;
+  if (!fs.existsSync(contentDir)) {
+    fs.mkdirSync(contentDir, { recursive: true });
+  }
 
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    city = getRandomItem(CITIES);
-    topic = getRandomItem(TOPIC_TEMPLATES);
-    seedTitle = topic.template
-      .replace("{city}", city)
-      .replace("{year}", year.toString());
-    slug = slugify(seedTitle);
-    filePath = path.join(contentDir, `${slug}.json`);
+  type Combo = {
+    city: string;
+    topic: (typeof TOPIC_TEMPLATES)[number];
+    seedTitle: string;
+    slug: string;
+    filePath: string;
+  };
 
-    if (fs.existsSync(filePath)) {
-      console.log(`Attempt ${attempt}/${MAX_ATTEMPTS}: slug "${slug}" already exists, retrying.`);
-      continue;
+  const totalCombos = CITIES.length * TOPIC_TEMPLATES.length;
+  const unused: Combo[] = [];
+  for (const c of CITIES) {
+    for (const t of TOPIC_TEMPLATES) {
+      const title = t.template
+        .replace("{city}", c)
+        .replace("{year}", year.toString());
+      const s = buildSlug(title, year);
+      const fp = path.join(contentDir, `${s}.json`);
+      if (!fs.existsSync(fp)) {
+        unused.push({ city: c, topic: t, seedTitle: title, slug: s, filePath: fp });
+      }
     }
-
-    console.log(`Attempt ${attempt}/${MAX_ATTEMPTS}: selected fresh slug "${slug}" (city: ${city}).`);
-    found = true;
-    break;
   }
 
-  if (!found) {
-    console.warn(`Could not find an unused topic/city combo after ${MAX_ATTEMPTS} attempts. Exiting without generating a post.`);
-    return;
+  if (unused.length === 0) {
+    throw new Error(
+      `All ${totalCombos} topic/city combos for ${year} have already been generated. ` +
+        `Add more templates to TOPIC_TEMPLATES or cities to CITIES to keep the pipeline producing posts.`,
+    );
   }
+
+  const pick = getRandomItem(unused);
+  const { city, topic, seedTitle, slug, filePath } = pick;
+  console.log(
+    `Selected fresh slug "${slug}" (city: ${city}, topic: "${topic.template}"). ` +
+      `${unused.length}/${totalCombos} combos remaining for ${year}.`,
+  );
 
   let generated: GeneratedPost;
   let usedAI = false;
@@ -358,6 +372,14 @@ async function main(): Promise<void> {
   } else {
     console.warn("ANTHROPIC_API_KEY not set. Using template fallback.");
     generated = generateFallbackPost(seedTitle, city, topic.category);
+  }
+
+  if (!generated.content.trim() || countWords(generated.content) < 200) {
+    throw new Error(
+      `Refusing to write post: content is empty or implausibly short (${countWords(
+        generated.content,
+      )} words). This indicates a bug in the AI path or the template fallback.`,
+    );
   }
 
   const cityTag = city.toLowerCase().replace(/\s+/g, "-");
@@ -390,10 +412,6 @@ async function main(): Promise<void> {
       },
     ],
   };
-
-  if (!fs.existsSync(contentDir)) {
-    fs.mkdirSync(contentDir, { recursive: true });
-  }
 
   fs.writeFileSync(filePath, JSON.stringify(post, null, 2));
   console.log(`Generated (${usedAI ? "AI" : "template"}): ${filePath}`);
