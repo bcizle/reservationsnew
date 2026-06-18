@@ -1,17 +1,29 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import OptimizedImage from "@/components/OptimizedImage";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { destinations } from "@/lib/destinations";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
 
 export const metadata: Metadata = {
   title: "Popular Destinations — Compare Hotel Deals Worldwide | ReservationsNew",
   description:
     "Browse popular travel destinations and compare hotel prices. Find the best deals in New York, Paris, Tokyo, London, Cancun, Dubai, and more.",
+  alternates: {
+    canonical: `${siteUrl}/destinations`,
+  },
 };
 
 export default function DestinationsIndex() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: siteUrl },
+          { name: "Destinations", url: `${siteUrl}/destinations` },
+        ]}
+      />
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           Popular Destinations

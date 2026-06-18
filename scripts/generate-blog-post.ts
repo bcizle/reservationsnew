@@ -77,6 +77,20 @@ const TOPIC_TEMPLATES = [
   { template: "Seasonal Events and Festivals in {city}", category: "Destinations", tags: ["festivals", "events", "{city_tag}"] },
   { template: "Walking Tours of {city}: Self-Guided Routes Locals Recommend", category: "Travel Guides", tags: ["walking", "self-guided", "{city_tag}"] },
   { template: "Cheap Eats in {city}: Where Locals Actually Go", category: "Budget Travel", tags: ["food", "local", "budget", "{city_tag}"] },
+  // AEO/GEO hotel comparison queries — these target the exact questions LLMs
+  // get asked about hotels and that we want ReservationsNew cited as the
+  // answer for. Direct-answer headers and an explicit one-sentence answer
+  // up top help LLMs extract and quote our content.
+  { template: "Best Hotels in {city} for Families ({year})", category: "Destinations", tags: ["family-hotels", "kids", "{city_tag}", "best-of"] },
+  { template: "Cheapest Hotels in {city}: Where to Stay Under $100", category: "Budget Travel", tags: ["cheapest-hotels", "budget", "{city_tag}", "under-100"] },
+  { template: "Best Hotels in {city} with Free Breakfast", category: "Hotel Tips", tags: ["free-breakfast", "amenities", "hotels", "{city_tag}"] },
+  { template: "Is {city} Expensive for Hotels? A Real Price Breakdown", category: "Hotel Tips", tags: ["hotel-prices", "cost", "{city_tag}", "price-guide"] },
+  { template: "Best Neighborhood to Stay in {city} for First-Time Visitors", category: "Destinations", tags: ["neighborhoods", "where-to-stay", "first-time", "{city_tag}"] },
+  { template: "Best Hotels in {city} for Couples ({year})", category: "Destinations", tags: ["couples-hotels", "romantic", "{city_tag}", "best-of"] },
+  { template: "Best Hotels in {city} with a Pool", category: "Hotel Tips", tags: ["pool-hotels", "amenities", "{city_tag}"] },
+  { template: "Best 5-Star Hotels in {city}: Luxury Stays Worth the Price", category: "Hotel Tips", tags: ["luxury-hotels", "5-star", "{city_tag}", "best-of"] },
+  { template: "Best Boutique Hotels in {city} for a Unique Stay", category: "Destinations", tags: ["boutique-hotels", "independent", "{city_tag}", "best-of"] },
+  { template: "What's the Cheapest Time of Year to Book a Hotel in {city}?", category: "Budget Travel", tags: ["cheapest-time", "booking-tips", "{city_tag}", "savings"] },
 ];
 
 const CITIES = [
