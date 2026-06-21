@@ -230,4 +230,72 @@ export const AWIN_PARTNERS: AwinPartner[] = [
     icon: "🏝️",
     destinationUrl: "https://www.xcaret.com/en/",
   },
+
+  // Pending travel programs — added 2026-06-20 to broaden the affiliate
+  // surface area while we diagnose conversion attribution. advertiserId is
+  // "TODO" for entries whose Awin awinmid we still need to confirm from the
+  // dashboard (My Account → My Programs → Approved → click program name).
+  // buildAwinLink falls back to the direct destination URL for TODO entries,
+  // so the cards still work — they just won't earn commission until the IDs
+  // are filled in.
+  {
+    id: "mytrip",
+    name: "Mytrip",
+    advertiserId: "TODO",
+    category: "Flights",
+    description:
+      "Search and book flights across 800+ airlines worldwide — compare fares, route options, and travel times in one place.",
+    icon: "✈️",
+    destinationUrl: "https://www.mytrip.com/",
+  },
+  {
+    id: "gotogate",
+    name: "Gotogate",
+    advertiserId: "TODO",
+    category: "Flights",
+    description:
+      "Compare cheap flights from hundreds of carriers — straightforward fare search with no membership required.",
+    icon: "🛫",
+    destinationUrl: "https://www.gotogate.com/",
+  },
+  {
+    id: "radisson",
+    name: "Radisson Hotels",
+    advertiserId: "TODO",
+    category: "Hotels",
+    description:
+      "Book direct at 1,100+ Radisson hotels worldwide — Radisson Blu, Radisson RED, Park Inn, and Country Inn & Suites brands.",
+    icon: "🏨",
+    destinationUrl: "https://www.radissonhotels.com/",
+  },
+  {
+    id: "one-stop-parking",
+    name: "One Stop Parking",
+    advertiserId: "TODO",
+    category: "Airport & Cruise Parking",
+    description:
+      "Reserve off-airport and cruise-port parking in advance and save vs. on-site rates — covers most major US airports and cruise terminals.",
+    icon: "🅿️",
+    destinationUrl: "https://www.onestopparking.com/",
+  },
+  {
+    id: "the-tour-guy",
+    name: "The Tour Guy",
+    advertiserId: "TODO",
+    category: "Tours & Activities",
+    description:
+      "Small-group and skip-the-line tours of Europe's top attractions — Vatican, Colosseum, Eiffel Tower, and more, led by local expert guides.",
+    icon: "🗽",
+    destinationUrl: "https://thetourguy.com/",
+  },
+  {
+    id: "travelzoo",
+    name: "Travelzoo",
+    advertiserId: "TODO",
+    category: "Travel Deals",
+    description:
+      "Curated travel deals across hotels, cruises, flights, and vacation packages — Travelzoo's editorial team vets every offer before publishing.",
+    icon: "🌍",
+    destinationUrl: "https://www.travelzoo.com/",
+  },
 ];

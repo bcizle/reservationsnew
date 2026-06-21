@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GoogleTagManager from "@/components/GoogleTagManager";
+import AwinMasterTag from "@/components/AwinMasterTag";
 import { WebSiteJsonLd } from "@/components/JsonLd";
 
 const inter = Inter({
@@ -62,6 +63,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <GoogleTagManager />
+        <AwinMasterTag />
         <WebSiteJsonLd
           name="ReservationsNew"
           url={siteUrl}

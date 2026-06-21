@@ -11,6 +11,12 @@ const AWIN_PUBLISHER_ID =
   process.env.NEXT_PUBLIC_AWIN_PUBLISHER_ID ?? "2793280";
 const BOOKING_AWIN_ADVERTISER_ID = "6776";
 
+// Legacy Booking.com direct-affiliate id. Awin's cread.php is the primary
+// attribution path; this env var, when set, also stamps the inner URL so
+// Booking.com has a fallback attribution signal on its side. Falls back to
+// undefined (no aid param) when the env var is unset.
+const DEFAULT_BOOKING_AID = process.env.NEXT_PUBLIC_BOOKING_AID || undefined;
+
 interface BookingLinkOptions {
   /** Optional Booking.com label for tracking sub-campaigns. */
   label?: string;
@@ -44,7 +50,8 @@ export function buildBookingLink(
     label: options.label ?? "reservationsnew",
     lang: "en-us",
   });
-  if (options.aid) params.set("aid", options.aid);
+  const aid = options.aid ?? DEFAULT_BOOKING_AID;
+  if (aid) params.set("aid", aid);
   if (destination) params.set("ss", destination);
   if (checkin) params.set("checkin", checkin);
   if (checkout) params.set("checkout", checkout);
@@ -75,6 +82,7 @@ export function buildBookingHomeLink(label?: string): string {
   const params = new URLSearchParams({
     label: label ?? "reservationsnew-home",
   });
+  if (DEFAULT_BOOKING_AID) params.set("aid", DEFAULT_BOOKING_AID);
   const bookingUrl = `https://www.booking.com/index.html?${params.toString()}`;
   return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
     bookingUrl,
@@ -90,6 +98,7 @@ export function buildBookingCarLink(destination?: string, label?: string): strin
   const params = new URLSearchParams({
     label: label ?? "reservationsnew-cars",
   });
+  if (DEFAULT_BOOKING_AID) params.set("aid", DEFAULT_BOOKING_AID);
   if (destination) params.set("ss", destination);
   const carsUrl = `https://www.booking.com/cars/index.html?${params.toString()}`;
   return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
@@ -106,6 +115,7 @@ export function buildBookingFlightLink(destination?: string, label?: string): st
   const params = new URLSearchParams({
     label: label ?? "reservationsnew-flights",
   });
+  if (DEFAULT_BOOKING_AID) params.set("aid", DEFAULT_BOOKING_AID);
   if (destination) params.set("to", destination);
   const flightsUrl = `https://www.booking.com/flights/index.html?${params.toString()}`;
   return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
