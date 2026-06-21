@@ -151,7 +151,7 @@ export default async function DestinationPage({
               <a
                 href={bookingLink}
                 target="_blank"
-                rel="noopener noreferrer sponsored"
+                rel="noopener sponsored"
                 className="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-bold text-white transition hover:bg-accent-hover"
               >
                 Search Hotels in {dest.name}
@@ -286,7 +286,7 @@ export default async function DestinationPage({
           <a
             href={bookingLink}
             target="_blank"
-            rel="noopener noreferrer sponsored"
+            rel="noopener sponsored"
             className="mt-5 inline-block rounded-lg bg-accent px-8 py-3 text-sm font-bold text-white transition hover:bg-accent-hover"
           >
             Search Hotels in {dest.name} on Booking.com

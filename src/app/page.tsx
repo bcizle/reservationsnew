@@ -227,7 +227,7 @@ export default function Home() {
           <a
             href={bookingCtaUrl}
             target="_blank"
-            rel="noopener noreferrer sponsored"
+            rel="noopener sponsored"
             className="mt-8 inline-block rounded-lg bg-accent px-8 py-4 text-lg font-bold text-white transition hover:bg-accent-hover"
           >
             Start Searching on Booking.com

@@ -179,7 +179,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <a
             href={bookingLink}
             target="_blank"
-            rel="noopener noreferrer sponsored"
+            rel="noopener sponsored"
             className="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-bold text-white transition hover:bg-accent-hover"
           >
             Search Hotels on Booking.com

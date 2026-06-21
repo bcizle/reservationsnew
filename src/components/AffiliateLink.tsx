@@ -32,7 +32,7 @@ export default function AffiliateLink({ href, provider, children, className }: A
     <a
       href={href}
       target="_blank"
-      rel="noopener noreferrer sponsored"
+      rel="noopener sponsored"
       onClick={handleClick}
       className={className}
     >

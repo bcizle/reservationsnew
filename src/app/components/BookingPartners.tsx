@@ -72,7 +72,7 @@ export function BookingPartners() {
               key={p.name}
               href={p.url}
               target="_blank"
-              rel="noopener noreferrer sponsored"
+              rel="noopener sponsored"
               className={[
                 "group relative flex items-center gap-4 rounded-xl border bg-white px-5 py-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md",
                 p.badge ? "border-[#003580]/40 ring-1 ring-[#003580]/20" : "border-gray-200 hover:border-gray-300",

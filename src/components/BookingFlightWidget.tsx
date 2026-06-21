@@ -45,7 +45,7 @@ export default function BookingFlightWidget({ destination }: BookingFlightWidget
       <a
         href={searchUrl}
         target="_blank"
-        rel="noopener noreferrer sponsored"
+        rel="noopener sponsored"
         onClick={handleClick}
         className="inline-flex items-center gap-2 rounded-lg bg-[#003580] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#002255]"
       >

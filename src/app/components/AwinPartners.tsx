@@ -7,7 +7,7 @@ function PartnerCard({ partner }: { partner: AwinPartner }) {
     <a
       href={href}
       target="_blank"
-      rel="noopener noreferrer sponsored"
+      rel="noopener sponsored"
       className={[
         "group relative flex flex-col rounded-2xl border p-6 transition-all",
         "hover:-translate-y-1 hover:shadow-lg",
