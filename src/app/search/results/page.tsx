@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import HotelSearchForm from "@/components/HotelSearchForm";
+import AffiliateLink from "@/components/AffiliateLink";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
+import { buildBookingLink } from "@/lib/booking";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://reservationsnew.com";
 
@@ -240,8 +241,17 @@ export default async function SearchResultsPage({
                         ? `~$${(hotel.nightlyPrice * nights).toLocaleString()} for ${nights} ${nights === 1 ? "night" : "nights"}`
                         : "Select dates for total price"}
                     </p>
-                    <Link
-                      href={`/hotels/${hotel.slug}`}
+                    <AffiliateLink
+                      href={buildBookingLink(
+                        destination || undefined,
+                        params.checkin,
+                        params.checkout,
+                        {
+                          label: `reservationsnew-results-${hotel.slug}`,
+                          adults: guests,
+                        },
+                      )}
+                      provider="Booking.com"
                       className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-5 py-2.5 text-sm font-bold text-white transition hover:bg-accent-hover"
                     >
                       View deal
@@ -258,7 +268,7 @@ export default async function SearchResultsPage({
                           d="M14 5l7 7m0 0l-7 7m7-7H3"
                         />
                       </svg>
-                    </Link>
+                    </AffiliateLink>
                   </div>
                 </div>
               </div>

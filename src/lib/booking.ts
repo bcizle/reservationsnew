@@ -11,11 +11,30 @@ const AWIN_PUBLISHER_ID =
   process.env.NEXT_PUBLIC_AWIN_PUBLISHER_ID ?? "2793280";
 const BOOKING_AWIN_ADVERTISER_ID = "6776";
 
-// Legacy Booking.com direct-affiliate id. Awin's cread.php is the primary
-// attribution path; this env var, when set, also stamps the inner URL so
-// Booking.com has a fallback attribution signal on its side. Falls back to
-// undefined (no aid param) when the env var is unset.
-const DEFAULT_BOOKING_AID = process.env.NEXT_PUBLIC_BOOKING_AID || undefined;
+// Legacy Booking.com direct-affiliate id (issued by Booking.com Partner Hub,
+// NOT by Awin). Awin's cread.php is the primary attribution path; this env
+// var, when set, additionally stamps the inner URL so Booking.com has a
+// direct attribution signal on its side. Falls back to undefined (no aid
+// param) when the env var is unset.
+//
+// Safety guard: a common operator mistake is to paste the Awin Publisher ID
+// here. The two IDs live in different namespaces — passing the Awin pub ID
+// as a Booking.com aid sends Booking.com an aid it doesn't recognize, which
+// can suppress the Awin S2S postback and zero out commissions. If the env
+// value equals the Awin publisher ID we treat it as a misconfiguration and
+// drop the aid entirely (Awin attribution still works via cread.php).
+const RAW_BOOKING_AID = process.env.NEXT_PUBLIC_BOOKING_AID || undefined;
+const DEFAULT_BOOKING_AID =
+  RAW_BOOKING_AID && RAW_BOOKING_AID !== AWIN_PUBLISHER_ID
+    ? RAW_BOOKING_AID
+    : undefined;
+if (RAW_BOOKING_AID && RAW_BOOKING_AID === AWIN_PUBLISHER_ID) {
+  console.warn(
+    "[booking] NEXT_PUBLIC_BOOKING_AID equals NEXT_PUBLIC_AWIN_PUBLISHER_ID. " +
+      "Booking.com aids are issued by partner.booking.com, not by Awin. " +
+      "Ignoring the env value to avoid breaking Awin attribution.",
+  );
+}
 
 interface BookingLinkOptions {
   /** Optional Booking.com label for tracking sub-campaigns. */
