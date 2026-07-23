@@ -37,6 +37,9 @@ yarn-error.log*
 # local partnership/application details with applicant PII
 docs/partnerships/private/
 
+# claude code
+.claude/
+
 # vercel
 .vercel
 
