@@ -54,6 +54,7 @@ export interface AwinPartner {
  *   GoWithGuide US       → 87121
  *   Kiwi MX              → 20563
  *   Xcaret Global        → 34947
+ *   ScholarTrip          → 95023
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
@@ -229,6 +230,16 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Eight eco-theme parks across Cancun and the Riviera Maya, plus all-inclusive Xcaret hotels — book unforgettable experiences in Mexico's top vacation region.",
     icon: "🏝️",
     destinationUrl: "https://www.xcaret.com/en/",
+  },
+  {
+    id: "scholartrip",
+    name: "ScholarTrip",
+    advertiserId: "95023",
+    category: "Flights",
+    description:
+      "Discounted student and youth airfares to destinations worldwide — special negotiated fares for college students and travelers under 26.",
+    icon: "🎓",
+    destinationUrl: "https://scholartrip.com/",
   },
 
   // Pending travel programs — added 2026-06-20 to broaden the affiliate
