@@ -54,7 +54,7 @@ export default function BookingCarWidget({ destination }: BookingCarWidgetProps)
         </svg>
       </a>
       <p className="mt-3 text-xs text-gray-400">
-        As a Booking.com Affiliate, we earn from qualifying transactions — at no extra cost to you.
+        This site contains affiliate links, and we may earn a commission on some of them at no extra cost to you.
       </p>
     </div>
   );

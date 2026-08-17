@@ -173,8 +173,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </h3>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-blue-100">
             Open Booking.com to review current accommodation options, prices, cancellation
-            policies, and verified guest reviews. As a Booking.com Affiliate, we earn from
-            qualifying transactions.
+            policies, and verified guest reviews. This site contains affiliate links, and we may earn a commission on some of them.
           </p>
           <a
             href={bookingLink}

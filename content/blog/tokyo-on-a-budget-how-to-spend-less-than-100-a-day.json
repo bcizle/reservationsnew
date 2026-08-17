@@ -17,12 +17,12 @@
   "affiliateLinks": [
     {
       "label": "Search Hotels in Tokyo on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3DTokyo%26label%3Dreservationsnew-blog-tokyo-hotels",
+      "url": "https://www.booking.com/searchresults.html?ss=Tokyo&label=reservationsnew-blog-tokyo-hotels",
       "provider": "Booking.com"
     },
     {
       "label": "Find Flights to Tokyo on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fflights%2Findex.html%3Fto%3DTokyo%26label%3Dreservationsnew-blog-tokyo-flights",
+      "url": "https://www.booking.com/flights/index.html?to=Tokyo&label=reservationsnew-blog-tokyo-flights",
       "provider": "Booking.com"
     }
   ]

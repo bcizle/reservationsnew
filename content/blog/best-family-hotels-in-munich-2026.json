@@ -17,12 +17,12 @@
   "affiliateLinks": [
     {
       "label": "Search Hotels in Munich on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3DMunich%26label%3Dreservationsnew-blog-munich-hotels",
+      "url": "https://www.booking.com/searchresults.html?ss=Munich&label=reservationsnew-blog-munich-hotels",
       "provider": "Booking.com"
     },
     {
       "label": "Find Flights to Munich on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fflights%2Findex.html%3Fto%3DMunich%26label%3Dreservationsnew-blog-munich-flights",
+      "url": "https://www.booking.com/flights/index.html?to=Munich&label=reservationsnew-blog-munich-flights",
       "provider": "Booking.com"
     }
   ]

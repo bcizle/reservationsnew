@@ -17,12 +17,12 @@
   "affiliateLinks": [
     {
       "label": "Search Hotels in Lisbon on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3DLisbon%26label%3Dreservationsnew-blog-lisbon-hotels",
+      "url": "https://www.booking.com/searchresults.html?ss=Lisbon&label=reservationsnew-blog-lisbon-hotels",
       "provider": "Booking.com"
     },
     {
       "label": "Find Flights to Lisbon on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fflights%2Findex.html%3Fto%3DLisbon%26label%3Dreservationsnew-blog-lisbon-flights",
+      "url": "https://www.booking.com/flights/index.html?to=Lisbon&label=reservationsnew-blog-lisbon-flights",
       "provider": "Booking.com"
     }
   ]

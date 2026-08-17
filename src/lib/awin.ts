@@ -36,8 +36,8 @@ export interface AwinPartner {
 /**
  * Approved Awin partner programs.
  *
- * Confirmed IDs (verified via Awin merchant profile pages):
- *   Booking.com          → 6776
+ * Confirmed IDs (verified 2026-08-17 against the Awin Publisher API,
+ * GET /publishers/2793280/programmes?relationship=joined):
  *   Caesars Rewards      → 6145
  *   Campspot             → 22326
  *   ShopRaise            → 115325
@@ -55,12 +55,18 @@ export interface AwinPartner {
  *   Kiwi MX              → 20563
  *   Xcaret Global        → 34947
  *   ScholarTrip          → 95023
+ *
+ * NOT confirmed: Booking.com. Advertiser 6776 is not available to publisher
+ * 2793280 (absent from every relationship list, and its cread.php link returns
+ * "This link is inactive"). Its card is marked "TODO" so buildAwinLink falls
+ * back to a working direct link. See src/lib/booking.ts.
  */
 export const AWIN_PARTNERS: AwinPartner[] = [
   {
     id: "booking",
     name: "Booking.com",
-    advertiserId: "6776",
+    // No active Awin relationship — see the note above. Direct link until one exists.
+    advertiserId: "TODO",
     category: "Hotels",
     description:
       "Start a Booking.com accommodation search and confirm current prices, availability, reviews, policies, and checkout terms with the provider.",

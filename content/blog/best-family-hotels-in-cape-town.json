@@ -17,12 +17,12 @@
   "affiliateLinks": [
     {
       "label": "Search Hotels in Cape Town on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3DCape%2520Town%26label%3Dreservationsnew-blog-cape-town-hotels",
+      "url": "https://www.booking.com/searchresults.html?ss=Cape%20Town&label=reservationsnew-blog-cape-town-hotels",
       "provider": "Booking.com"
     },
     {
       "label": "Find Flights to Cape Town on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fflights%2Findex.html%3Fto%3DCape%2520Town%26label%3Dreservationsnew-blog-cape-town-flights",
+      "url": "https://www.booking.com/flights/index.html?to=Cape%20Town&label=reservationsnew-blog-cape-town-flights",
       "provider": "Booking.com"
     }
   ]

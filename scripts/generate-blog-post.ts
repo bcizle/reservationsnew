@@ -12,9 +12,11 @@
  * Env vars:
  * - ANTHROPIC_API_KEY (required for AI generation; absent → template fallback)
  *
- * Affiliate links are pre-baked Awin-tracked Booking.com deep links
- * (Awin Publisher 2793280, Booking.com Advertiser 6776) — no env-var
- * substitution needed at generation time.
+ * Booking.com links are baked in as direct deep links. Advertiser 6776 was
+ * removed on 2026-08-17 after the Awin Publisher API confirmed no such
+ * relationship exists for publisher 2793280 and its cread.php links returned
+ * "This link is inactive." Set BOOKING_AWIN_MID to a verified advertiser ID to
+ * restore Awin tracking on newly generated posts.
  */
 
 import fs from "fs";
@@ -26,11 +28,14 @@ import Anthropic from "@anthropic-ai/sdk";
 // ============================================================
 
 const AWIN_PUBLISHER_ID = "2793280";
-const BOOKING_AWIN_ADVERTISER_ID = "6776";
+// Empty unless a verified Booking.com advertiser ID exists. Do not hardcode
+// 6776 here again — it is not a valid relationship for this publisher.
+const BOOKING_AWIN_ADVERTISER_ID = process.env.BOOKING_AWIN_MID?.trim() || "";
 
 function awinBookingLink(bookingPath: string, label: string): string {
   const sep = bookingPath.includes("?") ? "&" : "?";
   const bookingUrl = `https://www.booking.com${bookingPath}${sep}label=${label}`;
+  if (!BOOKING_AWIN_ADVERTISER_ID) return bookingUrl;
   return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
     bookingUrl,
   )}`;

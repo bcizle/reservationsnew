@@ -56,8 +56,7 @@ export default function Home() {
           <SearchWidget />
 
           <p className="mx-auto mt-3 max-w-2xl text-xs text-blue-200">
-            Search routes through Booking.com via our Awin affiliate link. As a Booking.com
-            Affiliate, we earn from qualifying transactions — at no extra cost to you.
+            Search routes through Booking.com via our Awin affiliate link. This site contains affiliate links, and we may earn a commission on some of them at no extra cost to you.
           </p>
 
           {/* Trust Badges */}

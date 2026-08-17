@@ -1,15 +1,44 @@
 /**
- * Booking.com affiliate link builder — routed through the Awin tracking domain.
+ * Booking.com link builder.
+ *
+ * STATUS (verified 2026-08-17 against the Awin Publisher API):
+ * Advertiser 6776 is NOT available to publisher 2793280. It appears in none of
+ * the joined / pending / suspended / rejected / notjoined programme lists, and
+ * a live fetch of
+ *   https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=...
+ * returns an HTML page reading "This link is inactive." — i.e. every
+ * Booking.com CTA on the site was a dead end for the visitor, not merely an
+ * untracked one.
+ *
+ * Until a valid Booking.com advertiser relationship exists, we send visitors
+ * straight to Booking.com. No commission is earned either way, but the links
+ * work. Set NEXT_PUBLIC_BOOKING_AWIN_MID to a confirmed advertiser ID to
+ * re-enable Awin tracking without touching this file.
  *
  * Awin Publisher ID: 2793280 (ReservationsNew)
- * Booking.com Awin Advertiser ID: 6776
- *
- * Format: https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued={ENCODED_BOOKING_URL}
+ * Tracked format: https://www.awin1.com/cread.php?awinmid={MID}&awinaffid=2793280&ued={ENCODED_BOOKING_URL}
  */
 
 const AWIN_PUBLISHER_ID =
   process.env.NEXT_PUBLIC_AWIN_PUBLISHER_ID ?? "2793280";
-const BOOKING_AWIN_ADVERTISER_ID = "6776";
+
+/**
+ * Confirmed Booking.com Awin advertiser ID, if one exists. Empty by default —
+ * do not hardcode 6776 here again without re-verifying it against the API.
+ */
+const BOOKING_AWIN_ADVERTISER_ID =
+  process.env.NEXT_PUBLIC_BOOKING_AWIN_MID?.trim() || "";
+
+/**
+ * Wrap a Booking.com URL in Awin tracking when a valid advertiser ID is
+ * configured; otherwise return the direct URL so the link still works.
+ */
+function withAwinTracking(bookingUrl: string): string {
+  if (!BOOKING_AWIN_ADVERTISER_ID) return bookingUrl;
+  return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
+    bookingUrl,
+  )}`;
+}
 
 // Legacy Booking.com direct-affiliate id (issued by Booking.com Partner Hub,
 // NOT by Awin). Awin's cread.php is the primary attribution path; this env
@@ -91,9 +120,7 @@ export function buildBookingLink(
   }
 
   const bookingUrl = `https://www.booking.com/searchresults.html?${params.toString()}`;
-  return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
-    bookingUrl,
-  )}`;
+  return withAwinTracking(bookingUrl);
 }
 
 /** Awin-tracked Booking.com homepage link — for non-search CTAs. */
@@ -103,9 +130,7 @@ export function buildBookingHomeLink(label?: string): string {
   });
   if (DEFAULT_BOOKING_AID) params.set("aid", DEFAULT_BOOKING_AID);
   const bookingUrl = `https://www.booking.com/index.html?${params.toString()}`;
-  return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
-    bookingUrl,
-  )}`;
+  return withAwinTracking(bookingUrl);
 }
 
 /**
@@ -120,9 +145,7 @@ export function buildBookingCarLink(destination?: string, label?: string): strin
   if (DEFAULT_BOOKING_AID) params.set("aid", DEFAULT_BOOKING_AID);
   if (destination) params.set("ss", destination);
   const carsUrl = `https://www.booking.com/cars/index.html?${params.toString()}`;
-  return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
-    carsUrl,
-  )}`;
+  return withAwinTracking(carsUrl);
 }
 
 /**
@@ -137,7 +160,5 @@ export function buildBookingFlightLink(destination?: string, label?: string): st
   if (DEFAULT_BOOKING_AID) params.set("aid", DEFAULT_BOOKING_AID);
   if (destination) params.set("to", destination);
   const flightsUrl = `https://www.booking.com/flights/index.html?${params.toString()}`;
-  return `https://www.awin1.com/cread.php?awinmid=${BOOKING_AWIN_ADVERTISER_ID}&awinaffid=${AWIN_PUBLISHER_ID}&ued=${encodeURIComponent(
-    flightsUrl,
-  )}`;
+  return withAwinTracking(flightsUrl);
 }

@@ -49,11 +49,9 @@ export default function About() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">How we make money</h2>
           <p className="mt-3">
-            <strong>As a Booking.com Affiliate, we earn from qualifying transactions — at no
-            extra cost to you.</strong> When you click a partner link on ReservationsNew and
-            complete a booking, the partner (Booking.com or another approved Awin merchant) pays
-            us a small referral fee. The price you pay is the same as if you had visited the
-            partner directly.
+            <strong>This site contains affiliate links, and we may earn a commission on some of them at no extra cost to you.</strong> When you click a partner link on ReservationsNew and
+            complete a booking, an approved Awin merchant pays us a small referral fee. The price
+            you pay is the same as if you had visited the partner directly.
           </p>
           <p className="mt-3">
             That&apos;s the whole business model. We never charge you, never sell your personal
@@ -69,14 +67,13 @@ export default function About() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">Our partnerships</h2>
           <p className="mt-3">
-            Our primary affiliate path is <strong>Booking.com</strong>. We&apos;re an approved
-            Booking.com Affiliate via the Awin network (Awin Publisher 2793280, Booking.com
-            Advertiser 6776), which lets us earn from qualifying transactions through partner
-            referral links. Affiliate approval is separate from Booking.com content or API access;
-            we are pursuing approved content/API access before republishing richer Booking.com
-            property content on ReservationsNew. We also work with a
-            hand-picked roster of <strong>{AWIN_PARTNERS.length} additional Awin partners</strong>{" "}
-            covering city passes, eSIMs, campgrounds, boutique hotels, and more.
+            We send hotel, flight, and car searches to <strong>Booking.com</strong> because it has
+            the broadest inventory. We do not currently have an active commission relationship with
+            Booking.com, so those links are plain referrals and we earn nothing from them. Our
+            commission-earning partnerships run through the Awin network (Awin Publisher 2793280):
+            a hand-picked roster of{" "}
+            <strong>{AWIN_PARTNERS.length} partners</strong> covering city passes, eSIMs,
+            campgrounds, boutique hotels, tours, and more.
           </p>
           <ul className="mt-4 grid gap-2 sm:grid-cols-2">
             {AWIN_PARTNERS.slice(0, 8).map((p) => (

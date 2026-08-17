@@ -17,12 +17,12 @@
   "affiliateLinks": [
     {
       "label": "Search Hotels in Hanoi on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3DHanoi%26label%3Dreservationsnew-blog-hanoi-hotels",
+      "url": "https://www.booking.com/searchresults.html?ss=Hanoi&label=reservationsnew-blog-hanoi-hotels",
       "provider": "Booking.com"
     },
     {
       "label": "Find Flights to Hanoi on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fflights%2Findex.html%3Fto%3DHanoi%26label%3Dreservationsnew-blog-hanoi-flights",
+      "url": "https://www.booking.com/flights/index.html?to=Hanoi&label=reservationsnew-blog-hanoi-flights",
       "provider": "Booking.com"
     }
   ]

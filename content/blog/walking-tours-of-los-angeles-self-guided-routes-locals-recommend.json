@@ -17,12 +17,12 @@
   "affiliateLinks": [
     {
       "label": "Search Hotels in Los Angeles on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3DLos%2520Angeles%26label%3Dreservationsnew-blog-los-angeles-hotels",
+      "url": "https://www.booking.com/searchresults.html?ss=Los%20Angeles&label=reservationsnew-blog-los-angeles-hotels",
       "provider": "Booking.com"
     },
     {
       "label": "Find Flights to Los Angeles on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fflights%2Findex.html%3Fto%3DLos%2520Angeles%26label%3Dreservationsnew-blog-los-angeles-flights",
+      "url": "https://www.booking.com/flights/index.html?to=Los%20Angeles&label=reservationsnew-blog-los-angeles-flights",
       "provider": "Booking.com"
     }
   ]

@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Affiliate Disclosure",
   description:
-    "As a Booking.com Affiliate, ReservationsNew earns from qualifying transactions. Full transparency on our affiliate partnership with Booking.com via the Awin network.",
+    "This site contains affiliate links, and we may earn a commission on some of them. Full transparency on how ReservationsNew earns revenue through the Awin affiliate network.",
 };
 
 export default function AffiliateDisclosure() {
@@ -16,18 +16,18 @@ export default function AffiliateDisclosure() {
       <div className="mt-10 space-y-8 text-sm leading-relaxed text-gray-700">
         <section className="rounded-2xl border border-blue-100 bg-blue-50/40 p-5">
           <p className="text-base font-semibold text-foreground">
-            As a Booking.com Affiliate, I earn from qualifying transactions.
+            Some links on this site earn us a commission. It never costs you extra.
           </p>
           <p className="mt-2 text-sm text-gray-700">
-            ReservationsNew participates in the Booking.com affiliate partner program through the
-            Awin affiliate network (Awin Publisher ID 2793280, Booking.com Advertiser ID 6776).
-            When you click a Booking.com link on this site and complete a booking, we may earn a
-            commission — at no extra cost to you.
+            ReservationsNew participates in the Awin affiliate network (Awin Publisher ID 2793280).
+            When you click one of our partner links and complete a booking or purchase, we may earn
+            a commission at no additional cost to you.
           </p>
           <p className="mt-2 text-sm text-gray-700">
-            Affiliate approval does not grant us unrestricted rights to republish Booking.com
-            property content. We are pursuing approved Booking.com content/API access before adding
-            richer Booking.com property content directly on ReservationsNew.
+            Booking.com links on this site are plain referral links. We do not currently have an
+            active commission relationship with Booking.com and earn nothing when you book through
+            them. We send searches there because of its inventory coverage, not because of any
+            payment.
           </p>
         </section>
 
@@ -45,11 +45,11 @@ export default function AffiliateDisclosure() {
           </p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>
-              <strong>Booking.com (via Awin)</strong> — As a Booking.com Affiliate, we earn from
-              qualifying transactions. Bookings made through our Booking.com links are tracked
-              through the Awin affiliate network. Booking.com is the world&apos;s largest
-              accommodation platform. Current prices, availability, cancellation options, and
-              verified guest reviews are shown on Booking.com after you click through.
+              <strong>Booking.com (referral only)</strong> — We link to Booking.com because it is
+              the world&apos;s largest accommodation platform, but we have no active commission
+              relationship with it and earn nothing from those links. Current prices, availability,
+              cancellation options, and verified guest reviews are shown on Booking.com after you
+              click through.
             </li>
             <li>
               <strong>Awin partner network</strong> — Beyond Booking.com, we work with a curated
