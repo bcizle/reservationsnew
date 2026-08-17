@@ -165,7 +165,7 @@ export default async function DestinationPage({
                 </svg>
               </a>
               <p className="mt-3 text-[11px] text-blue-200">
-                Affiliate link via Awin — we may earn a commission at no extra cost to you.
+                Referral link to Booking.com. Prices are the same as going direct.
               </p>
             </div>
             <div className="hidden shrink-0 rounded-xl bg-white/10 p-5 text-sm shadow-sm backdrop-blur-sm sm:block">

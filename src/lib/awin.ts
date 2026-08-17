@@ -72,8 +72,6 @@ export const AWIN_PARTNERS: AwinPartner[] = [
       "Start a Booking.com accommodation search and confirm current prices, availability, reviews, policies, and checkout terms with the provider.",
     icon: "🏨",
     destinationUrl: "https://www.booking.com/",
-    badge: "Featured Partner",
-    topPerformer: true,
   },
   {
     id: "xtv",

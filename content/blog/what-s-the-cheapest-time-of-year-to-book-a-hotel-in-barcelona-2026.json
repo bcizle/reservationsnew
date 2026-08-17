@@ -17,12 +17,12 @@
   "affiliateLinks": [
     {
       "label": "Search Hotels in Barcelona on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3DBarcelona%26label%3Dreservationsnew-blog-barcelona-hotels",
+      "url": "https://www.booking.com/searchresults.html?ss=Barcelona&label=reservationsnew-blog-barcelona-hotels",
       "provider": "Booking.com"
     },
     {
       "label": "Find Flights to Barcelona on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fflights%2Findex.html%3Fto%3DBarcelona%26label%3Dreservationsnew-blog-barcelona-flights",
+      "url": "https://www.booking.com/flights/index.html?to=Barcelona&label=reservationsnew-blog-barcelona-flights",
       "provider": "Booking.com"
     }
   ]

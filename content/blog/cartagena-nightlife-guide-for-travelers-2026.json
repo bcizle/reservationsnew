@@ -17,12 +17,12 @@
   "affiliateLinks": [
     {
       "label": "Search Hotels in Cartagena on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fsearchresults.html%3Fss%3DCartagena%26label%3Dreservationsnew-blog-cartagena-hotels",
+      "url": "https://www.booking.com/searchresults.html?ss=Cartagena&label=reservationsnew-blog-cartagena-hotels",
       "provider": "Booking.com"
     },
     {
       "label": "Find Flights to Cartagena on Booking.com",
-      "url": "https://www.awin1.com/cread.php?awinmid=6776&awinaffid=2793280&ued=https%3A%2F%2Fwww.booking.com%2Fflights%2Findex.html%3Fto%3DCartagena%26label%3Dreservationsnew-blog-cartagena-flights",
+      "url": "https://www.booking.com/flights/index.html?to=Cartagena&label=reservationsnew-blog-cartagena-flights",
       "provider": "Booking.com"
     }
   ]
