@@ -46,8 +46,21 @@ Top: Kiwi MX 26, Xcaret 8, Sim Local 7, Caesars 7, Campspot 7, XTV 7, GoWithGuid
 - Last 30 days: 0 transactions, $0.00
 
 ## Changes made
+Committed as `367a4a7` and pushed to `main`, which triggers a Vercel deploy.
+
 - Removed the Travelzoo card from `AWIN_PARTNERS` in `src/lib/awin.ts`. The program is confirmed rejected, so the card was sending untracked direct traffic with no commission path.
 - Updated the pending list in `CLAUDE.md` from 7 to the actual 6, and noted Travelzoo's rejection.
+- Committed the backlog of `reports/` files that earlier scheduled runs had left untracked, plus the `.gitignore` entries for the Awin scratch JSON dumps.
+
+### Build verification caveat
+`npm run build` cannot complete in the automation sandbox. Two blockers, both environmental rather than code:
+
+1. `.next/` holds `.fuse_hidden*` files the OneDrive mount will not let the sandbox unlink, so Next's clean step fails with `EPERM`.
+2. `node_modules` was installed on Windows, so `lightningcss` is missing its Linux native binary and the CSS step dies on `globals.css`.
+
+What was verified instead: `tsc --noEmit` passes clean, `eslint src/lib/awin.ts` passes clean, and a build against a scratch `distDir` compiled and emitted every route's server bundle before hitting the CSS step.
+
+**Vercel confirmed the real build.** Deployment `dpl_8apNH9s8Tr1FKh17gFeakcMoZXe5` for commit `367a4a7` reached `READY` and is aliased to reservationsnew.com.
 
 ## API note for the skill file
 Step 4 of the task (`reports/advertiser`) uses `regionCodes`, which the API rejects with `invalid region code list`. The working parameter is singular and single-valued: `region=US`. Multiple regions require one call per region. This run queried `US` and `MX` and merged the results.
