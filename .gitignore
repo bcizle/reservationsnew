@@ -48,3 +48,10 @@ docs/partnerships/private/
 next-env.d.ts
 
 .vercel
+
+# awin scratch dumps
+/joined.json
+/pending.json
+/report.json
+/report_all.json
+/tx.json

@@ -303,14 +303,8 @@ export const AWIN_PARTNERS: AwinPartner[] = [
     icon: "🗽",
     destinationUrl: "https://thetourguy.com/",
   },
-  {
-    id: "travelzoo",
-    name: "Travelzoo",
-    advertiserId: "TODO",
-    category: "Travel Deals",
-    description:
-      "Curated travel deals across hotels, cruises, flights, and vacation packages — Travelzoo's editorial team vets every offer before publishing.",
-    icon: "🌍",
-    destinationUrl: "https://www.travelzoo.com/",
-  },
+  // Travelzoo (6394) removed 2026-09-11: the Awin API now reports it in the
+  // `rejected` relationship, not `pending`. The card was shipping untracked
+  // direct traffic with no path to commission. Re-add if the application is
+  // ever re-submitted and approved.
 ];

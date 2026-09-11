@@ -73,7 +73,7 @@ scripts/generate-blog-post.ts     # Template-based blog post generator
 - Search page with sample hotel cards and "View Deal" affiliate buttons
 - 6 destination detail pages (NYC, Paris, Tokyo, London, Cancun, Dubai) with hotel/flight/car widgets
 - 6 SEO blog posts with affiliate CTAs and related posts
-- Awin affiliate integration: 9 approved partners with deep links
+- Awin affiliate integration: 17 approved partners with deep links
 - Booking.com affiliate integration (hotels, flights, cars) via Awin tracking
 - Affiliate click tracking via Google Analytics events
 - Dynamic sitemap with all pages, destinations, and blog posts
@@ -114,19 +114,28 @@ None currently. All pages are statically rendered or use client-side affiliate l
 
 ### Awin (Primary Network)
 - **Publisher ID:** 2793280 (env: `NEXT_PUBLIC_AWIN_PUBLISHER_ID`)
-- **9 approved partners** with verified advertiser IDs:
+- **17 approved partners** with verified advertiser IDs:
   | Partner | Advertiser ID | Category |
   |---------|--------------|----------|
-  | XTV | 110558 | Entertainment |
-  | b0arding.com | 116441 | Hotels |
+  | Caesars Rewards | 6145 | Hotels |
+  | NN Hotels | 19428 | Hotels |
+  | Station Casinos | 19995 | Hotels |
+  | Kiwi.com | 20563 | Flights |
   | Campspot | 22326 | Camping |
-  | Sim Local LATAM | 87123 | Travel SIM |
-  | eSimShop HK | 124780 | Travel eSIM |
-  | ShopRaise | 115325 | Shopping |
-  | Turbopass US | 100613 | City Passes |
   | Temptation Experience | 23093 | Resorts |
+  | Xcaret Global | 34947 | Attractions |
+  | GoWithGuide | 87121 | Tours |
+  | Sim Local LATAM | 87123 | Travel SIM |
+  | ScholarTrip | 95023 | Flights |
+  | Turbopass US | 100613 | City Passes |
   | Promeed | 100833 | Travel Comfort |
-- **43 more programs pending approval**
+  | XTV | 110558 | Entertainment |
+  | ShopRaise | 115325 | Shopping |
+  | b0arding.com | 116441 | Hotels |
+  | Swimply | 117149 | Experiences |
+  | eSimShop HK | 124780 | Travel eSIM |
+- **6 programs pending approval** (verified via Awin API 2026-09-11): Radisson Hotels (5907), Lovability (32759), Greyhound Lines (40028), The Tour Guy (74246), Mytrip (112832), Gotogate (112834)
+- **Rejected:** Travelzoo (6394) moved from pending to rejected. 32 programs total sit in the `rejected` relationship.
 - **Link format:** `https://www.awin1.com/cread.php?awinmid={advertiserId}&awinaffid={publisherId}&ued={encodedUrl}`
 - **Link builder:** `buildAwinLink()` in `src/lib/awin.ts` — falls back to direct URL if advertiserId is "TODO"
 
